@@ -1,0 +1,4 @@
+38:MigrationRunnerTest.AppliesAllPortedMigrationsAndCreatesTables
+39:MigrationRunnerTest.RecordsAllVersions
+40:MigrationRunnerTest.IdempotentOnReRun
+41:MigrationRunnerTest.ResultsTableHasStructuredColumns

@@ -1,0 +1,23 @@
+MigrationRunnerTest.AppliesAllPortedMigrationsAndCreatesTables 5 0.00667799
+MigrationRunnerTest.RecordsAllVersions 5 0.00643773
+MigrationRunnerTest.IdempotentOnReRun 5 0.00669732
+MigrationRunnerTest.ResultsTableHasStructuredColumns 5 0.00722586
+StatusConvertTest.ToStringRoundTrip 3 0.00284687
+StatusConvertTest.FromStringRoundTrip 3 0.0018678
+StatusConvertTest.LowercaseInput 3 0.001679
+SeverityConvertTest.ToStringRoundTrip 3 0.00165642
+SeverityConvertTest.FromStringRoundTrip 3 0.00159295
+TypedMapTest.DoubleValue 3 0.00184183
+TypedMapTest.IntValue 3 0.00172705
+TypedMapTest.StringValue 3 0.00217196
+TypedMapTest.BoolValue 3 0.00165364
+TypedMapTest.EmptyMapSerialisesToObject 3 0.00167921
+StringMapTest.ReasonMap 3 0.0018577
+ProtoToResultTest.MapsFields 3 0.00172002
+ProtoToResultTest.RecursesIntoSubtests 3 0.00171714
+UnpackModuleResultsTest.UnpacksModuleWrapperWithMultipleResults 3 0.00199001
+UnpackModuleResultsTest.EmptyWrapperReturnsZeroResults 3 0.0016341
+UnpackModuleResultsTest.BareTestResultFallback 3 0.00187405
+UnpackModuleResultsTest.EmptyPayloadReturnsZero 3 0.00215773
+ModuleResultTypeUrlTest.MatchesClientConvention 3 0.001671
+---

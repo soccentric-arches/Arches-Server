@@ -1,0 +1,8 @@
+# CMake generated Testfile for 
+# Source directory: /home/sandesh/work/project-managers/Arches/Arches-HAL/tests/thermal_management
+# Build directory: /home/sandesh/work/project-managers/Arches/Arches-Server/build/native/arches_hal_build/tests/thermal_management
+# 
+# This file includes the relevant testing commands required for 
+# testing this directory and lists subdirectories to be tested as well.
+add_test(test_thermal_management "/home/sandesh/work/project-managers/Arches/Arches-Server/build/native/arches_hal_build/bin/test_thermal_management")
+set_tests_properties(test_thermal_management PROPERTIES  TIMEOUT "300" _BACKTRACE_TRIPLES "/home/sandesh/work/project-managers/Arches/Arches-HAL/tests/thermal_management/CMakeLists.txt;4;add_test;/home/sandesh/work/project-managers/Arches/Arches-HAL/tests/thermal_management/CMakeLists.txt;0;")
