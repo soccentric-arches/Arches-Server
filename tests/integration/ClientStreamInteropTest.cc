@@ -133,6 +133,7 @@ protected:
     }
 
     void SetUp() override {
+        std::cerr << "[DBG] SetUp: TempDb\n"; std::cerr.flush();
         db_ = std::make_unique<TempDb>("srv");
 
         // Bind to ":0" — the kernel chooses a free port and GrpcServerRunner
@@ -144,6 +145,7 @@ protected:
         settings_.registry_path = "<unused>";  // empty registry — no HalService RPCs here
 
         // Full stack (mirrors main.cpp), minus loading modules.yaml.
+        std::cerr << "[DBG] SetUp: build stack\n"; std::cerr.flush();
         stream_registry_ = std::make_unique<ClientStreamRegistry>();
         run_svc_ = std::make_unique<RunService>(*stream_registry_);
         log_svc_ = std::make_unique<LogService>();
@@ -154,24 +156,31 @@ protected:
                                                             *stream_registry_, 64);
         runner_ = std::make_unique<GrpcServerRunner>(*hal_svc_, *client_svc_, settings_);
 
+        std::cerr << "[DBG] SetUp: start server thread\n"; std::cerr.flush();
         server_thread_ = std::make_unique<std::thread>([this] { runner_->start(); });
 
         // Block until the server has actually bound a port. port_future().get()
         // throws cleanly if BuildAndStart failed (instead of segfaulting on a
         // null server) — a bind failure becomes an explicit test failure.
+        std::cerr << "[DBG] SetUp: await port_future\n"; std::cerr.flush();
         int port = runner_->port_future().get();
+        std::cerr << "[DBG] SetUp: got port " << port << "\n"; std::cerr.flush();
         ASSERT_NE(port, 0) << "server bound an unexpected port 0";
 
         // Client channel + stub.  (`::grpc` qualified — `using namespace
         // arches::server;` above would otherwise make bare `grpc::` ambiguous
         // with `arches::server::grpc`.)
         const std::string target = "127.0.0.1:" + std::to_string(port);
+        std::cerr << "[DBG] SetUp: CreateChannel " << target << "\n"; std::cerr.flush();
         channel_ = ::grpc::CreateChannel(target,
                                          ::grpc::InsecureChannelCredentials());
+        std::cerr << "[DBG] SetUp: WaitForConnected\n"; std::cerr.flush();
         ASSERT_TRUE(channel_->WaitForConnected(
             std::chrono::system_clock::now() + std::chrono::seconds(5)))
             << "client could not connect to " << target;
+        std::cerr << "[DBG] SetUp: NewStub\n"; std::cerr.flush();
         stub_ = s::ClientService::NewStub(channel_);
+        std::cerr << "[DBG] SetUp: done\n"; std::cerr.flush();
     }
 
     void TearDown() override {
@@ -226,8 +235,10 @@ protected:
 
 // ── (1)+(2): run-control push + §5 unpack + COMPLETED mapping ───────────────────
 TEST_F(ClientStreamInteropTest, StartRunPushesControlAndCompletedBatchMapsToStatus) {
+    std::cerr << "[DBG] BODY start\n"; std::cerr.flush();
     const std::string board = "interop-board-1";
     auto stream = connect_and_hello(board);
+    std::cerr << "[DBG] BODY after connect_and_hello\n"; std::cerr.flush();
 
     // start_run pushes ConfigureRun + StartRun to the client stream.
     hal::common::CommonConfig common;
