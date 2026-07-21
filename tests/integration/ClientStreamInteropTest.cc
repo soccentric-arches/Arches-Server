@@ -45,11 +45,8 @@
 #include <atomic>
 #include <chrono>
 #include <csignal>
-#include <netinet/in.h>
 #include <string>
-#include <sys/socket.h>
 #include <thread>
-#include <unistd.h>
 
 using namespace arches::server;
 using arches::server::grpc::ClientStreamRegistry;
@@ -59,23 +56,6 @@ using arches::server::grpc::GrpcServerRunner;
 namespace s = acadia::stream;
 
 namespace {
-
-// Pick an ephemeral free TCP port by binding a throwaway socket to port 0.
-// Small race window (port could be reused) — acceptable for a test.
-int pick_free_port() {
-    int fd = ::socket(AF_INET, SOCK_STREAM, 0);
-    if (fd < 0) return 51277;  // fallback
-    sockaddr_in addr{};
-    addr.sin_family = AF_INET;
-    addr.sin_addr.s_addr = htonl(INADDR_LOOPBACK);
-    addr.sin_port = 0;
-    ::bind(fd, reinterpret_cast<sockaddr*>(&addr), sizeof(addr));
-    socklen_t len = sizeof(addr);
-    ::getsockname(fd, reinterpret_cast<sockaddr*>(&addr), &len);
-    int port = ntohs(addr.sin_port);
-    ::close(fd);
-    return port == 0 ? 51277 : port;
-}
 
 // Wait up to `timeout_ms` for `pred` to become true, polling every 5ms.
 template <typename Pred>
@@ -155,7 +135,11 @@ protected:
     void SetUp() override {
         db_ = std::make_unique<TempDb>("srv");
 
-        settings_.grpc_listen = "127.0.0.1:" + std::to_string(pick_free_port());
+        // Bind to ":0" — the kernel chooses a free port and GrpcServerRunner
+        // publishes it via port_future(). This eliminates the pick_free_port()
+        // TOCTOU race (bind→close→return→server-bind) that caused intermittent
+        // segfaults when prior test processes left ports in flux.
+        settings_.grpc_listen = "127.0.0.1:0";
         settings_.db_path = db_->path;
         settings_.registry_path = "<unused>";  // empty registry — no HalService RPCs here
 
@@ -172,14 +156,21 @@ protected:
 
         server_thread_ = std::make_unique<std::thread>([this] { runner_->start(); });
 
+        // Block until the server has actually bound a port. port_future().get()
+        // throws cleanly if BuildAndStart failed (instead of segfaulting on a
+        // null server) — a bind failure becomes an explicit test failure.
+        int port = runner_->port_future().get();
+        ASSERT_NE(port, 0) << "server bound an unexpected port 0";
+
         // Client channel + stub.  (`::grpc` qualified — `using namespace
         // arches::server;` above would otherwise make bare `grpc::` ambiguous
         // with `arches::server::grpc`.)
-        channel_ = ::grpc::CreateChannel(settings_.grpc_listen,
+        const std::string target = "127.0.0.1:" + std::to_string(port);
+        channel_ = ::grpc::CreateChannel(target,
                                          ::grpc::InsecureChannelCredentials());
         ASSERT_TRUE(channel_->WaitForConnected(
             std::chrono::system_clock::now() + std::chrono::seconds(5)))
-            << "client could not connect to " << settings_.grpc_listen;
+            << "client could not connect to " << target;
         stub_ = s::ClientService::NewStub(channel_);
     }
 

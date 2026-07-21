@@ -1,5 +1,0 @@
-if(EXISTS "/home/sandesh/work/project-managers/Arches/Arches-Server/build/native/tests/arches-clientstream-interop-test[1]_tests.cmake")
-  include("/home/sandesh/work/project-managers/Arches/Arches-Server/build/native/tests/arches-clientstream-interop-test[1]_tests.cmake")
-else()
-  add_test(arches-clientstream-interop-test_NOT_BUILT arches-clientstream-interop-test_NOT_BUILT)
-endif()

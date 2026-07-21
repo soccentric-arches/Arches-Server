@@ -1,7 +1,0 @@
-#pragma once
-// Auto-generated from cmake/version.hpp.in at configure time.
-// The arches-server target also receives ARCHES_SERVER_VERSION as a compile
-// definition; this header is kept for parity with Acadia-Server and for any
-// translation unit that prefers to #include the version rather than rely on a
-// macro from the build system.
-#define ARCHES_SERVER_VERSION "0.1.0"

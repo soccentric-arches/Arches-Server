@@ -1,5 +1,0 @@
-if(EXISTS "/home/sandesh/work/project-managers/Arches/Arches-Server/build/native/tests/arches-migration-test[1]_tests.cmake")
-  include("/home/sandesh/work/project-managers/Arches/Arches-Server/build/native/tests/arches-migration-test[1]_tests.cmake")
-else()
-  add_test(arches-migration-test_NOT_BUILT arches-migration-test_NOT_BUILT)
-endif()
