@@ -44,9 +44,9 @@
 
 #include <atomic>
 #include <chrono>
-#include <csignal>
 #include <string>
 #include <thread>
+#include <unistd.h>  // getpid, unlink (TempDb cleanup)
 
 using namespace arches::server;
 using arches::server::grpc::ClientStreamRegistry;
@@ -133,7 +133,6 @@ protected:
     }
 
     void SetUp() override {
-        std::cerr << "[DBG] SetUp: TempDb\n"; std::cerr.flush();
         db_ = std::make_unique<TempDb>("srv");
 
         // Bind to ":0" — the kernel chooses a free port and GrpcServerRunner
@@ -145,7 +144,6 @@ protected:
         settings_.registry_path = "<unused>";  // empty registry — no HalService RPCs here
 
         // Full stack (mirrors main.cpp), minus loading modules.yaml.
-        std::cerr << "[DBG] SetUp: build stack\n"; std::cerr.flush();
         stream_registry_ = std::make_unique<ClientStreamRegistry>();
         run_svc_ = std::make_unique<RunService>(*stream_registry_);
         log_svc_ = std::make_unique<LogService>();
@@ -156,31 +154,24 @@ protected:
                                                             *stream_registry_, 64);
         runner_ = std::make_unique<GrpcServerRunner>(*hal_svc_, *client_svc_, settings_);
 
-        std::cerr << "[DBG] SetUp: start server thread\n"; std::cerr.flush();
         server_thread_ = std::make_unique<std::thread>([this] { runner_->start(); });
 
         // Block until the server has actually bound a port. port_future().get()
         // throws cleanly if BuildAndStart failed (instead of segfaulting on a
         // null server) — a bind failure becomes an explicit test failure.
-        std::cerr << "[DBG] SetUp: await port_future\n"; std::cerr.flush();
         int port = runner_->port_future().get();
-        std::cerr << "[DBG] SetUp: got port " << port << "\n"; std::cerr.flush();
         ASSERT_NE(port, 0) << "server bound an unexpected port 0";
 
         // Client channel + stub.  (`::grpc` qualified — `using namespace
         // arches::server;` above would otherwise make bare `grpc::` ambiguous
         // with `arches::server::grpc`.)
         const std::string target = "127.0.0.1:" + std::to_string(port);
-        std::cerr << "[DBG] SetUp: CreateChannel " << target << "\n"; std::cerr.flush();
         channel_ = ::grpc::CreateChannel(target,
                                          ::grpc::InsecureChannelCredentials());
-        std::cerr << "[DBG] SetUp: WaitForConnected\n"; std::cerr.flush();
         ASSERT_TRUE(channel_->WaitForConnected(
             std::chrono::system_clock::now() + std::chrono::seconds(5)))
             << "client could not connect to " << target;
-        std::cerr << "[DBG] SetUp: NewStub\n"; std::cerr.flush();
         stub_ = s::ClientService::NewStub(channel_);
-        std::cerr << "[DBG] SetUp: done\n"; std::cerr.flush();
     }
 
     void TearDown() override {
@@ -235,23 +226,18 @@ protected:
 
 // ── (1)+(2): run-control push + §5 unpack + COMPLETED mapping ───────────────────
 TEST_F(ClientStreamInteropTest, StartRunPushesControlAndCompletedBatchMapsToStatus) {
-    std::cerr << "[DBG] BODY start\n"; std::cerr.flush();
     const std::string board = "interop-board-1";
     auto stream = connect_and_hello(board);
-    std::cerr << "[DBG] BODY after connect_and_hello\n"; std::cerr.flush();
 
     // start_run pushes ConfigureRun + StartRun to the client stream.
     hal::common::CommonConfig common;
     common.set_interval_ms(100);
     google::protobuf::Any empty_module_config;  // cpu has no Config fields needed
-    std::cerr << "[DBG] BODY before start_run\n"; std::cerr.flush();
     auto run = run_svc_->start_run(board, "cpu", hal::common::SINGLE_SHOT,
                                     common, empty_module_config, "interop-run");
-    std::cerr << "[DBG] BODY after start_run run.id=" << run.id << "\n"; std::cerr.flush();
 
     // Read ConfigureRun.
     s::ServerMessage msg1;
-    std::cerr << "[DBG] BODY Read(ConfigureRun)\n"; std::cerr.flush();
     ASSERT_TRUE(stream->Read(&msg1)) << "did not receive ConfigureRun";
     ASSERT_EQ(msg1.payload_case(), s::ServerMessage::kConfigureRun);
     EXPECT_EQ(msg1.configure_run().run_id(), run.id);
@@ -260,7 +246,6 @@ TEST_F(ClientStreamInteropTest, StartRunPushesControlAndCompletedBatchMapsToStat
 
     // Read StartRun.
     s::ServerMessage msg2;
-    std::cerr << "[DBG] BODY Read(StartRun)\n"; std::cerr.flush();
     ASSERT_TRUE(stream->Read(&msg2)) << "did not receive StartRun";
     ASSERT_EQ(msg2.payload_case(), s::ServerMessage::kStartRun);
     EXPECT_EQ(msg2.start_run().run_id(), run.id);
@@ -276,12 +261,10 @@ TEST_F(ClientStreamInteropTest, StartRunPushesControlAndCompletedBatchMapsToStat
     batch->set_state(s::COMPLETED);
     batch->set_terminal(true);
     *batch->add_samples() = make_cpu_sample();
-    std::cerr << "[DBG] BODY Write(batch)\n"; std::cerr.flush();
     ASSERT_TRUE(stream->Write(batch_msg));
 
     // Server sends a BatchAck.
     s::ServerMessage ack;
-    std::cerr << "[DBG] BODY Read(BatchAck)\n"; std::cerr.flush();
     ASSERT_TRUE(stream->Read(&ack)) << "did not receive BatchAck";
     ASSERT_EQ(ack.payload_case(), s::ServerMessage::kBatchAck);
     EXPECT_EQ(ack.batch_ack().run_id(), run.id);

@@ -7,15 +7,39 @@
 // deviation from Acadia-Server's PostgreSQL is flagged in server_update/10_arches_port.md.
 //
 // Threading model: a single `sqlite3*` connection is shared across all server
-// threads (gRPC threads + the result-writer thread). Every call that touches the
-// connection acquires a process-wide mutex, so each individual sqlite3 call is
-// atomic w.r.t. other threads. A `PreparedStatement` does NOT hold the lock for
-// its lifetime — only during each bind/step/reset call — because the prepared
-// statement's bound-parameter state lives in the `sqlite3_stmt*`, not in the
-// shared connection, so interleaving with another thread's operation on the same
-// connection cannot corrupt this statement. This keeps lock hold time minimal
-// and avoids deadlocks, and is correct regardless of SQLite's compile-time
-// threading mode.
+// threads (gRPC read-loop thread + the db-writer thread + the test/main thread).
+// The connection is opened with SQLITE_OPEN_NOMUTEX, so SQLite provides NO
+// internal serialization — we are responsible for it.
+//
+// A `PreparedStatement` HOLDS the connection mutex (`g_db_mutex`, a
+// `std::recursive_mutex`) for its ENTIRE lifetime: acquired in the constructor
+// (around `sqlite3_prepare_v2`) and released in the destructor (after
+// `sqlite3_finalize`). bind/step/reset/column accessors run under that already-
+// held lock and do NOT re-lock. This makes each PreparedStatement object one
+// fully-serialized critical section, so two statements on the shared connection
+// can NEVER interleave their prepare/bind/step/reset call sequences.
+//
+// WHY lifetime locking (not per-call): `sqlite3_prepare_v2`, `sqlite3_step`, and
+// the column accessors touch the CONNECTION's shared internal state (the SQL
+// parser, the vdbe memory pool, the lookaside allocator, the per-connection
+// error state) — not just the `sqlite3_stmt*`. An earlier per-call-locking
+// design let thread A's `insert` step interleave with thread B's `set_run_status`
+// prepare on the same connection, which corrupted SQLite's internal memory pool
+// and surfaced as an intermittent SEGV deep inside `sqlite3_prepare_v2`
+// (`sqlite3DbMallocRawNN`) — caught deterministically by ASan. Lifetime locking
+// eliminates the interleave.
+//
+// The mutex is RECURSIVE because `ResultRepository::insert_recursive` opens a
+// statement, then recurses into subtests opening further statements on the SAME
+// thread (and `upsert_run_summary` opens one inside `insert`); same-thread
+// re-acquisition must not self-deadlock. Cross-thread serialization is preserved:
+// a second thread's PreparedStatement blocks at its constructor until the first
+// thread's statement is destroyed.
+//
+// Tradeoff: a long SELECT iteration holds the mutex for the whole loop,
+// blocking other threads. Phase-1 result sets are tiny (one run's results); the
+// starvation concern is deferred to Phase 2 (trend/distribution queries), where
+// per-thread connections or shorter critical sections can be revisited.
 
 #include <cstdint>
 #include <memory>
@@ -50,8 +74,9 @@ void exec(const std::string& sql);
 
 // RAII prepared statement with typed binders + column accessors. Repositories
 // build one of these from a SQL string, bind parameters, then call step() in a
-// loop. The lock is taken per bind/step/reset call (see the threading note
-// above), so a long-running SELECT iteration does not starve other threads.
+// loop. The connection mutex is held for the statement's whole lifetime (see the
+// threading note above), so the entire prepare->bind->step->fetch sequence is
+// one serialized critical section.
 class PreparedStatement {
 public:
     // Compiles `sql` against the shared connection. Throws on compile error.
@@ -97,11 +122,13 @@ private:
     void check(int rc, const char* context) const;
 
     sqlite3_stmt* stmt_{nullptr};
+    sqlite3*      db_{nullptr};   // captured under the lock in the ctor; for error msgs
+    std::unique_lock<std::recursive_mutex> lock_;  // held for the statement's lifetime
 };
 
-// Convenience: a scoped lock on the connection mutex. Repositories rarely need
-// this (per-call locking suffices); it is exposed for the rare case that needs
-// to make several calls atomic as a unit (e.g. read-then-write without racing).
+// Convenience: a scoped lock on the connection mutex. With PreparedStatement now
+// holding the lock for its lifetime, this is rarely needed directly; it remains
+// for cases that must serialize a sequence of raw sqlite3 calls as one unit.
 class [[nodiscard]] DbLock {
 public:
     DbLock();
@@ -109,7 +136,7 @@ public:
     DbLock(const DbLock&) = delete;
     DbLock& operator=(const DbLock&) = delete;
 private:
-    std::unique_lock<std::mutex> lock_;
+    std::unique_lock<std::recursive_mutex> lock_;
 };
 
 }  // namespace arches::server::db

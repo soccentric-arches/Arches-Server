@@ -4,7 +4,6 @@
 
 #include <spdlog/spdlog.h>
 
-#include <iostream>
 #include <thread>
 
 namespace arches::server::grpc {
@@ -110,13 +109,10 @@ void ClientServiceImpl::handle_log_batch(const acadia::stream::LogBatch& batch) 
         while (true) {
             auto msg = out_queue->dequeue();
             if (!msg.has_value()) break;  // queue closed
-            std::cerr << "[DBG-S] out_writer before Write case=" << msg->payload_case() << "\n"; std::cerr.flush();
             if (!stream->Write(*msg)) {
                 spdlog::warn("client_svc: stream->Write failed; outbound writer exiting");
-                std::cerr << "[DBG-S] out_writer Write FAILED\n"; std::cerr.flush();
                 break;
             }
-            std::cerr << "[DBG-S] out_writer after Write\n"; std::cerr.flush();
         }
     }};
 
@@ -138,16 +134,13 @@ void ClientServiceImpl::handle_log_batch(const acadia::stream::LogBatch& batch) 
 
         case acadia::stream::ClientMessage::kResultBatch: {
             const auto& batch = msg.result_batch();
-            std::cerr << "[DBG-S] kResultBatch run=" << batch.run_id() << " samples=" << batch.samples_size() << "\n"; std::cerr.flush();
             handle_result_batch(batch, ingest_queue);
-            std::cerr << "[DBG-S] after handle_result_batch\n"; std::cerr.flush();
 
             // Send BatchAck via the outbound queue (serialized with run-control).
             acadia::stream::ServerMessage ack_msg;
             auto* ack = ack_msg.mutable_batch_ack();
             ack->set_run_id(batch.run_id());
             ack->set_batch_seq(batch.batch_seq());
-            std::cerr << "[DBG-S] enqueue BatchAck\n"; std::cerr.flush();
             if (!out_queue->enqueue(ack_msg)) {
                 spdlog::warn("client_svc: failed to enqueue BatchAck run_id={}",
                              batch.run_id());
@@ -156,7 +149,6 @@ void ClientServiceImpl::handle_log_batch(const acadia::stream::LogBatch& batch) 
             // Consume batch.state(): map the client's RunState -> runs.status
             // instead of Acadia's blind complete_run("completed").
             if (batch.terminal()) {
-                std::cerr << "[DBG-S] terminal set_run_status state=" << static_cast<int>(batch.state()) << "\n"; std::cerr.flush();
                 try {
                     run_svc_.set_run_status(batch.run_id(), batch.state());
                 } catch (const std::exception& e) {

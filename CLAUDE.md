@@ -29,11 +29,20 @@ Acadia-Server's PostgreSQL/Drogon — flagged in `server_update/10_arches_port.m
   handles `--` comments + multiple statements natively. Keep each migration's
   own `BEGIN/COMMIT` for atomicity; the runner issues a best-effort `ROLLBACK` on
   failure before re-throwing with the version name for attribution.
-- **SQLite connection threading:** one shared `sqlite3*` + one `std::mutex`.
-  Acquire the lock per individual `sqlite3_*` call (in `exec()` and in every
-  `PreparedStatement` bind/step/reset/column accessor). A `PreparedStatement` does
-  NOT hold the lock across its lifetime — bound params live in the
-  `sqlite3_stmt*`, not the connection, so interleaving cannot corrupt the stmt.
+- **SQLite connection threading:** one shared `sqlite3*` (opened
+  `SQLITE_OPEN_NOMUTEX` — SQLite does NO internal serialization) + one
+  `std::recursive_mutex` (`g_db_mutex`). A `PreparedStatement` HOLDS the mutex
+  for its ENTIRE lifetime (acquired in the ctor around `sqlite3_prepare_v2`,
+  released in the dtor after `sqlite3_finalize`); bind/step/reset/column
+  accessors run under that already-held lock and do NOT re-lock. This makes each
+  PreparedStatement one fully-serialized critical section, so two statements on
+  the shared connection can NEVER interleave their prepare/bind/step/reset
+  sequences. The mutex is RECURSIVE because `ResultRepository::insert_recursive`
+  opens a statement then recurses into subtests opening more statements on the
+  same thread (and `upsert_run_summary` opens one inside `insert`); same-thread
+  re-acquisition must not self-deadlock. Cross-thread statements still serialize
+  (a second thread's PreparedStatement blocks at its ctor until the first is
+  destroyed). `exec()`/`init`/`shutdown` lock per-call as before.
 - **Migration test uses the REAL migrations dir** (`ARCHES_MIGRATIONS_DIR`,
   a PUBLIC compile def on `arches_db`) — validates the actual schema, no skip
   gate (SQLite is always available, unlike Acadia's Postgres `GTEST_SKIP`).
@@ -142,13 +151,41 @@ Acadia-Server's PostgreSQL/Drogon — flagged in `server_update/10_arches_port.m
   from `build/native/compile_commands.json`, both best-effort (skip + report if the
   tool is absent; fail nonzero if a present tool reports errors). Never bypass it
   with ad-hoc `clang-tidy`/`cppcheck` invocations.
+- **`ENABLE_SANITIZERS` instruments the test binary + all in-repo libs, not just
+  `arches-server`:** the option emits directory-level `add_compile_options/
+  add_link_options(-fsanitize=address,undefined -fno-omit-frame-pointer -g)`
+  placed AFTER the HAL `add_subdirectory` (so the HAL subproject is NOT
+  instrumented — it ships pre-built and its `-Werror`/external deps fight ASan)
+  and BEFORE `src/`+`tests/`, so every arches_* static lib, the `arches-server`
+  exe, and the test exes are instrumented. The earlier target-specific form
+  (`target_compile_options(arches-server PRIVATE …)`) left the test binary
+  uninstrumented, so ASan could not see the bidi-stream interop heap corruption
+  — that's why the SQLite interleave race hid for so long. Run instrumented tests
+  with `ASAN_OPTIONS=detect_leaks=0` (gRPC leaves threads alive at exit → leak
+  false positives) and loop the interop test: `cmake --preset asan && ninja -C
+  build/asan && ASAN_OPTIONS=detect_leaks=0 ctest --test-dir build/asan -L
+  arches_server`.
 
 ## Don't
 - **Don't `ALTER TABLE ADD CONSTRAINT CHECK`** — SQLite only allows CHECK at
   CREATE TABLE time. The `results.status > 0` invariant (Postgres enforced via
   ALTER TABLE ADD CONSTRAINT) is enforced in `ResultRepository` instead.
-- **Don't hold the DB mutex across a `PreparedStatement`'s lifetime** — it would
-  starve all other DB ops during a long SELECT iteration. Lock per call (above).
+- **Don't use per-call locking for `PreparedStatement` on the shared `sqlite3*`**
+  — an earlier design held `g_db_mutex` only during each bind/step/reset call,
+  reasoning that bound params live in the `sqlite3_stmt*` so interleaving was
+  safe. It was NOT: `sqlite3_prepare_v2`/`sqlite3_step`/column accessors touch
+  the CONNECTION's shared internal state (parser, vdbe memory pool, lookaside
+  allocator, per-connection error state), so the db-writer thread's `insert`
+  interleaved with the gRPC read-loop thread's `set_run_status`→`set_ended` on
+  the same `SQLITE_OPEN_NOMUTEX` connection and corrupted SQLite's memory pool.
+  It surfaced as an intermittent SEGV deep in `sqlite3_prepare_v2`
+  (`sqlite3DbMallocRawNN`) — caught deterministically by ASan once the test
+  binary was instrumented (the original `ENABLE_SANITIZERS` only flagged
+  `arches-server`, not the test exe / libs; fixed by directory-level
+  `add_compile_options/add_link_options` placed AFTER the HAL `add_subdirectory`
+  and BEFORE `src/`+`tests/`). Fix: hold the (recursive) mutex for the
+  PreparedStatement's whole lifetime. The long-SELECT starvation that the
+  per-call design tried to avoid is a Phase-2 concern (tiny result sets now).
 - **Don't use Postgres-isms in SQLite migrations:** `JSONB`/`GIN`/`COMMENT ON`/
   `array_agg()[1]`/`gen_random_uuid()`/partial-`WHERE`-unique-index don't port
   directly. Adapt per the list in `server_update/10_arches_port.md`
@@ -204,15 +241,17 @@ Acadia-Server's PostgreSQL/Drogon — flagged in `server_update/10_arches_port.m
   server keeps running (or gets re-parented). Background the server binary alone
   so `$!` is its PID.
 - **Don't trust a single `ClientStreamInteropTest` segfault as a deterministic
-  failure** — observed one SEGFAULT at ~1.1s in the full `ctest -L arches_server`
-  run (after 29 prior tests), but it did NOT reproduce in 11 subsequent runs
-  (5 direct, 3 ctest-scoped, 3 full-suite). `GrpcServerRunner::start()` already
-  null-checks `BuildAndStart()` (throws, not derefs), so it wasn't a bind-fault
-  null-deref — a rare race in the `Connect` handler (out_writer / db_writer /
-  registry deregister) under process churn is the suspect. **Phase-2 action:**
-  stress-test the bidi stream with the real Arches-Client binary (the plan's
-  optional stretch) and/or ThreadSanitizer to surface it. The `pick_free_port()`
-  TOCTOU (bind→close→return→server-bind) is a contributing port-collision risk
-  to harden then too. The interop test also runs ~8s — the two `wait_for` polls
-  (status→"completed", result_repo.count≥1) approach their 4s budgets; revisit
-  the DB-writer / set_run_status latency in Phase 2.
+  failure** — it was an intermittent (~1/5 full-suite, ~12-25% fresh-process)
+  SQLite connection-interleave race (see the per-call-locking Don't above), NOT
+  a protobuf/`tr`-transit bug. Long misdiagnosed as corruption in the §5 unpack
+  / `IngestWork` queue transit (the `subtests=7` reading was freed-memory
+  garbage from the SQLite pool corruption manifesting at `insert`, not a bad
+  `TestResult`). gdb hid it (20 clean runs — its slowdown changes the
+  interleaving); the `:0` port bind + `port_future()` did NOT fix it (port
+  TOCTOU was a red herring). The decisive tool was ASan — but ONLY after
+  rewiring `ENABLE_SANITIZERS` to instrument the test binary + libs, not just
+  `arches-server`. Root cause + fix recorded above; the race is gone
+  (15/15 native + 10/10 ASan + 31/31 full-suite ASan). The interop test runs
+  ~8s — the two `wait_for` polls (status→"completed", result_repo.count≥1)
+  approach their 4s budgets; revisit DB-writer / set_run_status latency in
+  Phase 2.

@@ -235,7 +235,20 @@ std::vector<hal::common::TestResult> unpack_module_results(
         if (results_fld && results_fld->is_repeated() &&
             results_fld->type() ==
                 google::protobuf::FieldDescriptor::TYPE_MESSAGE) {
-            static google::protobuf::DynamicMessageFactory factory;
+            // NOTE: a function-local static factory is intentionally NOT used
+            // here — DynamicMessageFactory is not guaranteed thread-safe across
+            // concurrent GetPrototype/New calls. A fresh factory per call is
+            // safe. Each repeated element is serialized to bytes and
+            // ParseFromString'd into a *generated* TestResult rather than
+            // CopyFrom'd from the DynamicMessage-backed sub-message: this never
+            // crosses the DynamicMessage/generated representation boundary, so
+            // the generated TestResult is always well-formed. (An earlier
+            // hypothesis that CopyFrom caused intermittent TestResult corruption
+            // here was a misdiagnosis — the corruption was an unrelated SQLite
+            // connection-interleave race in DbClient, since fixed by lifetime-
+            // locking PreparedStatement. The serialize/parse round-trip is kept
+            // as a belt-and-braces measure regardless.)
+            google::protobuf::DynamicMessageFactory factory;
             const auto* prototype = factory.GetPrototype(desc);
             if (prototype) {
                 auto msg = std::unique_ptr<google::protobuf::Message>(prototype->New());
@@ -245,10 +258,10 @@ std::vector<hal::common::TestResult> unpack_module_results(
                     out.reserve(static_cast<std::size_t>(n));
                     for (int i = 0; i < n; ++i) {
                         const auto& sub = refl->GetRepeatedMessage(*msg, results_fld, i);
+                        std::string bytes;
+                        sub.SerializeToString(&bytes);
                         hal::common::TestResult tr;
-                        // sub is a hal.common.TestResult (the field's message
-                        // type) — CopyFrom across the shared descriptor works.
-                        tr.CopyFrom(sub);
+                        tr.ParseFromString(bytes);
                         out.push_back(std::move(tr));
                     }
                     return out;

@@ -41,6 +41,22 @@ add_subdirectory(
 )
 
 # ---------------------------------------------------------------------------
+# Optional sanitizers (ASan + UBSan). Applied as DIRECTORY-level flags here —
+# AFTER the HAL add_subdirectory (so the HAL subproject is NOT instrumented; it
+# ships pre-built and instrumenting it conficts with its -Werror + external
+# deps) but BEFORE src/ and tests/ are added, so every in-repo target (the
+# arches_* static libs, the arches-server exe, and the test exes that actually
+# reproduce the bug) is instrumented. The earlier target-specific form only
+# flagged `arches-server` — the test binary was uninstrumented, so ASan could
+# not see the intermittent heap corruption in the bidi-stream interop test.
+# ---------------------------------------------------------------------------
+option(ENABLE_SANITIZERS "Enable -fsanitize=address,undefined" OFF)
+if(ENABLE_SANITIZERS)
+  add_compile_options(-fsanitize=address,undefined -fno-omit-frame-pointer -g)
+  add_link_options(-fsanitize=address,undefined)
+endif()
+
+# ---------------------------------------------------------------------------
 # Host dependencies. The HAL subproject finds protobuf + gRPC itself; we do not
 # regenerate protos here, so protoc / grpc_cpp_plugin are NOT required on the host.
 # ---------------------------------------------------------------------------
@@ -81,15 +97,6 @@ if(BUILD_TESTS)
   include(GoogleTest)  # gtest_discover_tests + LABELS for `ctest -L arches_server`
   enable_testing()
   add_subdirectory(tests)
-endif()
-
-# ---------------------------------------------------------------------------
-# Optional sanitizers
-# ---------------------------------------------------------------------------
-option(ENABLE_SANITIZERS "Enable -fsanitize=address,undefined" OFF)
-if(ENABLE_SANITIZERS)
-  target_compile_options(arches-server PRIVATE -fsanitize=address,undefined)
-  target_link_options(arches-server PRIVATE -fsanitize=address,undefined)
 endif()
 
 # ---------------------------------------------------------------------------
