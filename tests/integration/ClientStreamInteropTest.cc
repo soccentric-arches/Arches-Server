@@ -244,11 +244,14 @@ TEST_F(ClientStreamInteropTest, StartRunPushesControlAndCompletedBatchMapsToStat
     hal::common::CommonConfig common;
     common.set_interval_ms(100);
     google::protobuf::Any empty_module_config;  // cpu has no Config fields needed
+    std::cerr << "[DBG] BODY before start_run\n"; std::cerr.flush();
     auto run = run_svc_->start_run(board, "cpu", hal::common::SINGLE_SHOT,
                                     common, empty_module_config, "interop-run");
+    std::cerr << "[DBG] BODY after start_run run.id=" << run.id << "\n"; std::cerr.flush();
 
     // Read ConfigureRun.
     s::ServerMessage msg1;
+    std::cerr << "[DBG] BODY Read(ConfigureRun)\n"; std::cerr.flush();
     ASSERT_TRUE(stream->Read(&msg1)) << "did not receive ConfigureRun";
     ASSERT_EQ(msg1.payload_case(), s::ServerMessage::kConfigureRun);
     EXPECT_EQ(msg1.configure_run().run_id(), run.id);
@@ -257,6 +260,7 @@ TEST_F(ClientStreamInteropTest, StartRunPushesControlAndCompletedBatchMapsToStat
 
     // Read StartRun.
     s::ServerMessage msg2;
+    std::cerr << "[DBG] BODY Read(StartRun)\n"; std::cerr.flush();
     ASSERT_TRUE(stream->Read(&msg2)) << "did not receive StartRun";
     ASSERT_EQ(msg2.payload_case(), s::ServerMessage::kStartRun);
     EXPECT_EQ(msg2.start_run().run_id(), run.id);
@@ -272,10 +276,12 @@ TEST_F(ClientStreamInteropTest, StartRunPushesControlAndCompletedBatchMapsToStat
     batch->set_state(s::COMPLETED);
     batch->set_terminal(true);
     *batch->add_samples() = make_cpu_sample();
+    std::cerr << "[DBG] BODY Write(batch)\n"; std::cerr.flush();
     ASSERT_TRUE(stream->Write(batch_msg));
 
     // Server sends a BatchAck.
     s::ServerMessage ack;
+    std::cerr << "[DBG] BODY Read(BatchAck)\n"; std::cerr.flush();
     ASSERT_TRUE(stream->Read(&ack)) << "did not receive BatchAck";
     ASSERT_EQ(ack.payload_case(), s::ServerMessage::kBatchAck);
     EXPECT_EQ(ack.batch_ack().run_id(), run.id);
