@@ -1,0 +1,5 @@
+if(EXISTS "/home/sandesh/work/project-managers/Arches/Arches-Server/build/native/tests/arches-streambackpressure-test[1]_tests.cmake")
+  include("/home/sandesh/work/project-managers/Arches/Arches-Server/build/native/tests/arches-streambackpressure-test[1]_tests.cmake")
+else()
+  add_test(arches-streambackpressure-test_NOT_BUILT arches-streambackpressure-test_NOT_BUILT)
+endif()

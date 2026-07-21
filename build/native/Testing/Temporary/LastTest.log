@@ -1,10 +1,10 @@
-Start testing: Jul 20 19:08 PDT
+Start testing: Jul 21 09:21 PDT
 ----------------------------------------------------------
-38/59 Testing: MigrationRunnerTest.AppliesAllPortedMigrationsAndCreatesTables
-38/59 Test: MigrationRunnerTest.AppliesAllPortedMigrationsAndCreatesTables
-Command: "/mnt/data/workspace/project-managers/Arches/Arches-Server/build/native/bin/arches-migration-test" "--gtest_filter=MigrationRunnerTest.AppliesAllPortedMigrationsAndCreatesTables" "--gtest_also_run_disabled_tests"
-Directory: /mnt/data/workspace/project-managers/Arches/Arches-Server/build/native/tests
-"MigrationRunnerTest.AppliesAllPortedMigrationsAndCreatesTables" start time: Jul 20 19:08 PDT
+38/68 Testing: MigrationRunnerTest.AppliesAllPortedMigrationsAndCreatesTables
+38/68 Test: MigrationRunnerTest.AppliesAllPortedMigrationsAndCreatesTables
+Command: "/home/sandesh/work/project-managers/Arches/Arches-Server/build/native/bin/arches-migration-test" "--gtest_filter=MigrationRunnerTest.AppliesAllPortedMigrationsAndCreatesTables" "--gtest_also_run_disabled_tests"
+Directory: /home/sandesh/work/project-managers/Arches/Arches-Server/build/native/tests
+"MigrationRunnerTest.AppliesAllPortedMigrationsAndCreatesTables" start time: Jul 21 09:21 PDT
 Output:
 ----------------------------------------------------------
 Running main() from ./googletest/src/gtest_main.cc
@@ -23,15 +23,15 @@ Running main() from ./googletest/src/gtest_main.cc
 Test time =   0.03 sec
 ----------------------------------------------------------
 Test Passed.
-"MigrationRunnerTest.AppliesAllPortedMigrationsAndCreatesTables" end time: Jul 20 19:08 PDT
+"MigrationRunnerTest.AppliesAllPortedMigrationsAndCreatesTables" end time: Jul 21 09:21 PDT
 "MigrationRunnerTest.AppliesAllPortedMigrationsAndCreatesTables" time elapsed: 00:00:00
 ----------------------------------------------------------
 
-39/59 Testing: MigrationRunnerTest.RecordsAllVersions
-39/59 Test: MigrationRunnerTest.RecordsAllVersions
-Command: "/mnt/data/workspace/project-managers/Arches/Arches-Server/build/native/bin/arches-migration-test" "--gtest_filter=MigrationRunnerTest.RecordsAllVersions" "--gtest_also_run_disabled_tests"
-Directory: /mnt/data/workspace/project-managers/Arches/Arches-Server/build/native/tests
-"MigrationRunnerTest.RecordsAllVersions" start time: Jul 20 19:08 PDT
+39/68 Testing: MigrationRunnerTest.RecordsAllVersions
+39/68 Test: MigrationRunnerTest.RecordsAllVersions
+Command: "/home/sandesh/work/project-managers/Arches/Arches-Server/build/native/bin/arches-migration-test" "--gtest_filter=MigrationRunnerTest.RecordsAllVersions" "--gtest_also_run_disabled_tests"
+Directory: /home/sandesh/work/project-managers/Arches/Arches-Server/build/native/tests
+"MigrationRunnerTest.RecordsAllVersions" start time: Jul 21 09:21 PDT
 Output:
 ----------------------------------------------------------
 Running main() from ./googletest/src/gtest_main.cc
@@ -40,34 +40,7 @@ Running main() from ./googletest/src/gtest_main.cc
 [0;32m[----------] [mGlobal test environment set-up.
 [0;32m[----------] [m1 test from MigrationRunnerTest
 [0;32m[ RUN      ] [mMigrationRunnerTest.RecordsAllVersions
-[0;32m[       OK ] [mMigrationRunnerTest.RecordsAllVersions (29 ms)
-[0;32m[----------] [m1 test from MigrationRunnerTest (29 ms total)
-
-[0;32m[----------] [mGlobal test environment tear-down
-[0;32m[==========] [m1 test from 1 test suite ran. (29 ms total)
-[0;32m[  PASSED  ] [m1 test.
-<end of output>
-Test time =   0.03 sec
-----------------------------------------------------------
-Test Passed.
-"MigrationRunnerTest.RecordsAllVersions" end time: Jul 20 19:08 PDT
-"MigrationRunnerTest.RecordsAllVersions" time elapsed: 00:00:00
-----------------------------------------------------------
-
-40/59 Testing: MigrationRunnerTest.IdempotentOnReRun
-40/59 Test: MigrationRunnerTest.IdempotentOnReRun
-Command: "/mnt/data/workspace/project-managers/Arches/Arches-Server/build/native/bin/arches-migration-test" "--gtest_filter=MigrationRunnerTest.IdempotentOnReRun" "--gtest_also_run_disabled_tests"
-Directory: /mnt/data/workspace/project-managers/Arches/Arches-Server/build/native/tests
-"MigrationRunnerTest.IdempotentOnReRun" start time: Jul 20 19:08 PDT
-Output:
-----------------------------------------------------------
-Running main() from ./googletest/src/gtest_main.cc
-[0;33mNote: Google Test filter = MigrationRunnerTest.IdempotentOnReRun
-[m[0;32m[==========] [mRunning 1 test from 1 test suite.
-[0;32m[----------] [mGlobal test environment set-up.
-[0;32m[----------] [m1 test from MigrationRunnerTest
-[0;32m[ RUN      ] [mMigrationRunnerTest.IdempotentOnReRun
-[0;32m[       OK ] [mMigrationRunnerTest.IdempotentOnReRun (30 ms)
+[0;32m[       OK ] [mMigrationRunnerTest.RecordsAllVersions (30 ms)
 [0;32m[----------] [m1 test from MigrationRunnerTest (30 ms total)
 
 [0;32m[----------] [mGlobal test environment tear-down
@@ -77,15 +50,42 @@ Running main() from ./googletest/src/gtest_main.cc
 Test time =   0.03 sec
 ----------------------------------------------------------
 Test Passed.
-"MigrationRunnerTest.IdempotentOnReRun" end time: Jul 20 19:08 PDT
+"MigrationRunnerTest.RecordsAllVersions" end time: Jul 21 09:21 PDT
+"MigrationRunnerTest.RecordsAllVersions" time elapsed: 00:00:00
+----------------------------------------------------------
+
+40/68 Testing: MigrationRunnerTest.IdempotentOnReRun
+40/68 Test: MigrationRunnerTest.IdempotentOnReRun
+Command: "/home/sandesh/work/project-managers/Arches/Arches-Server/build/native/bin/arches-migration-test" "--gtest_filter=MigrationRunnerTest.IdempotentOnReRun" "--gtest_also_run_disabled_tests"
+Directory: /home/sandesh/work/project-managers/Arches/Arches-Server/build/native/tests
+"MigrationRunnerTest.IdempotentOnReRun" start time: Jul 21 09:21 PDT
+Output:
+----------------------------------------------------------
+Running main() from ./googletest/src/gtest_main.cc
+[0;33mNote: Google Test filter = MigrationRunnerTest.IdempotentOnReRun
+[m[0;32m[==========] [mRunning 1 test from 1 test suite.
+[0;32m[----------] [mGlobal test environment set-up.
+[0;32m[----------] [m1 test from MigrationRunnerTest
+[0;32m[ RUN      ] [mMigrationRunnerTest.IdempotentOnReRun
+[0;32m[       OK ] [mMigrationRunnerTest.IdempotentOnReRun (29 ms)
+[0;32m[----------] [m1 test from MigrationRunnerTest (29 ms total)
+
+[0;32m[----------] [mGlobal test environment tear-down
+[0;32m[==========] [m1 test from 1 test suite ran. (29 ms total)
+[0;32m[  PASSED  ] [m1 test.
+<end of output>
+Test time =   0.03 sec
+----------------------------------------------------------
+Test Passed.
+"MigrationRunnerTest.IdempotentOnReRun" end time: Jul 21 09:21 PDT
 "MigrationRunnerTest.IdempotentOnReRun" time elapsed: 00:00:00
 ----------------------------------------------------------
 
-41/59 Testing: MigrationRunnerTest.ResultsTableHasStructuredColumns
-41/59 Test: MigrationRunnerTest.ResultsTableHasStructuredColumns
-Command: "/mnt/data/workspace/project-managers/Arches/Arches-Server/build/native/bin/arches-migration-test" "--gtest_filter=MigrationRunnerTest.ResultsTableHasStructuredColumns" "--gtest_also_run_disabled_tests"
-Directory: /mnt/data/workspace/project-managers/Arches/Arches-Server/build/native/tests
-"MigrationRunnerTest.ResultsTableHasStructuredColumns" start time: Jul 20 19:08 PDT
+41/68 Testing: MigrationRunnerTest.ResultsTableHasStructuredColumns
+41/68 Test: MigrationRunnerTest.ResultsTableHasStructuredColumns
+Command: "/home/sandesh/work/project-managers/Arches/Arches-Server/build/native/bin/arches-migration-test" "--gtest_filter=MigrationRunnerTest.ResultsTableHasStructuredColumns" "--gtest_also_run_disabled_tests"
+Directory: /home/sandesh/work/project-managers/Arches/Arches-Server/build/native/tests
+"MigrationRunnerTest.ResultsTableHasStructuredColumns" start time: Jul 21 09:21 PDT
 Output:
 ----------------------------------------------------------
 Running main() from ./googletest/src/gtest_main.cc
@@ -94,25 +94,25 @@ Running main() from ./googletest/src/gtest_main.cc
 [0;32m[----------] [mGlobal test environment set-up.
 [0;32m[----------] [m1 test from MigrationRunnerTest
 [0;32m[ RUN      ] [mMigrationRunnerTest.ResultsTableHasStructuredColumns
-[0;32m[       OK ] [mMigrationRunnerTest.ResultsTableHasStructuredColumns (33 ms)
-[0;32m[----------] [m1 test from MigrationRunnerTest (33 ms total)
+[0;32m[       OK ] [mMigrationRunnerTest.ResultsTableHasStructuredColumns (28 ms)
+[0;32m[----------] [m1 test from MigrationRunnerTest (28 ms total)
 
 [0;32m[----------] [mGlobal test environment tear-down
-[0;32m[==========] [m1 test from 1 test suite ran. (33 ms total)
+[0;32m[==========] [m1 test from 1 test suite ran. (28 ms total)
 [0;32m[  PASSED  ] [m1 test.
 <end of output>
-Test time =   0.04 sec
+Test time =   0.03 sec
 ----------------------------------------------------------
 Test Passed.
-"MigrationRunnerTest.ResultsTableHasStructuredColumns" end time: Jul 20 19:08 PDT
+"MigrationRunnerTest.ResultsTableHasStructuredColumns" end time: Jul 21 09:21 PDT
 "MigrationRunnerTest.ResultsTableHasStructuredColumns" time elapsed: 00:00:00
 ----------------------------------------------------------
 
-42/59 Testing: StatusConvertTest.ToStringRoundTrip
-42/59 Test: StatusConvertTest.ToStringRoundTrip
-Command: "/mnt/data/workspace/project-managers/Arches/Arches-Server/build/native/bin/arches-resultconvert-test" "--gtest_filter=StatusConvertTest.ToStringRoundTrip" "--gtest_also_run_disabled_tests"
-Directory: /mnt/data/workspace/project-managers/Arches/Arches-Server/build/native/tests
-"StatusConvertTest.ToStringRoundTrip" start time: Jul 20 19:08 PDT
+42/68 Testing: StatusConvertTest.ToStringRoundTrip
+42/68 Test: StatusConvertTest.ToStringRoundTrip
+Command: "/home/sandesh/work/project-managers/Arches/Arches-Server/build/native/bin/arches-resultconvert-test" "--gtest_filter=StatusConvertTest.ToStringRoundTrip" "--gtest_also_run_disabled_tests"
+Directory: /home/sandesh/work/project-managers/Arches/Arches-Server/build/native/tests
+"StatusConvertTest.ToStringRoundTrip" start time: Jul 21 09:21 PDT
 Output:
 ----------------------------------------------------------
 Running main() from ./googletest/src/gtest_main.cc
@@ -131,15 +131,15 @@ Running main() from ./googletest/src/gtest_main.cc
 Test time =   0.01 sec
 ----------------------------------------------------------
 Test Passed.
-"StatusConvertTest.ToStringRoundTrip" end time: Jul 20 19:08 PDT
+"StatusConvertTest.ToStringRoundTrip" end time: Jul 21 09:21 PDT
 "StatusConvertTest.ToStringRoundTrip" time elapsed: 00:00:00
 ----------------------------------------------------------
 
-43/59 Testing: StatusConvertTest.FromStringRoundTrip
-43/59 Test: StatusConvertTest.FromStringRoundTrip
-Command: "/mnt/data/workspace/project-managers/Arches/Arches-Server/build/native/bin/arches-resultconvert-test" "--gtest_filter=StatusConvertTest.FromStringRoundTrip" "--gtest_also_run_disabled_tests"
-Directory: /mnt/data/workspace/project-managers/Arches/Arches-Server/build/native/tests
-"StatusConvertTest.FromStringRoundTrip" start time: Jul 20 19:08 PDT
+43/68 Testing: StatusConvertTest.FromStringRoundTrip
+43/68 Test: StatusConvertTest.FromStringRoundTrip
+Command: "/home/sandesh/work/project-managers/Arches/Arches-Server/build/native/bin/arches-resultconvert-test" "--gtest_filter=StatusConvertTest.FromStringRoundTrip" "--gtest_also_run_disabled_tests"
+Directory: /home/sandesh/work/project-managers/Arches/Arches-Server/build/native/tests
+"StatusConvertTest.FromStringRoundTrip" start time: Jul 21 09:21 PDT
 Output:
 ----------------------------------------------------------
 Running main() from ./googletest/src/gtest_main.cc
@@ -158,15 +158,15 @@ Running main() from ./googletest/src/gtest_main.cc
 Test time =   0.01 sec
 ----------------------------------------------------------
 Test Passed.
-"StatusConvertTest.FromStringRoundTrip" end time: Jul 20 19:08 PDT
+"StatusConvertTest.FromStringRoundTrip" end time: Jul 21 09:21 PDT
 "StatusConvertTest.FromStringRoundTrip" time elapsed: 00:00:00
 ----------------------------------------------------------
 
-44/59 Testing: StatusConvertTest.LowercaseInput
-44/59 Test: StatusConvertTest.LowercaseInput
-Command: "/mnt/data/workspace/project-managers/Arches/Arches-Server/build/native/bin/arches-resultconvert-test" "--gtest_filter=StatusConvertTest.LowercaseInput" "--gtest_also_run_disabled_tests"
-Directory: /mnt/data/workspace/project-managers/Arches/Arches-Server/build/native/tests
-"StatusConvertTest.LowercaseInput" start time: Jul 20 19:08 PDT
+44/68 Testing: StatusConvertTest.LowercaseInput
+44/68 Test: StatusConvertTest.LowercaseInput
+Command: "/home/sandesh/work/project-managers/Arches/Arches-Server/build/native/bin/arches-resultconvert-test" "--gtest_filter=StatusConvertTest.LowercaseInput" "--gtest_also_run_disabled_tests"
+Directory: /home/sandesh/work/project-managers/Arches/Arches-Server/build/native/tests
+"StatusConvertTest.LowercaseInput" start time: Jul 21 09:21 PDT
 Output:
 ----------------------------------------------------------
 Running main() from ./googletest/src/gtest_main.cc
@@ -185,15 +185,15 @@ Running main() from ./googletest/src/gtest_main.cc
 Test time =   0.01 sec
 ----------------------------------------------------------
 Test Passed.
-"StatusConvertTest.LowercaseInput" end time: Jul 20 19:08 PDT
+"StatusConvertTest.LowercaseInput" end time: Jul 21 09:21 PDT
 "StatusConvertTest.LowercaseInput" time elapsed: 00:00:00
 ----------------------------------------------------------
 
-45/59 Testing: SeverityConvertTest.ToStringRoundTrip
-45/59 Test: SeverityConvertTest.ToStringRoundTrip
-Command: "/mnt/data/workspace/project-managers/Arches/Arches-Server/build/native/bin/arches-resultconvert-test" "--gtest_filter=SeverityConvertTest.ToStringRoundTrip" "--gtest_also_run_disabled_tests"
-Directory: /mnt/data/workspace/project-managers/Arches/Arches-Server/build/native/tests
-"SeverityConvertTest.ToStringRoundTrip" start time: Jul 20 19:08 PDT
+45/68 Testing: SeverityConvertTest.ToStringRoundTrip
+45/68 Test: SeverityConvertTest.ToStringRoundTrip
+Command: "/home/sandesh/work/project-managers/Arches/Arches-Server/build/native/bin/arches-resultconvert-test" "--gtest_filter=SeverityConvertTest.ToStringRoundTrip" "--gtest_also_run_disabled_tests"
+Directory: /home/sandesh/work/project-managers/Arches/Arches-Server/build/native/tests
+"SeverityConvertTest.ToStringRoundTrip" start time: Jul 21 09:21 PDT
 Output:
 ----------------------------------------------------------
 Running main() from ./googletest/src/gtest_main.cc
@@ -209,18 +209,18 @@ Running main() from ./googletest/src/gtest_main.cc
 [0;32m[==========] [m1 test from 1 test suite ran. (0 ms total)
 [0;32m[  PASSED  ] [m1 test.
 <end of output>
-Test time =   0.00 sec
+Test time =   0.01 sec
 ----------------------------------------------------------
 Test Passed.
-"SeverityConvertTest.ToStringRoundTrip" end time: Jul 20 19:08 PDT
+"SeverityConvertTest.ToStringRoundTrip" end time: Jul 21 09:21 PDT
 "SeverityConvertTest.ToStringRoundTrip" time elapsed: 00:00:00
 ----------------------------------------------------------
 
-46/59 Testing: SeverityConvertTest.FromStringRoundTrip
-46/59 Test: SeverityConvertTest.FromStringRoundTrip
-Command: "/mnt/data/workspace/project-managers/Arches/Arches-Server/build/native/bin/arches-resultconvert-test" "--gtest_filter=SeverityConvertTest.FromStringRoundTrip" "--gtest_also_run_disabled_tests"
-Directory: /mnt/data/workspace/project-managers/Arches/Arches-Server/build/native/tests
-"SeverityConvertTest.FromStringRoundTrip" start time: Jul 20 19:08 PDT
+46/68 Testing: SeverityConvertTest.FromStringRoundTrip
+46/68 Test: SeverityConvertTest.FromStringRoundTrip
+Command: "/home/sandesh/work/project-managers/Arches/Arches-Server/build/native/bin/arches-resultconvert-test" "--gtest_filter=SeverityConvertTest.FromStringRoundTrip" "--gtest_also_run_disabled_tests"
+Directory: /home/sandesh/work/project-managers/Arches/Arches-Server/build/native/tests
+"SeverityConvertTest.FromStringRoundTrip" start time: Jul 21 09:21 PDT
 Output:
 ----------------------------------------------------------
 Running main() from ./googletest/src/gtest_main.cc
@@ -236,18 +236,18 @@ Running main() from ./googletest/src/gtest_main.cc
 [0;32m[==========] [m1 test from 1 test suite ran. (0 ms total)
 [0;32m[  PASSED  ] [m1 test.
 <end of output>
-Test time =   0.00 sec
+Test time =   0.01 sec
 ----------------------------------------------------------
 Test Passed.
-"SeverityConvertTest.FromStringRoundTrip" end time: Jul 20 19:08 PDT
+"SeverityConvertTest.FromStringRoundTrip" end time: Jul 21 09:21 PDT
 "SeverityConvertTest.FromStringRoundTrip" time elapsed: 00:00:00
 ----------------------------------------------------------
 
-47/59 Testing: TypedMapTest.DoubleValue
-47/59 Test: TypedMapTest.DoubleValue
-Command: "/mnt/data/workspace/project-managers/Arches/Arches-Server/build/native/bin/arches-resultconvert-test" "--gtest_filter=TypedMapTest.DoubleValue" "--gtest_also_run_disabled_tests"
-Directory: /mnt/data/workspace/project-managers/Arches/Arches-Server/build/native/tests
-"TypedMapTest.DoubleValue" start time: Jul 20 19:08 PDT
+47/68 Testing: TypedMapTest.DoubleValue
+47/68 Test: TypedMapTest.DoubleValue
+Command: "/home/sandesh/work/project-managers/Arches/Arches-Server/build/native/bin/arches-resultconvert-test" "--gtest_filter=TypedMapTest.DoubleValue" "--gtest_also_run_disabled_tests"
+Directory: /home/sandesh/work/project-managers/Arches/Arches-Server/build/native/tests
+"TypedMapTest.DoubleValue" start time: Jul 21 09:21 PDT
 Output:
 ----------------------------------------------------------
 Running main() from ./googletest/src/gtest_main.cc
@@ -266,15 +266,15 @@ Running main() from ./googletest/src/gtest_main.cc
 Test time =   0.01 sec
 ----------------------------------------------------------
 Test Passed.
-"TypedMapTest.DoubleValue" end time: Jul 20 19:08 PDT
+"TypedMapTest.DoubleValue" end time: Jul 21 09:21 PDT
 "TypedMapTest.DoubleValue" time elapsed: 00:00:00
 ----------------------------------------------------------
 
-48/59 Testing: TypedMapTest.IntValue
-48/59 Test: TypedMapTest.IntValue
-Command: "/mnt/data/workspace/project-managers/Arches/Arches-Server/build/native/bin/arches-resultconvert-test" "--gtest_filter=TypedMapTest.IntValue" "--gtest_also_run_disabled_tests"
-Directory: /mnt/data/workspace/project-managers/Arches/Arches-Server/build/native/tests
-"TypedMapTest.IntValue" start time: Jul 20 19:08 PDT
+48/68 Testing: TypedMapTest.IntValue
+48/68 Test: TypedMapTest.IntValue
+Command: "/home/sandesh/work/project-managers/Arches/Arches-Server/build/native/bin/arches-resultconvert-test" "--gtest_filter=TypedMapTest.IntValue" "--gtest_also_run_disabled_tests"
+Directory: /home/sandesh/work/project-managers/Arches/Arches-Server/build/native/tests
+"TypedMapTest.IntValue" start time: Jul 21 09:21 PDT
 Output:
 ----------------------------------------------------------
 Running main() from ./googletest/src/gtest_main.cc
@@ -293,15 +293,15 @@ Running main() from ./googletest/src/gtest_main.cc
 Test time =   0.01 sec
 ----------------------------------------------------------
 Test Passed.
-"TypedMapTest.IntValue" end time: Jul 20 19:08 PDT
+"TypedMapTest.IntValue" end time: Jul 21 09:21 PDT
 "TypedMapTest.IntValue" time elapsed: 00:00:00
 ----------------------------------------------------------
 
-49/59 Testing: TypedMapTest.StringValue
-49/59 Test: TypedMapTest.StringValue
-Command: "/mnt/data/workspace/project-managers/Arches/Arches-Server/build/native/bin/arches-resultconvert-test" "--gtest_filter=TypedMapTest.StringValue" "--gtest_also_run_disabled_tests"
-Directory: /mnt/data/workspace/project-managers/Arches/Arches-Server/build/native/tests
-"TypedMapTest.StringValue" start time: Jul 20 19:08 PDT
+49/68 Testing: TypedMapTest.StringValue
+49/68 Test: TypedMapTest.StringValue
+Command: "/home/sandesh/work/project-managers/Arches/Arches-Server/build/native/bin/arches-resultconvert-test" "--gtest_filter=TypedMapTest.StringValue" "--gtest_also_run_disabled_tests"
+Directory: /home/sandesh/work/project-managers/Arches/Arches-Server/build/native/tests
+"TypedMapTest.StringValue" start time: Jul 21 09:21 PDT
 Output:
 ----------------------------------------------------------
 Running main() from ./googletest/src/gtest_main.cc
@@ -320,15 +320,15 @@ Running main() from ./googletest/src/gtest_main.cc
 Test time =   0.01 sec
 ----------------------------------------------------------
 Test Passed.
-"TypedMapTest.StringValue" end time: Jul 20 19:08 PDT
+"TypedMapTest.StringValue" end time: Jul 21 09:21 PDT
 "TypedMapTest.StringValue" time elapsed: 00:00:00
 ----------------------------------------------------------
 
-50/59 Testing: TypedMapTest.BoolValue
-50/59 Test: TypedMapTest.BoolValue
-Command: "/mnt/data/workspace/project-managers/Arches/Arches-Server/build/native/bin/arches-resultconvert-test" "--gtest_filter=TypedMapTest.BoolValue" "--gtest_also_run_disabled_tests"
-Directory: /mnt/data/workspace/project-managers/Arches/Arches-Server/build/native/tests
-"TypedMapTest.BoolValue" start time: Jul 20 19:08 PDT
+50/68 Testing: TypedMapTest.BoolValue
+50/68 Test: TypedMapTest.BoolValue
+Command: "/home/sandesh/work/project-managers/Arches/Arches-Server/build/native/bin/arches-resultconvert-test" "--gtest_filter=TypedMapTest.BoolValue" "--gtest_also_run_disabled_tests"
+Directory: /home/sandesh/work/project-managers/Arches/Arches-Server/build/native/tests
+"TypedMapTest.BoolValue" start time: Jul 21 09:21 PDT
 Output:
 ----------------------------------------------------------
 Running main() from ./googletest/src/gtest_main.cc
@@ -344,18 +344,18 @@ Running main() from ./googletest/src/gtest_main.cc
 [0;32m[==========] [m1 test from 1 test suite ran. (0 ms total)
 [0;32m[  PASSED  ] [m1 test.
 <end of output>
-Test time =   0.00 sec
+Test time =   0.01 sec
 ----------------------------------------------------------
 Test Passed.
-"TypedMapTest.BoolValue" end time: Jul 20 19:08 PDT
+"TypedMapTest.BoolValue" end time: Jul 21 09:21 PDT
 "TypedMapTest.BoolValue" time elapsed: 00:00:00
 ----------------------------------------------------------
 
-51/59 Testing: TypedMapTest.EmptyMapSerialisesToObject
-51/59 Test: TypedMapTest.EmptyMapSerialisesToObject
-Command: "/mnt/data/workspace/project-managers/Arches/Arches-Server/build/native/bin/arches-resultconvert-test" "--gtest_filter=TypedMapTest.EmptyMapSerialisesToObject" "--gtest_also_run_disabled_tests"
-Directory: /mnt/data/workspace/project-managers/Arches/Arches-Server/build/native/tests
-"TypedMapTest.EmptyMapSerialisesToObject" start time: Jul 20 19:08 PDT
+51/68 Testing: TypedMapTest.EmptyMapSerialisesToObject
+51/68 Test: TypedMapTest.EmptyMapSerialisesToObject
+Command: "/home/sandesh/work/project-managers/Arches/Arches-Server/build/native/bin/arches-resultconvert-test" "--gtest_filter=TypedMapTest.EmptyMapSerialisesToObject" "--gtest_also_run_disabled_tests"
+Directory: /home/sandesh/work/project-managers/Arches/Arches-Server/build/native/tests
+"TypedMapTest.EmptyMapSerialisesToObject" start time: Jul 21 09:21 PDT
 Output:
 ----------------------------------------------------------
 Running main() from ./googletest/src/gtest_main.cc
@@ -374,15 +374,15 @@ Running main() from ./googletest/src/gtest_main.cc
 Test time =   0.01 sec
 ----------------------------------------------------------
 Test Passed.
-"TypedMapTest.EmptyMapSerialisesToObject" end time: Jul 20 19:08 PDT
+"TypedMapTest.EmptyMapSerialisesToObject" end time: Jul 21 09:21 PDT
 "TypedMapTest.EmptyMapSerialisesToObject" time elapsed: 00:00:00
 ----------------------------------------------------------
 
-52/59 Testing: StringMapTest.ReasonMap
-52/59 Test: StringMapTest.ReasonMap
-Command: "/mnt/data/workspace/project-managers/Arches/Arches-Server/build/native/bin/arches-resultconvert-test" "--gtest_filter=StringMapTest.ReasonMap" "--gtest_also_run_disabled_tests"
-Directory: /mnt/data/workspace/project-managers/Arches/Arches-Server/build/native/tests
-"StringMapTest.ReasonMap" start time: Jul 20 19:08 PDT
+52/68 Testing: StringMapTest.ReasonMap
+52/68 Test: StringMapTest.ReasonMap
+Command: "/home/sandesh/work/project-managers/Arches/Arches-Server/build/native/bin/arches-resultconvert-test" "--gtest_filter=StringMapTest.ReasonMap" "--gtest_also_run_disabled_tests"
+Directory: /home/sandesh/work/project-managers/Arches/Arches-Server/build/native/tests
+"StringMapTest.ReasonMap" start time: Jul 21 09:21 PDT
 Output:
 ----------------------------------------------------------
 Running main() from ./googletest/src/gtest_main.cc
@@ -401,15 +401,15 @@ Running main() from ./googletest/src/gtest_main.cc
 Test time =   0.01 sec
 ----------------------------------------------------------
 Test Passed.
-"StringMapTest.ReasonMap" end time: Jul 20 19:08 PDT
+"StringMapTest.ReasonMap" end time: Jul 21 09:21 PDT
 "StringMapTest.ReasonMap" time elapsed: 00:00:00
 ----------------------------------------------------------
 
-53/59 Testing: ProtoToResultTest.MapsFields
-53/59 Test: ProtoToResultTest.MapsFields
-Command: "/mnt/data/workspace/project-managers/Arches/Arches-Server/build/native/bin/arches-resultconvert-test" "--gtest_filter=ProtoToResultTest.MapsFields" "--gtest_also_run_disabled_tests"
-Directory: /mnt/data/workspace/project-managers/Arches/Arches-Server/build/native/tests
-"ProtoToResultTest.MapsFields" start time: Jul 20 19:08 PDT
+53/68 Testing: ProtoToResultTest.MapsFields
+53/68 Test: ProtoToResultTest.MapsFields
+Command: "/home/sandesh/work/project-managers/Arches/Arches-Server/build/native/bin/arches-resultconvert-test" "--gtest_filter=ProtoToResultTest.MapsFields" "--gtest_also_run_disabled_tests"
+Directory: /home/sandesh/work/project-managers/Arches/Arches-Server/build/native/tests
+"ProtoToResultTest.MapsFields" start time: Jul 21 09:21 PDT
 Output:
 ----------------------------------------------------------
 Running main() from ./googletest/src/gtest_main.cc
@@ -428,15 +428,15 @@ Running main() from ./googletest/src/gtest_main.cc
 Test time =   0.01 sec
 ----------------------------------------------------------
 Test Passed.
-"ProtoToResultTest.MapsFields" end time: Jul 20 19:08 PDT
+"ProtoToResultTest.MapsFields" end time: Jul 21 09:21 PDT
 "ProtoToResultTest.MapsFields" time elapsed: 00:00:00
 ----------------------------------------------------------
 
-54/59 Testing: ProtoToResultTest.RecursesIntoSubtests
-54/59 Test: ProtoToResultTest.RecursesIntoSubtests
-Command: "/mnt/data/workspace/project-managers/Arches/Arches-Server/build/native/bin/arches-resultconvert-test" "--gtest_filter=ProtoToResultTest.RecursesIntoSubtests" "--gtest_also_run_disabled_tests"
-Directory: /mnt/data/workspace/project-managers/Arches/Arches-Server/build/native/tests
-"ProtoToResultTest.RecursesIntoSubtests" start time: Jul 20 19:08 PDT
+54/68 Testing: ProtoToResultTest.RecursesIntoSubtests
+54/68 Test: ProtoToResultTest.RecursesIntoSubtests
+Command: "/home/sandesh/work/project-managers/Arches/Arches-Server/build/native/bin/arches-resultconvert-test" "--gtest_filter=ProtoToResultTest.RecursesIntoSubtests" "--gtest_also_run_disabled_tests"
+Directory: /home/sandesh/work/project-managers/Arches/Arches-Server/build/native/tests
+"ProtoToResultTest.RecursesIntoSubtests" start time: Jul 21 09:21 PDT
 Output:
 ----------------------------------------------------------
 Running main() from ./googletest/src/gtest_main.cc
@@ -455,15 +455,15 @@ Running main() from ./googletest/src/gtest_main.cc
 Test time =   0.01 sec
 ----------------------------------------------------------
 Test Passed.
-"ProtoToResultTest.RecursesIntoSubtests" end time: Jul 20 19:08 PDT
+"ProtoToResultTest.RecursesIntoSubtests" end time: Jul 21 09:21 PDT
 "ProtoToResultTest.RecursesIntoSubtests" time elapsed: 00:00:00
 ----------------------------------------------------------
 
-55/59 Testing: UnpackModuleResultsTest.UnpacksModuleWrapperWithMultipleResults
-55/59 Test: UnpackModuleResultsTest.UnpacksModuleWrapperWithMultipleResults
-Command: "/mnt/data/workspace/project-managers/Arches/Arches-Server/build/native/bin/arches-resultconvert-test" "--gtest_filter=UnpackModuleResultsTest.UnpacksModuleWrapperWithMultipleResults" "--gtest_also_run_disabled_tests"
-Directory: /mnt/data/workspace/project-managers/Arches/Arches-Server/build/native/tests
-"UnpackModuleResultsTest.UnpacksModuleWrapperWithMultipleResults" start time: Jul 20 19:08 PDT
+55/68 Testing: UnpackModuleResultsTest.UnpacksModuleWrapperWithMultipleResults
+55/68 Test: UnpackModuleResultsTest.UnpacksModuleWrapperWithMultipleResults
+Command: "/home/sandesh/work/project-managers/Arches/Arches-Server/build/native/bin/arches-resultconvert-test" "--gtest_filter=UnpackModuleResultsTest.UnpacksModuleWrapperWithMultipleResults" "--gtest_also_run_disabled_tests"
+Directory: /home/sandesh/work/project-managers/Arches/Arches-Server/build/native/tests
+"UnpackModuleResultsTest.UnpacksModuleWrapperWithMultipleResults" start time: Jul 21 09:21 PDT
 Output:
 ----------------------------------------------------------
 Running main() from ./googletest/src/gtest_main.cc
@@ -482,15 +482,15 @@ Running main() from ./googletest/src/gtest_main.cc
 Test time =   0.01 sec
 ----------------------------------------------------------
 Test Passed.
-"UnpackModuleResultsTest.UnpacksModuleWrapperWithMultipleResults" end time: Jul 20 19:08 PDT
+"UnpackModuleResultsTest.UnpacksModuleWrapperWithMultipleResults" end time: Jul 21 09:21 PDT
 "UnpackModuleResultsTest.UnpacksModuleWrapperWithMultipleResults" time elapsed: 00:00:00
 ----------------------------------------------------------
 
-56/59 Testing: UnpackModuleResultsTest.EmptyWrapperReturnsZeroResults
-56/59 Test: UnpackModuleResultsTest.EmptyWrapperReturnsZeroResults
-Command: "/mnt/data/workspace/project-managers/Arches/Arches-Server/build/native/bin/arches-resultconvert-test" "--gtest_filter=UnpackModuleResultsTest.EmptyWrapperReturnsZeroResults" "--gtest_also_run_disabled_tests"
-Directory: /mnt/data/workspace/project-managers/Arches/Arches-Server/build/native/tests
-"UnpackModuleResultsTest.EmptyWrapperReturnsZeroResults" start time: Jul 20 19:08 PDT
+56/68 Testing: UnpackModuleResultsTest.EmptyWrapperReturnsZeroResults
+56/68 Test: UnpackModuleResultsTest.EmptyWrapperReturnsZeroResults
+Command: "/home/sandesh/work/project-managers/Arches/Arches-Server/build/native/bin/arches-resultconvert-test" "--gtest_filter=UnpackModuleResultsTest.EmptyWrapperReturnsZeroResults" "--gtest_also_run_disabled_tests"
+Directory: /home/sandesh/work/project-managers/Arches/Arches-Server/build/native/tests
+"UnpackModuleResultsTest.EmptyWrapperReturnsZeroResults" start time: Jul 21 09:21 PDT
 Output:
 ----------------------------------------------------------
 Running main() from ./googletest/src/gtest_main.cc
@@ -506,18 +506,18 @@ Running main() from ./googletest/src/gtest_main.cc
 [0;32m[==========] [m1 test from 1 test suite ran. (0 ms total)
 [0;32m[  PASSED  ] [m1 test.
 <end of output>
-Test time =   0.00 sec
+Test time =   0.01 sec
 ----------------------------------------------------------
 Test Passed.
-"UnpackModuleResultsTest.EmptyWrapperReturnsZeroResults" end time: Jul 20 19:08 PDT
+"UnpackModuleResultsTest.EmptyWrapperReturnsZeroResults" end time: Jul 21 09:21 PDT
 "UnpackModuleResultsTest.EmptyWrapperReturnsZeroResults" time elapsed: 00:00:00
 ----------------------------------------------------------
 
-57/59 Testing: UnpackModuleResultsTest.BareTestResultFallback
-57/59 Test: UnpackModuleResultsTest.BareTestResultFallback
-Command: "/mnt/data/workspace/project-managers/Arches/Arches-Server/build/native/bin/arches-resultconvert-test" "--gtest_filter=UnpackModuleResultsTest.BareTestResultFallback" "--gtest_also_run_disabled_tests"
-Directory: /mnt/data/workspace/project-managers/Arches/Arches-Server/build/native/tests
-"UnpackModuleResultsTest.BareTestResultFallback" start time: Jul 20 19:08 PDT
+57/68 Testing: UnpackModuleResultsTest.BareTestResultFallback
+57/68 Test: UnpackModuleResultsTest.BareTestResultFallback
+Command: "/home/sandesh/work/project-managers/Arches/Arches-Server/build/native/bin/arches-resultconvert-test" "--gtest_filter=UnpackModuleResultsTest.BareTestResultFallback" "--gtest_also_run_disabled_tests"
+Directory: /home/sandesh/work/project-managers/Arches/Arches-Server/build/native/tests
+"UnpackModuleResultsTest.BareTestResultFallback" start time: Jul 21 09:21 PDT
 Output:
 ----------------------------------------------------------
 Running main() from ./googletest/src/gtest_main.cc
@@ -536,15 +536,15 @@ Running main() from ./googletest/src/gtest_main.cc
 Test time =   0.01 sec
 ----------------------------------------------------------
 Test Passed.
-"UnpackModuleResultsTest.BareTestResultFallback" end time: Jul 20 19:08 PDT
+"UnpackModuleResultsTest.BareTestResultFallback" end time: Jul 21 09:21 PDT
 "UnpackModuleResultsTest.BareTestResultFallback" time elapsed: 00:00:00
 ----------------------------------------------------------
 
-58/59 Testing: UnpackModuleResultsTest.EmptyPayloadReturnsZero
-58/59 Test: UnpackModuleResultsTest.EmptyPayloadReturnsZero
-Command: "/mnt/data/workspace/project-managers/Arches/Arches-Server/build/native/bin/arches-resultconvert-test" "--gtest_filter=UnpackModuleResultsTest.EmptyPayloadReturnsZero" "--gtest_also_run_disabled_tests"
-Directory: /mnt/data/workspace/project-managers/Arches/Arches-Server/build/native/tests
-"UnpackModuleResultsTest.EmptyPayloadReturnsZero" start time: Jul 20 19:08 PDT
+58/68 Testing: UnpackModuleResultsTest.EmptyPayloadReturnsZero
+58/68 Test: UnpackModuleResultsTest.EmptyPayloadReturnsZero
+Command: "/home/sandesh/work/project-managers/Arches/Arches-Server/build/native/bin/arches-resultconvert-test" "--gtest_filter=UnpackModuleResultsTest.EmptyPayloadReturnsZero" "--gtest_also_run_disabled_tests"
+Directory: /home/sandesh/work/project-managers/Arches/Arches-Server/build/native/tests
+"UnpackModuleResultsTest.EmptyPayloadReturnsZero" start time: Jul 21 09:21 PDT
 Output:
 ----------------------------------------------------------
 Running main() from ./googletest/src/gtest_main.cc
@@ -563,15 +563,15 @@ Running main() from ./googletest/src/gtest_main.cc
 Test time =   0.01 sec
 ----------------------------------------------------------
 Test Passed.
-"UnpackModuleResultsTest.EmptyPayloadReturnsZero" end time: Jul 20 19:08 PDT
+"UnpackModuleResultsTest.EmptyPayloadReturnsZero" end time: Jul 21 09:21 PDT
 "UnpackModuleResultsTest.EmptyPayloadReturnsZero" time elapsed: 00:00:00
 ----------------------------------------------------------
 
-59/59 Testing: ModuleResultTypeUrlTest.MatchesClientConvention
-59/59 Test: ModuleResultTypeUrlTest.MatchesClientConvention
-Command: "/mnt/data/workspace/project-managers/Arches/Arches-Server/build/native/bin/arches-resultconvert-test" "--gtest_filter=ModuleResultTypeUrlTest.MatchesClientConvention" "--gtest_also_run_disabled_tests"
-Directory: /mnt/data/workspace/project-managers/Arches/Arches-Server/build/native/tests
-"ModuleResultTypeUrlTest.MatchesClientConvention" start time: Jul 20 19:08 PDT
+59/68 Testing: ModuleResultTypeUrlTest.MatchesClientConvention
+59/68 Test: ModuleResultTypeUrlTest.MatchesClientConvention
+Command: "/home/sandesh/work/project-managers/Arches/Arches-Server/build/native/bin/arches-resultconvert-test" "--gtest_filter=ModuleResultTypeUrlTest.MatchesClientConvention" "--gtest_also_run_disabled_tests"
+Directory: /home/sandesh/work/project-managers/Arches/Arches-Server/build/native/tests
+"ModuleResultTypeUrlTest.MatchesClientConvention" start time: Jul 21 09:21 PDT
 Output:
 ----------------------------------------------------------
 Running main() from ./googletest/src/gtest_main.cc
@@ -590,11 +590,254 @@ Running main() from ./googletest/src/gtest_main.cc
 Test time =   0.01 sec
 ----------------------------------------------------------
 Test Passed.
-"ModuleResultTypeUrlTest.MatchesClientConvention" end time: Jul 20 19:08 PDT
+"ModuleResultTypeUrlTest.MatchesClientConvention" end time: Jul 21 09:21 PDT
 "ModuleResultTypeUrlTest.MatchesClientConvention" time elapsed: 00:00:00
 ----------------------------------------------------------
 
-End testing: Jul 20 19:08 PDT
+60/68 Testing: BoundedQueueTest.BasicEnqueueDequeue
+60/68 Test: BoundedQueueTest.BasicEnqueueDequeue
+Command: "/home/sandesh/work/project-managers/Arches/Arches-Server/build/native/bin/arches-streambackpressure-test" "--gtest_filter=BoundedQueueTest.BasicEnqueueDequeue" "--gtest_also_run_disabled_tests"
+Directory: /home/sandesh/work/project-managers/Arches/Arches-Server/build/native/tests
+"BoundedQueueTest.BasicEnqueueDequeue" start time: Jul 21 09:21 PDT
+Output:
+----------------------------------------------------------
+Running main() from ./googletest/src/gtest_main.cc
+[0;33mNote: Google Test filter = BoundedQueueTest.BasicEnqueueDequeue
+[m[0;32m[==========] [mRunning 1 test from 1 test suite.
+[0;32m[----------] [mGlobal test environment set-up.
+[0;32m[----------] [m1 test from BoundedQueueTest
+[0;32m[ RUN      ] [mBoundedQueueTest.BasicEnqueueDequeue
+[0;32m[       OK ] [mBoundedQueueTest.BasicEnqueueDequeue (0 ms)
+[0;32m[----------] [m1 test from BoundedQueueTest (0 ms total)
 
-arches_server =   0.24 sec*proc
+[0;32m[----------] [mGlobal test environment tear-down
+[0;32m[==========] [m1 test from 1 test suite ran. (0 ms total)
+[0;32m[  PASSED  ] [m1 test.
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"BoundedQueueTest.BasicEnqueueDequeue" end time: Jul 21 09:21 PDT
+"BoundedQueueTest.BasicEnqueueDequeue" time elapsed: 00:00:00
+----------------------------------------------------------
+
+61/68 Testing: BoundedQueueTest.CloseUnblocksDequeue
+61/68 Test: BoundedQueueTest.CloseUnblocksDequeue
+Command: "/home/sandesh/work/project-managers/Arches/Arches-Server/build/native/bin/arches-streambackpressure-test" "--gtest_filter=BoundedQueueTest.CloseUnblocksDequeue" "--gtest_also_run_disabled_tests"
+Directory: /home/sandesh/work/project-managers/Arches/Arches-Server/build/native/tests
+"BoundedQueueTest.CloseUnblocksDequeue" start time: Jul 21 09:21 PDT
+Output:
+----------------------------------------------------------
+Running main() from ./googletest/src/gtest_main.cc
+[0;33mNote: Google Test filter = BoundedQueueTest.CloseUnblocksDequeue
+[m[0;32m[==========] [mRunning 1 test from 1 test suite.
+[0;32m[----------] [mGlobal test environment set-up.
+[0;32m[----------] [m1 test from BoundedQueueTest
+[0;32m[ RUN      ] [mBoundedQueueTest.CloseUnblocksDequeue
+[0;32m[       OK ] [mBoundedQueueTest.CloseUnblocksDequeue (0 ms)
+[0;32m[----------] [m1 test from BoundedQueueTest (0 ms total)
+
+[0;32m[----------] [mGlobal test environment tear-down
+[0;32m[==========] [m1 test from 1 test suite ran. (0 ms total)
+[0;32m[  PASSED  ] [m1 test.
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"BoundedQueueTest.CloseUnblocksDequeue" end time: Jul 21 09:21 PDT
+"BoundedQueueTest.CloseUnblocksDequeue" time elapsed: 00:00:00
+----------------------------------------------------------
+
+62/68 Testing: BoundedQueueTest.EnqueueAfterCloseFails
+62/68 Test: BoundedQueueTest.EnqueueAfterCloseFails
+Command: "/home/sandesh/work/project-managers/Arches/Arches-Server/build/native/bin/arches-streambackpressure-test" "--gtest_filter=BoundedQueueTest.EnqueueAfterCloseFails" "--gtest_also_run_disabled_tests"
+Directory: /home/sandesh/work/project-managers/Arches/Arches-Server/build/native/tests
+"BoundedQueueTest.EnqueueAfterCloseFails" start time: Jul 21 09:21 PDT
+Output:
+----------------------------------------------------------
+Running main() from ./googletest/src/gtest_main.cc
+[0;33mNote: Google Test filter = BoundedQueueTest.EnqueueAfterCloseFails
+[m[0;32m[==========] [mRunning 1 test from 1 test suite.
+[0;32m[----------] [mGlobal test environment set-up.
+[0;32m[----------] [m1 test from BoundedQueueTest
+[0;32m[ RUN      ] [mBoundedQueueTest.EnqueueAfterCloseFails
+[0;32m[       OK ] [mBoundedQueueTest.EnqueueAfterCloseFails (0 ms)
+[0;32m[----------] [m1 test from BoundedQueueTest (0 ms total)
+
+[0;32m[----------] [mGlobal test environment tear-down
+[0;32m[==========] [m1 test from 1 test suite ran. (0 ms total)
+[0;32m[  PASSED  ] [m1 test.
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"BoundedQueueTest.EnqueueAfterCloseFails" end time: Jul 21 09:21 PDT
+"BoundedQueueTest.EnqueueAfterCloseFails" time elapsed: 00:00:00
+----------------------------------------------------------
+
+63/68 Testing: BoundedQueueTest.BackpressureBlocks
+63/68 Test: BoundedQueueTest.BackpressureBlocks
+Command: "/home/sandesh/work/project-managers/Arches/Arches-Server/build/native/bin/arches-streambackpressure-test" "--gtest_filter=BoundedQueueTest.BackpressureBlocks" "--gtest_also_run_disabled_tests"
+Directory: /home/sandesh/work/project-managers/Arches/Arches-Server/build/native/tests
+"BoundedQueueTest.BackpressureBlocks" start time: Jul 21 09:21 PDT
+Output:
+----------------------------------------------------------
+Running main() from ./googletest/src/gtest_main.cc
+[0;33mNote: Google Test filter = BoundedQueueTest.BackpressureBlocks
+[m[0;32m[==========] [mRunning 1 test from 1 test suite.
+[0;32m[----------] [mGlobal test environment set-up.
+[0;32m[----------] [m1 test from BoundedQueueTest
+[0;32m[ RUN      ] [mBoundedQueueTest.BackpressureBlocks
+[0;32m[       OK ] [mBoundedQueueTest.BackpressureBlocks (40 ms)
+[0;32m[----------] [m1 test from BoundedQueueTest (40 ms total)
+
+[0;32m[----------] [mGlobal test environment tear-down
+[0;32m[==========] [m1 test from 1 test suite ran. (40 ms total)
+[0;32m[  PASSED  ] [m1 test.
+<end of output>
+Test time =   0.04 sec
+----------------------------------------------------------
+Test Passed.
+"BoundedQueueTest.BackpressureBlocks" end time: Jul 21 09:21 PDT
+"BoundedQueueTest.BackpressureBlocks" time elapsed: 00:00:00
+----------------------------------------------------------
+
+64/68 Testing: RunStateMappingTest.MapsEachRunStateToStatus
+64/68 Test: RunStateMappingTest.MapsEachRunStateToStatus
+Command: "/home/sandesh/work/project-managers/Arches/Arches-Server/build/native/bin/arches-runstatemap-test" "--gtest_filter=RunStateMappingTest.MapsEachRunStateToStatus" "--gtest_also_run_disabled_tests"
+Directory: /home/sandesh/work/project-managers/Arches/Arches-Server/build/native/tests
+"RunStateMappingTest.MapsEachRunStateToStatus" start time: Jul 21 09:21 PDT
+Output:
+----------------------------------------------------------
+Running main() from ./googletest/src/gtest_main.cc
+[0;33mNote: Google Test filter = RunStateMappingTest.MapsEachRunStateToStatus
+[m[0;32m[==========] [mRunning 1 test from 1 test suite.
+[0;32m[----------] [mGlobal test environment set-up.
+[0;32m[----------] [m1 test from RunStateMappingTest
+[0;32m[ RUN      ] [mRunStateMappingTest.MapsEachRunStateToStatus
+[0;32m[       OK ] [mRunStateMappingTest.MapsEachRunStateToStatus (0 ms)
+[0;32m[----------] [m1 test from RunStateMappingTest (0 ms total)
+
+[0;32m[----------] [mGlobal test environment tear-down
+[0;32m[==========] [m1 test from 1 test suite ran. (0 ms total)
+[0;32m[  PASSED  ] [m1 test.
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"RunStateMappingTest.MapsEachRunStateToStatus" end time: Jul 21 09:21 PDT
+"RunStateMappingTest.MapsEachRunStateToStatus" time elapsed: 00:00:00
+----------------------------------------------------------
+
+65/68 Testing: RunStateMappingTest.TerminalStatesAreCompletedFailedCancelled
+65/68 Test: RunStateMappingTest.TerminalStatesAreCompletedFailedCancelled
+Command: "/home/sandesh/work/project-managers/Arches/Arches-Server/build/native/bin/arches-runstatemap-test" "--gtest_filter=RunStateMappingTest.TerminalStatesAreCompletedFailedCancelled" "--gtest_also_run_disabled_tests"
+Directory: /home/sandesh/work/project-managers/Arches/Arches-Server/build/native/tests
+"RunStateMappingTest.TerminalStatesAreCompletedFailedCancelled" start time: Jul 21 09:21 PDT
+Output:
+----------------------------------------------------------
+Running main() from ./googletest/src/gtest_main.cc
+[0;33mNote: Google Test filter = RunStateMappingTest.TerminalStatesAreCompletedFailedCancelled
+[m[0;32m[==========] [mRunning 1 test from 1 test suite.
+[0;32m[----------] [mGlobal test environment set-up.
+[0;32m[----------] [m1 test from RunStateMappingTest
+[0;32m[ RUN      ] [mRunStateMappingTest.TerminalStatesAreCompletedFailedCancelled
+[0;32m[       OK ] [mRunStateMappingTest.TerminalStatesAreCompletedFailedCancelled (0 ms)
+[0;32m[----------] [m1 test from RunStateMappingTest (0 ms total)
+
+[0;32m[----------] [mGlobal test environment tear-down
+[0;32m[==========] [m1 test from 1 test suite ran. (0 ms total)
+[0;32m[  PASSED  ] [m1 test.
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"RunStateMappingTest.TerminalStatesAreCompletedFailedCancelled" end time: Jul 21 09:21 PDT
+"RunStateMappingTest.TerminalStatesAreCompletedFailedCancelled" time elapsed: 00:00:00
+----------------------------------------------------------
+
+66/68 Testing: RunStateMappingTest.AllNonUnspecifiedStatesMapToValidRunsStatus
+66/68 Test: RunStateMappingTest.AllNonUnspecifiedStatesMapToValidRunsStatus
+Command: "/home/sandesh/work/project-managers/Arches/Arches-Server/build/native/bin/arches-runstatemap-test" "--gtest_filter=RunStateMappingTest.AllNonUnspecifiedStatesMapToValidRunsStatus" "--gtest_also_run_disabled_tests"
+Directory: /home/sandesh/work/project-managers/Arches/Arches-Server/build/native/tests
+"RunStateMappingTest.AllNonUnspecifiedStatesMapToValidRunsStatus" start time: Jul 21 09:21 PDT
+Output:
+----------------------------------------------------------
+Running main() from ./googletest/src/gtest_main.cc
+[0;33mNote: Google Test filter = RunStateMappingTest.AllNonUnspecifiedStatesMapToValidRunsStatus
+[m[0;32m[==========] [mRunning 1 test from 1 test suite.
+[0;32m[----------] [mGlobal test environment set-up.
+[0;32m[----------] [m1 test from RunStateMappingTest
+[0;32m[ RUN      ] [mRunStateMappingTest.AllNonUnspecifiedStatesMapToValidRunsStatus
+[0;32m[       OK ] [mRunStateMappingTest.AllNonUnspecifiedStatesMapToValidRunsStatus (0 ms)
+[0;32m[----------] [m1 test from RunStateMappingTest (0 ms total)
+
+[0;32m[----------] [mGlobal test environment tear-down
+[0;32m[==========] [m1 test from 1 test suite ran. (0 ms total)
+[0;32m[  PASSED  ] [m1 test.
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"RunStateMappingTest.AllNonUnspecifiedStatesMapToValidRunsStatus" end time: Jul 21 09:21 PDT
+"RunStateMappingTest.AllNonUnspecifiedStatesMapToValidRunsStatus" time elapsed: 00:00:00
+----------------------------------------------------------
+
+67/68 Testing: ClientStreamInteropTest.StartRunPushesControlAndCompletedBatchMapsToStatus
+67/68 Test: ClientStreamInteropTest.StartRunPushesControlAndCompletedBatchMapsToStatus
+Command: "/home/sandesh/work/project-managers/Arches/Arches-Server/build/native/bin/arches-clientstream-interop-test" "--gtest_filter=ClientStreamInteropTest.StartRunPushesControlAndCompletedBatchMapsToStatus" "--gtest_also_run_disabled_tests"
+Directory: /home/sandesh/work/project-managers/Arches/Arches-Server/build/native/tests
+"ClientStreamInteropTest.StartRunPushesControlAndCompletedBatchMapsToStatus" start time: Jul 21 09:21 PDT
+Output:
+----------------------------------------------------------
+Running main() from ./googletest/src/gtest_main.cc
+[0;33mNote: Google Test filter = ClientStreamInteropTest.StartRunPushesControlAndCompletedBatchMapsToStatus
+[m[0;32m[==========] [mRunning 1 test from 1 test suite.
+[0;32m[----------] [mGlobal test environment set-up.
+[0;32m[----------] [m1 test from ClientStreamInteropTest
+[0;32m[ RUN      ] [mClientStreamInteropTest.StartRunPushesControlAndCompletedBatchMapsToStatus
+[0;32m[       OK ] [mClientStreamInteropTest.StartRunPushesControlAndCompletedBatchMapsToStatus (8053 ms)
+[0;32m[----------] [m1 test from ClientStreamInteropTest (8053 ms total)
+
+[0;32m[----------] [mGlobal test environment tear-down
+[0;32m[==========] [m1 test from 1 test suite ran. (8053 ms total)
+[0;32m[  PASSED  ] [m1 test.
+<end of output>
+Test time =   8.06 sec
+----------------------------------------------------------
+Test Passed.
+"ClientStreamInteropTest.StartRunPushesControlAndCompletedBatchMapsToStatus" end time: Jul 21 09:22 PDT
+"ClientStreamInteropTest.StartRunPushesControlAndCompletedBatchMapsToStatus" time elapsed: 00:00:08
+----------------------------------------------------------
+
+68/68 Testing: ClientStreamInteropTest.StopRunPushesStopAndCancelledBatchMapsToStatus
+68/68 Test: ClientStreamInteropTest.StopRunPushesStopAndCancelledBatchMapsToStatus
+Command: "/home/sandesh/work/project-managers/Arches/Arches-Server/build/native/bin/arches-clientstream-interop-test" "--gtest_filter=ClientStreamInteropTest.StopRunPushesStopAndCancelledBatchMapsToStatus" "--gtest_also_run_disabled_tests"
+Directory: /home/sandesh/work/project-managers/Arches/Arches-Server/build/native/tests
+"ClientStreamInteropTest.StopRunPushesStopAndCancelledBatchMapsToStatus" start time: Jul 21 09:22 PDT
+Output:
+----------------------------------------------------------
+Running main() from ./googletest/src/gtest_main.cc
+[0;33mNote: Google Test filter = ClientStreamInteropTest.StopRunPushesStopAndCancelledBatchMapsToStatus
+[m[0;32m[==========] [mRunning 1 test from 1 test suite.
+[0;32m[----------] [mGlobal test environment set-up.
+[0;32m[----------] [m1 test from ClientStreamInteropTest
+[0;32m[ RUN      ] [mClientStreamInteropTest.StopRunPushesStopAndCancelledBatchMapsToStatus
+[0;32m[       OK ] [mClientStreamInteropTest.StopRunPushesStopAndCancelledBatchMapsToStatus (8043 ms)
+[0;32m[----------] [m1 test from ClientStreamInteropTest (8043 ms total)
+
+[0;32m[----------] [mGlobal test environment tear-down
+[0;32m[==========] [m1 test from 1 test suite ran. (8043 ms total)
+[0;32m[  PASSED  ] [m1 test.
+<end of output>
+Test time =   8.05 sec
+----------------------------------------------------------
+Test Passed.
+"ClientStreamInteropTest.StopRunPushesStopAndCancelledBatchMapsToStatus" end time: Jul 21 09:22 PDT
+"ClientStreamInteropTest.StopRunPushesStopAndCancelledBatchMapsToStatus" time elapsed: 00:00:08
+----------------------------------------------------------
+
+End testing: Jul 21 09:22 PDT
+
+arches_server =  16.43 sec*proc
 

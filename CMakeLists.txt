@@ -93,8 +93,98 @@ if(ENABLE_SANITIZERS)
 endif()
 
 # ---------------------------------------------------------------------------
+# Generated version header (parity with Acadia-Server; the arches-server target
+# also gets ARCHES_SERVER_VERSION as a compile definition — this header is for
+# TUs that prefer to #include it).
+# ---------------------------------------------------------------------------
+set(GENERATED_DIR "${PROJECT_BINARY_DIR}/generated")
+file(MAKE_DIRECTORY "${GENERATED_DIR}")
+configure_file(
+  "${CMAKE_SOURCE_DIR}/cmake/version.hpp.in"
+  "${GENERATED_DIR}/version.hpp"
+  @ONLY
+)
+
+# ---------------------------------------------------------------------------
+# Doxygen docs target (§12 mandatory for *-Server; Acadia-Server shipped a
+# Doxyfile but never wired the target — Arches-Server wires it). Builds the
+# `doc_doxygen` target that the Makefile `doc` target drives via `ninja
+# doc_doxygen`. Best-effort: if Doxygen is not installed, configure succeeds
+# but the target is absent (the Makefile reports this).
+# ---------------------------------------------------------------------------
+find_package(Doxygen QUIET)
+if(DOXYGEN_FOUND)
+  set(DOXYFILE_IN  "${CMAKE_SOURCE_DIR}/Doxyfile.in")
+  set(DOXYFILE_OUT "${PROJECT_BINARY_DIR}/Doxyfile")
+  configure_file("${DOXYFILE_IN}" "${DOXYFILE_OUT}" @ONLY)
+  add_custom_target(doc_doxygen
+    COMMAND ${DOXYGEN_EXECUTABLE} "${DOXYFILE_OUT}"
+    WORKING_DIRECTORY "${PROJECT_BINARY_DIR}"
+    VERBATIM
+    COMMENT "Generating Doxygen HTML docs for Arches-Server"
+  )
+else()
+  message(STATUS "Doxygen not found — `ninja doc_doxygen` / `make doc` will skip (install doxygen to enable).")
+endif()
+
+# ---------------------------------------------------------------------------
+# clang-format target (drives the Makefile `format` target via `ninja format`).
+# Best-effort: if clang-format is not installed, the target prints a notice.
+# ---------------------------------------------------------------------------
+find_program(CLANG_FORMAT_EXE NAMES clang-format clang-format-15 clang-format-14)
+if(CLANG_FORMAT_EXE)
+  file(GLOB_RECURSE ARCHES_FORMAT_SOURCES
+       CONFIGURE_DEPENDS
+       "${CMAKE_SOURCE_DIR}/src/*.cc" "${CMAKE_SOURCE_DIR}/src/*.h"
+       "${CMAKE_SOURCE_DIR}/tests/*.cc")
+  add_custom_target(format
+    COMMAND "${CLANG_FORMAT_EXE}" -i --style=file ${ARCHES_FORMAT_SOURCES}
+    WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
+    VERBATIM
+    COMMENT "Running clang-format on Arches-Server sources"
+  )
+else()
+  add_custom_target(format
+    COMMAND ${CMAKE_COMMAND} -E echo "clang-format not installed; skipping format."
+    VERBATIM
+  )
+endif()
+
+# ---------------------------------------------------------------------------
+# CPack packaging (§12: .deb, .rpm, .ipk for Yocto/opkg). Acadia-Server had no
+# CPack wiring; Arches-Server adds it. .ipk is produced by the DEB generator
+# with an opkg-compatible rename (Yocto consumes .ipk).
+# ---------------------------------------------------------------------------
+set(CPACK_PACKAGE_NAME "arches-server")
+set(CPACK_PACKAGE_VERSION "${PROJECT_VERSION}")
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY
+    "Arches-Server — C++17 gRPC IV&V server (NVIDIA Jetson / Arches)")
+set(CPACK_PACKAGE_CONTACT "SoCcentric IV&V")
+if(EXISTS "${CMAKE_SOURCE_DIR}/LICENSE")
+  set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_SOURCE_DIR}/LICENSE")
+endif()
+set(CPACK_STRIP_FILES ON)
+set(CPACK_PACKAGE_FILE_NAME
+    "${CPACK_PACKAGE_NAME}-${CPACK_PACKAGE_VERSION}-${CMAKE_SYSTEM_PROCESSOR}")
+
+# Debian / .deb (also the basis for the .ipk Yocto/opkg variant).
+set(CPACK_DEBIAN_PACKAGE_MAINTAINER "SoCcentric IV&V")
+set(CPACK_DEBIAN_PACKAGE_SECTION "devel")
+set(CPACK_DEBIAN_PACKAGE_DEPENDS "libsqlite3-0, libspdlog1, libyaml-cpp0.7, libgrpc++1, libprotobuf23")
+
+# RPM.
+set(CPACK_RPM_PACKAGE_LICENSE "Proprietary")
+set(CPACK_RPM_PACKAGE_GROUP "Development/Tools")
+set(CPACK_RPM_PACKAGE_REQUIRES "sqlite, spdlog, yaml-cpp, grpc, protobuf")
+
+include(CPack)
+
+# ---------------------------------------------------------------------------
 # Install
 # ---------------------------------------------------------------------------
 install(TARGETS arches-server
   RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+)
+install(DIRECTORY "${CMAKE_SOURCE_DIR}/migrations/"
+  DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/arches/migrations"
 )

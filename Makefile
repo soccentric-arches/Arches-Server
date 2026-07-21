@@ -62,10 +62,19 @@ lint: cppcheck
 		echo "  clang-tidy not installed; skipping (cppcheck result above stands)."; \
 	fi
 
-# Package the server via CPack (.deb / .rpm per §12).
+# Package the server via CPack (.deb / .rpm / .ipk per §12). The .ipk is an
+# opkg-compatible rename of the .deb (Yocto consumes .ipk); produced last.
 installer: build
 	@echo "Packaging Arches-Server via CPack..."
-	cd $(NATIVE_BUILD_DIR) && cpack -G DEB; cpack -G RPM
+	cd $(NATIVE_BUILD_DIR) && cpack -G DEB && cpack -G RPM
+	@deb=$$(cd $(NATIVE_BUILD_DIR) && ls -1 *.deb 2>/dev/null | head -1); \
+	if [ -n "$$deb" ]; then \
+		ipk=$${deb%.deb}.ipk; \
+		cp $(NATIVE_BUILD_DIR)/$$deb $(NATIVE_BUILD_DIR)/$$ipk; \
+		echo "  produced .ipk: $$ipk (opkg/Yocto variant of $$deb)"; \
+	else \
+		echo "  no .deb produced — .ipk skipped"; \
+	fi
 
 # =============================================================================
 # Common

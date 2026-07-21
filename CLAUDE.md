@@ -125,6 +125,23 @@ Acadia-Server's PostgreSQL/Drogon — flagged in `server_update/10_arches_port.m
   "received signal 15 — shutting down" → clean exit 0 + DB close.
 - **Env-var `Settings`** (`ARCHES_GRPC_LISTEN/DB_PATH/REGISTRY_PATH/STREAM_QUEUE_SIZE/
   LOG_LEVEL/SHUTDOWN_TIMEOUT_SEC`, env-var only, no TOML) via `config::load_settings()`.
+- **§12 tooling (Step 9):** `CMakePresets.json` (Ninja, `native`/`debug`/`release`/
+  `asan`/`strict` — `native` matches the Makefile's `build/native`; `strict` sets
+  `WARNINGS_AS_ERRORS=ON` for the CI gate). `-Werror` is opt-in via the
+  `WARNINGS_AS_ERRORS` option in `cmake/CompilerWarnings.cmake` (not on by default
+  so local dev isn't blocked by new warnings). The codebase is `-Werror`-clean —
+  verified by a forced strict rebuild. Doxygen is wired conditionally: `find_package(
+  Doxygen QUIET)` + `add_custom_target(doc_doxygen)` from `Doxyfile.in`; if Doxygen
+  isn't installed the target is absent and `make doc` reports it (best-effort, like
+  `make lint`). CPack produces `.deb` + `.rpm` directly; the `.ipk` (Yocto/opkg) is
+  a `cp`-rename of the `.deb` in the Makefile `installer` target (CPack has no
+  first-class IPK generator). `ARCHES_SERVER_VERSION` is a compile def on
+  `arches-server` (and `cmake/version.hpp.in` is generated for parity).
+- **Makefile is the single entry point** (`make build|test|lint|run|clean|format|
+  cppcheck|doc|installer`). `make lint` runs cppcheck then clang-tidy, both driven
+  from `build/native/compile_commands.json`, both best-effort (skip + report if the
+  tool is absent; fail nonzero if a present tool reports errors). Never bypass it
+  with ad-hoc `clang-tidy`/`cppcheck` invocations.
 
 ## Don't
 - **Don't `ALTER TABLE ADD CONSTRAINT CHECK`** — SQLite only allows CHECK at
@@ -178,8 +195,24 @@ Acadia-Server's PostgreSQL/Drogon — flagged in `server_update/10_arches_port.m
   not crashed.
 - **Don't use a bare `grpc::` type under `using namespace arches::server;`** —
   it's ambiguous between grpcpp's top-level `::grpc` and `arches::server::grpc`.
-  Qualify as `arches::server::grpc::HalServiceImpl` etc. (main.cpp hit this).
+  Qualify as `arches::server::grpc::HalServiceImpl` etc. (main.cpp hit this, and
+  `tests/integration/ClientStreamInteropTest.cc` hit it again — `spdlog::level::level::err`
+  was also a typo there; the real fix was `spdlog::level::err` + qualifying every
+  grpcpp use as `::grpc::` since the test file opens `using namespace arches::server;`).
 - **Don't background a compound `rm … && server &` and use `$!` as the server
   PID** — `$!` is the subshell, not `server`; `kill $!` kills the subshell and the
   server keeps running (or gets re-parented). Background the server binary alone
   so `$!` is its PID.
+- **Don't trust a single `ClientStreamInteropTest` segfault as a deterministic
+  failure** — observed one SEGFAULT at ~1.1s in the full `ctest -L arches_server`
+  run (after 29 prior tests), but it did NOT reproduce in 11 subsequent runs
+  (5 direct, 3 ctest-scoped, 3 full-suite). `GrpcServerRunner::start()` already
+  null-checks `BuildAndStart()` (throws, not derefs), so it wasn't a bind-fault
+  null-deref — a rare race in the `Connect` handler (out_writer / db_writer /
+  registry deregister) under process churn is the suspect. **Phase-2 action:**
+  stress-test the bidi stream with the real Arches-Client binary (the plan's
+  optional stretch) and/or ThreadSanitizer to surface it. The `pick_free_port()`
+  TOCTOU (bind→close→return→server-bind) is a contributing port-collision risk
+  to harden then too. The interop test also runs ~8s — the two `wait_for` polls
+  (status→"completed", result_repo.count≥1) approach their 4s budgets; revisit
+  the DB-writer / set_run_status latency in Phase 2.

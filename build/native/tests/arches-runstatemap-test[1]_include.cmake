@@ -1,0 +1,5 @@
+if(EXISTS "/home/sandesh/work/project-managers/Arches/Arches-Server/build/native/tests/arches-runstatemap-test[1]_tests.cmake")
+  include("/home/sandesh/work/project-managers/Arches/Arches-Server/build/native/tests/arches-runstatemap-test[1]_tests.cmake")
+else()
+  add_test(arches-runstatemap-test_NOT_BUILT arches-runstatemap-test_NOT_BUILT)
+endif()

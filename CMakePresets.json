@@ -1,0 +1,77 @@
+{
+    "version": 2,
+    "configurePresets": [
+        {
+            "name": "base",
+            "hidden": true,
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build/${presetName}",
+            "cacheVariables": {
+                "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+                "CMAKE_CXX_STANDARD": "17"
+            }
+        },
+        {
+            "name": "native",
+            "displayName": "Native (host build, tests on — matches Makefile)",
+            "inherits": "base",
+            "binaryDir": "${sourceDir}/build/native",
+            "cacheVariables": {
+                "BUILD_TESTS": "ON"
+            }
+        },
+        {
+            "name": "debug",
+            "displayName": "Debug",
+            "inherits": "base",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "BUILD_TESTS": "ON"
+            }
+        },
+        {
+            "name": "release",
+            "displayName": "Release",
+            "inherits": "base",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
+                "CMAKE_INTERPROCEDURAL_OPTIMIZATION": "ON"
+            }
+        },
+        {
+            "name": "asan",
+            "displayName": "AddressSanitizer + UBSan",
+            "inherits": "base",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "BUILD_TESTS": "ON",
+                "ENABLE_SANITIZERS": "ON"
+            }
+        },
+        {
+            "name": "strict",
+            "displayName": "Warnings-as-errors (CI gate)",
+            "inherits": "base",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
+                "BUILD_TESTS": "ON",
+                "WARNINGS_AS_ERRORS": "ON"
+            }
+        }
+    ],
+    "buildPresets": [
+        { "name": "native",  "configurePreset": "native" },
+        { "name": "debug",   "configurePreset": "debug" },
+        { "name": "release", "configurePreset": "release" },
+        { "name": "asan",    "configurePreset": "asan" },
+        { "name": "strict",  "configurePreset": "strict" }
+    ],
+    "testPresets": [
+        {
+            "name": "native",
+            "configurePreset": "native",
+            "output": { "outputOnFailure": true },
+            "filter": { "label": "arches_server" }
+        }
+    ]
+}
