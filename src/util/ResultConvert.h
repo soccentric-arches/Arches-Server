@@ -2,10 +2,10 @@
 // util/ResultConvert.h — conversion helpers between hal::common::TestResult proto
 // and the arches::server::Result DB struct, plus the §5 module-Result unpack.
 //
-// Port of Acadia-Server's util/ResultConvert.h with two changes:
+// Port of the prior reference implementation's util/ResultConvert.h with two changes:
 //   1. No JsonCpp dependency — TypedValue/string-map JSON serialisation uses a
 //      minimal built-in serializer (serialize direction only; the parse
-//      direction used by Acadia's REST output is Phase 2).
+//      direction used by the prior reference implementation's REST output is Phase 2).
 //   2. NEW: unpack_module_results() — the server-side inverse of the client's
 //      pack_module_result (Arches-Client/src/hal_bridge/ResultSerializer.cc).
 //      Given a google.protobuf.Any carrying hal.modules.<id>.Result

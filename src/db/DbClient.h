@@ -1,10 +1,10 @@
 #pragma once
 // DbClient — thin wrapper around a single SQLite3 connection.
 //
-// Replaces Acadia-Server's Drogon/PostgreSQL `DbClient` (which exposed a Drogon
+// Replaces the prior reference implementation's Drogon/PostgreSQL `DbClient` (which exposed a Drogon
 // ORM `DbClientPtr` pool). Per master CLAUDE.md §4 the *-Server stack is
 // "gRPC + SQLite" (not PostgreSQL); this is the host-buildable SQLite port. The
-// deviation from Acadia-Server's PostgreSQL is flagged in server_update/10_arches_port.md.
+// deviation from the prior reference implementation's PostgreSQL is flagged in server_update/10_arches_port.md.
 //
 // Threading model: a single `sqlite3*` connection is shared across all server
 // threads (gRPC read-loop thread + the db-writer thread + the test/main thread).

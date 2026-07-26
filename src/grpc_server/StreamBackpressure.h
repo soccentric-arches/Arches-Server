@@ -1,6 +1,6 @@
 #pragma once
 // grpc_server/StreamBackpressure.h — bounded MPSC queue for gRPC stream handlers.
-// Ported as-is from Acadia-Server (pure std, no Drogon). If the queue is full,
+// Ported as-is from the prior reference implementation (pure std, no Drogon). If the queue is full,
 // enqueue() blocks until space is available (backpressure). The DB writer / outbound
 // writer threads drain the queue from separate threads.
 //

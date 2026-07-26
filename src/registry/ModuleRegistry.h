@@ -1,8 +1,8 @@
 #pragma once
 // registry/ModuleRegistry.h — loads protos/registry/modules.yaml at startup.
-// Ported from Acadia-Server (YAML, no DB) and adapted to the Arches modules.yaml
+// Ported from the prior reference implementation (YAML, no DB) and adapted to the Arches modules.yaml
 // schema, which uses `result_type`/`config_type`/`proto_package`/`version`(int)/
-// `status`/`category`/`source_path` — not Acadia's `result_type_url`/
+// `status`/`category`/`source_path` — not the prior reference implementation's `result_type_url`/
 // `config_type_url`. Thread-safe for concurrent reads after load().
 //
 // Carries `result_type_url` per module — the §5 dispatch key the server uses to

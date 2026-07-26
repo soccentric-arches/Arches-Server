@@ -13,7 +13,7 @@
 #include <string>
 
 using arches::server::RunService;
-namespace s = acadia::stream;
+namespace s = arches::stream;
 
 TEST(RunStateMappingTest, MapsEachRunStateToStatus) {
     EXPECT_EQ(RunService::run_state_to_status(s::COMPLETED),             "completed");

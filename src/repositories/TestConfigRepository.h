@@ -1,5 +1,5 @@
 #pragma once
-// repositories/TestConfigRepository.h — SQLite port of Acadia-Server's
+// repositories/TestConfigRepository.h — SQLite port of the prior reference implementation's
 // TestConfigRepository. Stores reusable test configurations (which modules,
 // which mode, per-module params). RunService snapshots a TestConfig into
 // runs.test_config_snapshot when starting a run.

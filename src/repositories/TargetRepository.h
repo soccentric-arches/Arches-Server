@@ -1,5 +1,5 @@
 #pragma once
-// repositories/TargetRepository.h — SQLite port of Acadia-Server's TargetRepository.
+// repositories/TargetRepository.h — SQLite port of the prior reference implementation's TargetRepository.
 //
 // The "target" is the single board under validation, registered when the client
 // sends its first HelloReport on the ClientService stream. The server upserts/

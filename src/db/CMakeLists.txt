@@ -21,8 +21,8 @@ target_link_libraries(arches_db PUBLIC
 )
 
 # Path to the migrations directory, baked in at compile time so MigrationRunner
-# can locate the SQL files without a runtime flag. Mirrors Acadia's
-# ACADIA_MIGRATIONS_DIR.
+# can locate the SQL files without a runtime flag. Mirrors the prior reference
+# implementation's equivalent compile-time migrations-directory macro.
 target_compile_definitions(arches_db PUBLIC
     ARCHES_MIGRATIONS_DIR="${CMAKE_SOURCE_DIR}/migrations"
 )

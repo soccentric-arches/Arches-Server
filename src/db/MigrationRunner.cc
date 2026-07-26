@@ -39,7 +39,7 @@ void MigrationRunner::run() {
         }
     }
 
-    // Collect and sort migration files lexicographically (Acadia convention).
+    // Collect and sort migration files lexicographically (prior reference-implementation convention).
     std::vector<fs::path> files;
     if (!fs::exists(migrations_dir_)) {
         spdlog::warn("MigrationRunner: migrations directory '{}' not found — skipping",
@@ -92,7 +92,7 @@ void MigrationRunner::run() {
 
         // Record the migration. The SQL file already self-inserts the version
         // inside its transaction, but INSERT OR IGNORE makes this idempotent
-        // for migrations that don't self-register (matches Acadia's belt-and-
+        // for migrations that don't self-register (matches the prior reference implementation's belt-and-
         // braces behaviour; Postgres ON CONFLICT DO NOTHING -> SQLite INSERT OR
         // IGNORE per the §10 porting adaptation list).
         try {

@@ -1,5 +1,5 @@
 // tests/unit/util/ResultConvertTest.cc — unit tests for ResultConvert.
-// Ports Acadia-Server's ResultConvertTest (enum + JSON-serialise assertions,
+// Ports the prior reference implementation's ResultConvertTest (enum + JSON-serialise assertions,
 // adapted to substring checks since Arches drops the JsonCpp parse direction)
 // and ADDS the §5 module-Result unpack cases + a proto_to_result test.
 #include "util/ResultConvert.h"
@@ -18,7 +18,7 @@
 
 using namespace arches::server::util;
 
-// ── status_to_string / string_to_status (port of Acadia) ─────────────────────
+// ── status_to_string / string_to_status (port of the prior reference implementation) ─────────────────────
 
 TEST(StatusConvertTest, ToStringRoundTrip) {
     EXPECT_EQ(status_to_string(1), "PASS");
@@ -46,7 +46,7 @@ TEST(StatusConvertTest, LowercaseInput) {
     EXPECT_EQ(string_to_status("fail"), 2);
 }
 
-// ── severity_to_string / string_to_severity (port of Acadia) ─────────────────
+// ── severity_to_string / string_to_severity (port of the prior reference implementation) ─────────────────
 
 TEST(SeverityConvertTest, ToStringRoundTrip) {
     EXPECT_EQ(severity_to_string(1), "INFO");

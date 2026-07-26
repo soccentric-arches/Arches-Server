@@ -1,7 +1,7 @@
 #pragma once
 // grpc_server/GrpcServerRunner.h — owns and manages the gRPC server lifecycle.
-// Ported from Acadia-Server; takes the flat arches::server::config::Settings
-// (Acadia used a NetworkSettings sub-struct — dropped per the plan).
+// Ported from the prior reference implementation; takes the flat arches::server::config::Settings
+// (the prior reference implementation used a NetworkSettings sub-struct — dropped per the plan).
 //
 // If Settings::grpc_listen ends in ":0", the kernel chooses a free port and
 // the chosen port is published via port_future() (resolved after BuildAndStart,

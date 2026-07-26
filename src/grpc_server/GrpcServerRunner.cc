@@ -26,7 +26,7 @@ void GrpcServerRunner::start() {
     builder.RegisterService(&hal_service_);
     builder.RegisterService(&client_service_);
 
-    // Reuse port, keepalive tuning (mirrors Acadia).
+    // Reuse port, keepalive tuning (mirrors the prior reference implementation).
     builder.SetMaxReceiveMessageSize(32 * 1024 * 1024);  // 32 MiB
     builder.SetMaxSendMessageSize(32 * 1024 * 1024);
 

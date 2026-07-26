@@ -1,6 +1,6 @@
 #pragma once
 // util/Errors.h — common error types for Arches-Server.
-// Port of Acadia-Server's util/Errors.h (namespace acadia -> arches::server).
+// Port of the prior reference implementation's util/Errors.h (namespace renamed to arches::server).
 // Used by repositories (ConflictError on duplicate board, NotFoundError on
 // missing rows) and the service layer.
 

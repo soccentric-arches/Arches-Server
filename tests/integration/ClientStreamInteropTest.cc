@@ -5,7 +5,7 @@
 // in-process against a temp SQLite DB. A mock gRPC client connects over the
 // bidi ClientService::Connect stream and the test asserts the two gap-closures:
 //   (1) Run-control push: RunService::start_run -> the client receives
-//       ConfigureRun + StartRun on the stream (Acadia-Server never sent these).
+//       ConfigureRun + StartRun on the stream (the prior reference implementation never sent these).
 //   (2) §5 module-Result unpack + persist + batch.state() mapping: the client
 //       sends a terminal TestResultBatch carrying a hal.modules.cpu.Result
 //       payload + state=COMPLETED; the server §5-unpacks it, persists a results
@@ -53,7 +53,7 @@ using arches::server::grpc::ClientStreamRegistry;
 using arches::server::grpc::ClientServiceImpl;
 using arches::server::grpc::HalServiceImpl;
 using arches::server::grpc::GrpcServerRunner;
-namespace s = acadia::stream;
+namespace s = arches::stream;
 
 namespace {
 
@@ -92,7 +92,7 @@ struct TempDb {
 
 // Build a hal.modules.cpu.Result wrapping one TestResult, packed into the
 // ResultSample payload Any — exactly what the Arches client emits (§5).
-acadia::stream::ResultSample make_cpu_sample() {
+arches::stream::ResultSample make_cpu_sample() {
     hal::common::TestResult tr;
     tr.set_module_id("cpu");
     tr.set_test_id("temp");
@@ -115,7 +115,7 @@ acadia::stream::ResultSample make_cpu_sample() {
     hal::modules::cpu::Result mod_result;
     *mod_result.add_results() = tr;
 
-    acadia::stream::ResultSample sample;
+    arches::stream::ResultSample sample;
     sample.mutable_payload()->PackFrom(mod_result);
     sample.set_type_url("type.googleapis.com/hal.modules.cpu.Result");
     sample.set_status(hal::common::TEST_STATUS_PASS);

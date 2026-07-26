@@ -1,5 +1,5 @@
 #pragma once
-// repositories/ResultRepository.h — SQLite port of Acadia-Server's ResultRepository.
+// repositories/ResultRepository.h — SQLite port of the prior reference implementation's ResultRepository.
 //
 // The `Result` struct is the projection of a single HAL TestResult row in the
 // `results` table (plus its packed module-specific payload). It is the unit the
@@ -7,7 +7,7 @@
 // list of hal::common::TestResult, ResultConvert::proto_to_result maps each to a
 // `Result`, and ResultRepository::insert persists it (recursively, for subtests).
 //
-// The struct shape mirrors Acadia-Server's exactly so ResultConvert ports
+// The struct shape mirrors the prior reference implementation's exactly so ResultConvert ports
 // unchanged. Phase 1 implements the interop-critical methods (insert with
 // recursive subtests + run_summaries upsert, count_for_run, find_last_per_module,
 // upsert_run_summary, find_by_id, get_subtests). The trend/distribution/compare

@@ -1,5 +1,5 @@
 #pragma once
-// util/Uuid.h — UUID v4 generation (port of Acadia-Server util/Uuid.h).
+// util/Uuid.h — UUID v4 generation (port of the prior reference implementation util/Uuid.h).
 // Arches uses std::random_device instead of OpenSSL RAND_bytes to avoid pulling
 // a crypto dependency just for non-secret run/result ids. std::random_device is
 // non-deterministic on Linux (reads /dev/urandom). Run/result ids are not

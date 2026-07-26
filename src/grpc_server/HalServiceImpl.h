@@ -1,7 +1,7 @@
 #pragma once
 // grpc_server/HalServiceImpl.h — implements the hal::HalService gRPC service.
 //
-// Ported from Acadia-Server. Adapted for Arches Phase 1:
+// Ported from the prior reference implementation. Adapted for Arches Phase 1:
 //   - ModuleService (REST, Phase 2) replaced by ModuleRegistry: validate_module
 //     uses registry_.has(), ListModules reads registry_.all().
 //   - start_run is board-routed: HalService RPCs carry no board_id, so the run is

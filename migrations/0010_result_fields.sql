@@ -1,5 +1,5 @@
 -- Migration: 0010_result_fields (Arches / SQLite port)
--- Port of Acadia-Server's 0010_result_fields.sql from PostgreSQL to SQLite.
+-- Port of the prior reference implementation's 0010_result_fields.sql from PostgreSQL to SQLite.
 --
 -- Adds structured columns to `results` mirroring the HAL TestResult /
 -- TestOutput shape, and adds the `run_summaries` table for fast per-module

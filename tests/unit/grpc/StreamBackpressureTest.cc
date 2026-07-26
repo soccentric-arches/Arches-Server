@@ -1,5 +1,5 @@
 // tests/unit/grpc/StreamBackpressureTest.cc — verify BoundedQueue semantics.
-// Ported from Acadia-Server (pure std, no Drogon); namespace arches::server::grpc.
+// Ported from the prior reference implementation (pure std, no Drogon); namespace arches::server::grpc.
 #include "grpc_server/StreamBackpressure.h"
 
 #include <gtest/gtest.h>

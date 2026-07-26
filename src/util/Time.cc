@@ -26,8 +26,9 @@ std::string to_iso8601(TimePoint tp) {
 }
 
 TimePoint parse_iso8601(const std::string& s) {
-    // Acadia used std::mktime which interprets tm as LOCAL time despite the
-    // string being UTC — a latent bug. Use timegm (POSIX) for correct UTC parse.
+    // The prior reference implementation used std::mktime which interprets tm as
+    // LOCAL time despite the string being UTC — a latent bug. Use timegm (POSIX)
+    // for correct UTC parse.
     std::tm tm{};
     std::istringstream ss{s};
     ss >> std::get_time(&tm, "%Y-%m-%dT%H:%M:%S");

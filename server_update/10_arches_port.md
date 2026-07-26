@@ -1,4 +1,4 @@
-# Porting Note: Acadia-Server → Arches-Server (Phase 1: client↔server interop)
+# Porting Note: prior reference server → Arches-Server (Phase 1: client↔server interop)
 
 **Date:** 2026-07-21
 **Scope:** Arches-Server only (one project, one component — §5 blast radius respected)
@@ -8,12 +8,12 @@ interop test green (15/15 native + 10/10 ASan + 31/31 full-suite ASan).
 
 ## What changed
 
-This is a port of Acadia-Server's gRPC + persistence + run-lifecycle core onto
-the Arches-native, §12-compliant toolchain, scoped to **what Arches-Client
-needs to actually work against the server**. The subsystem shape
+This is a port of the prior reference server's gRPC + persistence + run-lifecycle
+core onto the Arches-native, §12-compliant toolchain, scoped to **what
+Arches-Client needs to actually work against the server**. The subsystem shape
 (config → db → migrations → repos → util → services → grpc_server → main)
-mirrors Acadia-Server; the storage backend, tooling, namespace, and two
-interop gap-closures differ.
+mirrors the prior reference server; the storage backend, tooling, namespace,
+and two interop gap-closures differ.
 
 ### Decisions locked (via AskUserQuestion, pre-implementation)
 
@@ -21,7 +21,7 @@ interop gap-closures differ.
    executable `arches-server`, paths `/etc/arches` / `/var/lib/arches`,
    `ARCHES_SERVER_VERSION`.
 2. **SQLite for the DB** (master §4 "gRPC + SQLite"; host-buildable like
-   Arches-Client). **Deviation from Acadia-Server's PostgreSQL/Drogon** — see
+   Arches-Client). **Deviation from the prior reference server's PostgreSQL/Drogon** — see
    "SQLite vs PostgreSQL" below.
 3. **Phase 1 = interop only** — defer the Dashboard-facing REST controllers,
    OTA, scheduler, anomaly/compare, auth, notifications, templates to Phase 2.
@@ -30,19 +30,19 @@ interop gap-closures differ.
 
 | Contract | Value | Why kept |
 |---|---|---|
-| Proto packages | `acadia.stream`, `hal.common`, `hal`, `hal.modules.*` | Shared wire contract with Client + PySDK |
-| `client_service.proto` | package `acadia.stream` | Client drives runs from this |
+| Proto packages | `arches.stream`, `hal.common`, `hal`, `hal.modules.*` | Shared wire contract with Client + PySDK |
+| `client_service.proto` | package `arches.stream` | Client drives runs from this |
 | `hal_service.proto` / `common.proto` | packages `hal` / `hal.common` | SDK + Client expect this |
 | §5 module-Result payload | `hal.modules.<id>.Result { repeated hal.common.TestResult results = 2; }` packed in `ResultSample.payload` Any | The §5-approved wire change from Arches-Client; the server unpacks it (no further contract change) |
 
-Only the server's **own C++ namespace** (`acadia::server` → `arches::server`),
-library/target names (`acadia_*` → `arches_*`), install paths, version macro,
+Only the server's **own C++ namespace** (renamed to `arches::server`),
+library/target names (renamed to `arches_*`), install paths, version macro,
 and DB backend changed. The proto packages, `.proto` files, and HAL API are
-unchanged.
+otherwise unchanged.
 
 ## SQLite vs PostgreSQL (the headline deviation)
 
-Acadia-Server is PostgreSQL via the Drogon ORM + a Drogon REST surface. Master
+The prior reference server is PostgreSQL via the Drogon ORM + a Drogon REST surface. Master
 CLAUDE.md §4 fixes `*-Server` as "gRPC + **SQLite**", and Phase 1 needs no
 Dashboard REST surface, so:
 
@@ -73,7 +73,7 @@ ModuleService(REST) + prometheus + GraphQL + PostgreSQL.
 
 ## Two interop gaps a faithful port would NOT close (implemented)
 
-Acadia-Server never emits run-control over the `ClientService` bidi stream
+The prior reference server never emits run-control over the `ClientService` bidi stream
 (only `BatchAck`/`LogBatchAck`) and ignores `batch.state()` (blindly marks any
 terminal run "completed"). Arches-Client drives runs **exclusively** from those
 stream messages and now emits meaningful `RunState`s. Phase 1 closes both:
@@ -90,7 +90,7 @@ stream messages and now emits meaningful `RunState`s. Phase 1 closes both:
    maps the client's `RunState` → `runs.status` (`run_state_to_status`:
    COMPLETED→completed, FAILED→failed, CANCELLED→cancelled, PAUSED→paused,
    RUNNING→running, CONFIGURED→queued, UNSPECIFIED→rejected) instead of
-   Acadia's blind `complete_run("completed")`. Terminal states set `ended_at`;
+   the prior reference server's blind `complete_run("completed")`. Terminal states set `ended_at`;
    RUNNING sets `started_at`; others `update_status`.
 
 Both are exercised end-to-end by `tests/integration/ClientStreamInteropTest.cc`
@@ -111,7 +111,7 @@ DynamicMessage/generated representation boundary). Falls back to a bare
 bare form. Called from `ClientServiceImpl::handle_result_batch` (the
 client↔server path) and `HalServiceImpl::persist_result` (parity on the
 HAL-RPC path). `proto_to_result` (TestResult → `Result` row, recursing into
-subtests) is ported unchanged from Acadia.
+subtests) is ported unchanged from the prior reference implementation.
 
 ## HAL subproject linking (mirrors Arches-Client — single proto symbol source)
 
@@ -120,8 +120,9 @@ ${CMAKE_BINARY_DIR}/arches_hal_build EXCLUDE_FROM_ALL)` then link
 `hal_protos_shared` (SHARED; carries protobuf+gRPC PUBLIC). No
 `find_package(gRPC/Protobuf)`, no local `protoc`. Linking it registers every
 `hal.modules.<id>.Result` descriptor in the generated pool — which the §5
-reflection unpack relies on. (Acadia-Server self-generated 3 protos; we do NOT
-mirror that — we mirror the client to avoid ODR / duplicate-symbol risk.)
+reflection unpack relies on. (The prior reference server self-generated 3
+protos; we do NOT mirror that — we mirror the client to avoid ODR /
+duplicate-symbol risk.)
 
 ## Services↔gRPC dependency cycle
 
@@ -168,7 +169,7 @@ Two concurrency points, both load-bearing:
   (single entry point; `installer` = `cpack -G DEB && cpack -G RPM` + `.deb`→`.ipk` rename).
 - `cmake/version.hpp.in`, `Doxyfile.in`, `cmake/CompilerWarnings.cmake`.
 
-### Source (ported from Acadia-Server, adapted to C++17 + SQLite + `arches::server`)
+### Source (ported from the prior reference server, adapted to C++17 + SQLite + `arches::server`)
 - `src/main.cpp` — `load_settings` → spdlog → `init_db_client` →
   `MigrationRunner` → `ModuleRegistry::load` → `ClientStreamRegistry` →
   `RunService` + `LogService` → `reconcile_stale_runs` → `HalServiceImpl` +
@@ -257,7 +258,7 @@ revisit DB-writer / `set_run_status` latency in Phase 2.
 - [x] Run-control push over the bidi stream implemented (`ClientStreamRegistry`
       + `RunService`)
 - [x] SQLite DB (not Postgres); deviation flagged (this note)
-- [x] Proto packages unchanged (`acadia.stream`, `hal.*`) — §5 respected
+- [x] Proto packages unchanged (`arches.stream`, `hal.*`) — §5 respected
 - [x] Namespace `arches::server`, targets `arches-*`, paths `/etc/arches` /
       `/var/lib/arches`, `ARCHES_SERVER_VERSION`
 - [x] `make lint` runs (graceful if tools absent)

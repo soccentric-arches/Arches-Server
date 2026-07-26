@@ -1,5 +1,5 @@
 # Doxyfile.in — Arches-Server (rendered by CMake into build/<preset>/Doxyfile).
-# Per §12 a Doxygen docs target is mandatory for *-Server. Acadia-Server shipped
+# Per §12 a Doxygen docs target is mandatory for *-Server. The prior reference server shipped
 # a Doxyfile but never wired the target; Arches-Server wires it (§12 wins).
 
 PROJECT_NAME           = "Arches-Server"

@@ -1,5 +1,5 @@
 -- Migration: 0003_results (Arches / SQLite port)
--- Port of Acadia-Server's 0003_results.sql from PostgreSQL to SQLite.
+-- Port of the prior reference implementation's 0003_results.sql from PostgreSQL to SQLite.
 -- Adaptations: UUID -> TEXT, TIMESTAMPTZ -> TEXT, BYTEA -> BLOB, NOW() ->
 -- CURRENT_TIMESTAMP, gen_random_uuid() removed, ON CONFLICT -> INSERT OR IGNORE.
 --

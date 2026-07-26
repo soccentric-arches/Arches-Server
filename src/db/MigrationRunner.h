@@ -1,7 +1,7 @@
 #pragma once
 // MigrationRunner — applies SQL migration files from migrations/ at startup.
 //
-// Port of Acadia-Server's Postgres MigrationRunner to SQLite. Migrations are
+// Port of the prior reference implementation's Postgres MigrationRunner to SQLite. Migrations are
 // applied in lexicographic order of filename. Idempotent: already-applied
 // versions are tracked in the `schema_migrations` table and skipped. Aborts
 // startup with std::runtime_error on any failure.

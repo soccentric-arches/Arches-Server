@@ -1,5 +1,5 @@
 -- Migration: 0001_init (Arches / SQLite port)
--- Port of Acadia-Server's 0001_init.sql from PostgreSQL to SQLite.
+-- Port of the prior reference implementation's 0001_init.sql from PostgreSQL to SQLite.
 -- Adaptations (see server_update/10_arches_port.md): UUID PK -> TEXT (caller-
 -- supplied id), TIMESTAMPTZ -> TEXT (ISO-8601), JSONB -> TEXT, NOW() ->
 -- CURRENT_TIMESTAMP, gen_random_uuid() removed (ids assigned by the server),
@@ -7,7 +7,7 @@
 --
 -- Phase 1 scope: only the board single-row table is needed for interop
 -- (clients register a board_id on the ClientService stream). The users and
--- api_tokens tables (Acadia auth surface) are deferred to Phase 2.
+-- api_tokens tables (the prior reference's auth surface) are deferred to Phase 2.
 
 BEGIN;
 

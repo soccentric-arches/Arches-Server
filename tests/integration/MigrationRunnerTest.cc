@@ -1,7 +1,7 @@
 // tests/integration/MigrationRunnerTest.cc
 // Validates the SQLite migration layer against the REAL ported migrations
 // (migrations/*.sql). SQLite is file-based and always available on the host, so
-// unlike Acadia's Postgres variant there is no GTEST_SKIP gate — this always
+// unlike the prior reference implementation's Postgres variant there is no GTEST_SKIP gate — this always
 // runs. It proves: all ported migrations apply cleanly, the expected tables
 // exist, schema_migrations records every version, and re-running is idempotent.
 #include "db/DbClient.h"

@@ -30,7 +30,7 @@ void ClientStreamRegistry::deregister_stream(const std::string& board_id,
 }
 
 bool ClientStreamRegistry::push(const std::string& board_id,
-                                 const acadia::stream::ServerMessage& msg) {
+                                 const arches::stream::ServerMessage& msg) {
     OutQueuePtr queue;
     {
         std::lock_guard<std::mutex> lock{mutex_};

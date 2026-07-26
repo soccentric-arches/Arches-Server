@@ -28,7 +28,7 @@ include(GNUInstallDirs)
 #                         module-Result unpack relies on. Single source of
 #                         generated proto symbols → no ODR/duplicate-symbol risk.
 #
-# Unlike Acadia-Server (which self-generates 3 protos via protoc), Arches-Server
+# Unlike the prior reference server (which self-generates 3 protos via protoc), Arches-Server
 # consumes the HAL subproject's protos, exactly like Arches-Client does. No
 # find_package(gRPC/Protobuf) here, no local protoc invocation.
 # ---------------------------------------------------------------------------
@@ -72,7 +72,7 @@ if(NOT TARGET yaml-cpp::yaml-cpp)
   add_library(yaml-cpp::yaml-cpp ALIAS yaml-cpp-wrapper)
 endif()
 
-# SQLite3 (master §4: *-Server is gRPC + SQLite; deviation from Acadia-Server's
+# SQLite3 (master §4: *-Server is gRPC + SQLite; deviation from the prior reference server's
 # PostgreSQL, flagged in the porting note).
 find_package(SQLite3 REQUIRED)
 
@@ -100,7 +100,7 @@ if(BUILD_TESTS)
 endif()
 
 # ---------------------------------------------------------------------------
-# Generated version header (parity with Acadia-Server; the arches-server target
+# Generated version header (parity with the prior reference server; the arches-server target
 # also gets ARCHES_SERVER_VERSION as a compile definition — this header is for
 # TUs that prefer to #include it).
 # ---------------------------------------------------------------------------
@@ -113,7 +113,7 @@ configure_file(
 )
 
 # ---------------------------------------------------------------------------
-# Doxygen docs target (§12 mandatory for *-Server; Acadia-Server shipped a
+# Doxygen docs target (§12 mandatory for *-Server; the prior reference server shipped a
 # Doxyfile but never wired the target — Arches-Server wires it). Builds the
 # `doc_doxygen` target that the Makefile `doc` target drives via `ninja
 # doc_doxygen`. Best-effort: if Doxygen is not installed, configure succeeds
@@ -158,7 +158,7 @@ else()
 endif()
 
 # ---------------------------------------------------------------------------
-# CPack packaging (§12: .deb, .rpm, .ipk for Yocto/opkg). Acadia-Server had no
+# CPack packaging (§12: .deb, .rpm, .ipk for Yocto/opkg). The prior reference server had no
 # CPack wiring; Arches-Server adds it. .ipk is produced by the DEB generator
 # with an opkg-compatible rename (Yocto consumes .ipk).
 # ---------------------------------------------------------------------------

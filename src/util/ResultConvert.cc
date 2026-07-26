@@ -13,7 +13,7 @@
 
 namespace arches::server::util {
 
-// ── Enum string helpers (port of Acadia, unchanged) ──────────────────────────
+// ── Enum string helpers (port of the prior reference implementation, unchanged) ──────────────────────────
 
 std::string status_to_string(std::int16_t status) {
     switch (status) {

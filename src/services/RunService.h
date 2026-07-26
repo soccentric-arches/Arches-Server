@@ -1,16 +1,16 @@
 #pragma once
 // services/RunService.h — run lifecycle management (Phase-1 subset).
 //
-// Ported from Acadia-Server with the two interop gap-closures the plan requires:
+// Ported from the prior reference implementation with the two interop gap-closures the plan requires:
 //   - run-control push: start_run/pause/resume/stop/restart push ServerMessages to
-//     the owning client's ClientService stream via ClientStreamRegistry (Acadia
-//     never did this — it only sent inline acks — so the Arches client, which
+//     the owning client's ClientService stream via ClientStreamRegistry (the prior
+//     reference implementation never did this — it only sent inline acks — so the Arches client, which
 //     drives runs exclusively from those messages, sat idle).
 //   - batch.state() mapping: set_run_status maps the client's RunState enum to the
-//     runs.status TEXT column instead of hardcoding "completed" (Acadia's blind
+//     runs.status TEXT column instead of hardcoding "completed" (the prior reference implementation's blind
 //     complete_run("completed") on every terminal batch).
 //
-// Dropped vs Acadia (Phase 2 / Dashboard surface): the result-subscriber live-tail
+// Dropped vs the prior reference implementation (Phase 2 / Dashboard surface): the result-subscriber live-tail
 // (broadcast_result / subscribe_results), trend/distribution/compare analytics,
 // rerun, set_baseline, delete_run, notification classification helpers
 // (is_terminal_failure / is_warning / module_badge), and the audit/notification
@@ -92,11 +92,11 @@ public:
     // states (COMPLETED/FAILED/CANCELLED) set ended_at; RUNNING sets started_at
     // (status="running"); PAUSED/CONFIGURED update status only. UNSPECIFIED is
     // rejected (no-op + warn). Called by ClientServiceImpl on terminal batches.
-    void set_run_status(const std::string& run_id, acadia::stream::RunState state);
+    void set_run_status(const std::string& run_id, arches::stream::RunState state);
 
     // Pure mapping functions (exposed for RunStateMappingTest — no DB needed).
-    static std::string run_state_to_status(acadia::stream::RunState s);
-    static bool run_state_is_terminal(acadia::stream::RunState s);
+    static std::string run_state_to_status(arches::stream::RunState s);
+    static bool run_state_is_terminal(arches::stream::RunState s);
 
     // ── Queries ────────────────────────────────────────────────────────────────
 
@@ -112,7 +112,7 @@ private:
     // Push a ServerMessage to the board owning `run_id`. Looks up the run's
     // board_id, then the stream. Logs + returns false if unreachable.
     bool push_to_owner(const std::string& run_id,
-                       const acadia::stream::ServerMessage& msg);
+                       const arches::stream::ServerMessage& msg);
 
     repositories::RunRepository    run_repo_;
     repositories::ResultRepository result_repo_;

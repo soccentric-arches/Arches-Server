@@ -1,7 +1,7 @@
 #pragma once
 // grpc_server/ClientStreamRegistry.h — board_id → outbound command sink.
 //
-// NEW for Arches (gap-closure #1 in the porting note). Acadia-Server never emits
+// NEW for Arches (gap-closure #1 in the porting note). the prior reference implementation never emits
 // run-control ServerMessages over the ClientService bidi stream — it only ever
 // sends BatchAck/LogBatchAck inline from the read thread. The Arches client, by
 // contrast, drives runs *exclusively* from ServerMessages it receives on that
@@ -34,7 +34,7 @@
 namespace arches::server::grpc {
 
 // An outbound queue of ServerMessages for one connected client.
-using OutQueue = BoundedQueue<acadia::stream::ServerMessage>;
+using OutQueue = BoundedQueue<arches::stream::ServerMessage>;
 using OutQueuePtr = std::shared_ptr<OutQueue>;
 
 class ClientStreamRegistry {
@@ -54,7 +54,7 @@ public:
     // Returns false if no stream is registered for board_id (board not
     // connected) or the queue is closed (stream tearing down). The caller
     // (RunService) treats a false return as "client not reachable" and logs it.
-    bool push(const std::string& board_id, const acadia::stream::ServerMessage& msg);
+    bool push(const std::string& board_id, const arches::stream::ServerMessage& msg);
 
     // Whether a board is currently connected (has a registered outbound queue).
     bool has_stream(const std::string& board_id);

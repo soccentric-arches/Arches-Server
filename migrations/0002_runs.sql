@@ -1,5 +1,5 @@
 -- Migration: 0002_runs (Arches / SQLite port)
--- Port of Acadia-Server's 0002_runs.sql from PostgreSQL to SQLite.
+-- Port of the prior reference implementation's 0002_runs.sql from PostgreSQL to SQLite.
 -- Adaptations: UUID -> TEXT, TIMESTAMPTZ -> TEXT, JSONB -> TEXT, NOW() ->
 -- CURRENT_TIMESTAMP, gen_random_uuid() removed (server assigns ids), partial
 -- unique index -> regular unique index, ON CONFLICT -> INSERT OR IGNORE.

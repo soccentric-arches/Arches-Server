@@ -114,7 +114,7 @@ std::vector<Run> RunRepository::list_by_status(const std::vector<std::string>& s
     if (statuses.empty()) return out;
 
     // Build an IN (?, ?, ...) clause with one placeholder per status. Bound,
-    // not string-concatenated (avoids the injection flavour Acadia's
+    // not string-concatenated (avoids the injection flavour the prior reference implementation's
     // find_distribution had).
     std::string sql = std::string("SELECT ") + kSelectColumns + " FROM runs WHERE status IN (";
     for (std::size_t i = 0; i < statuses.size(); ++i) {

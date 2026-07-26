@@ -37,7 +37,7 @@ HalServiceImpl::HalServiceImpl(RunService& run_svc,
 // §5 persist: unpack the Any payload (module Result wrapper OR bare TestResult,
 // both handled by util::unpack_module_results) and ingest each TestResult. Falls
 // back to building a minimal Result from the envelope fields when nothing could
-// be unpacked (graceful degradation, mirroring Acadia).
+// be unpacked (graceful degradation, mirroring the prior reference implementation).
 void HalServiceImpl::persist_result(const std::string& run_id,
                                       const hal::common::ResultEnvelope& env) {
     auto results = util::unpack_module_results(env.payload(), env.module_id());
@@ -59,7 +59,7 @@ void HalServiceImpl::persist_result(const std::string& run_id,
         return;
     }
 
-    // Acadia quirk preserved: results.mode stores the ExecutionMode int as a string.
+    // Prior reference-implementation quirk preserved: results.mode stores the ExecutionMode int as a string.
     const std::string mode = std::to_string(static_cast<int>(env.mode()));
     const std::string module_version = env.module_version().empty()
         ? mode : env.module_version();
@@ -123,7 +123,7 @@ void HalServiceImpl::persist_result(const std::string& run_id,
     writer->Write(ack);
 
     // Block until client cancels or server shutdown.
-    while (!ctx->IsCancelled()) {  // NOLINT: mirrors Acadia; ctx provided by caller
+    while (!ctx->IsCancelled()) {  // NOLINT: mirrors the prior reference implementation; ctx provided by caller
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
     }
 

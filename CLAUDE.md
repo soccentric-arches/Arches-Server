@@ -2,9 +2,9 @@
 Master SoCcentric CLAUDE.md applies. This file adds local knowledge only.
 Arches-Server is the C++17 gRPC IV&V server (runs on the x86 host, not the
 Jetson). It links the Arches-HAL subproject for the shared generated protos and
-serves the `acadia.stream::ClientService` bidi stream that Arches-Client drives
+serves the `arches.stream::ClientService` bidi stream that Arches-Client drives
 runs from. DB is SQLite (master §4 "gRPC + SQLite"), a deviation from
-Acadia-Server's PostgreSQL/Drogon — flagged in `server_update/10_arches_port.md`.
+the prior reference implementation's PostgreSQL/Drogon stack — flagged in `server_update/10_arches_port.md`.
 
 - Build: `make build` (Ninja, `build/native/`, C++17 strict, `ARCHES_SERVER_VERSION`)
 - Test:  `make test` (runs `ctest -L arches_server`)
@@ -45,7 +45,7 @@ Acadia-Server's PostgreSQL/Drogon — flagged in `server_update/10_arches_port.m
   destroyed). `exec()`/`init`/`shutdown` lock per-call as before.
 - **Migration test uses the REAL migrations dir** (`ARCHES_MIGRATIONS_DIR`,
   a PUBLIC compile def on `arches_db`) — validates the actual schema, no skip
-  gate (SQLite is always available, unlike Acadia's Postgres `GTEST_SKIP`).
+  gate (SQLite is always available, unlike the prior reference implementation's Postgres `GTEST_SKIP`).
 - **PRAGMA foreign_keys=ON** at `init_db_client` so `ON DELETE CASCADE`
   constraints in the migrations actually fire (SQLite defaults to FK off).
 - **Server assigns ids** (`util::generate_uuid()`): the SQLite migrations have no
@@ -53,8 +53,8 @@ Acadia-Server's PostgreSQL/Drogon — flagged in `server_update/10_arches_port.m
   `repo.create(...)`. No `RETURNING` clause needed (Postgres RETURNING dropped) —
   `create()` returns the struct the caller passed in.
 - **Build `IN (?,?,...)` with bound params**, one placeholder per value — not
-  string concatenation. Avoids the SQL-injection flavour Acadia's
-  `find_distribution` had (`in_clause << "'" << run_ids[i] << "'"`).
+  string concatenation. Avoids the SQL-injection flavour the prior reference
+  implementation's `find_distribution` had (`in_clause << "'" << run_ids[i] << "'"`).
 - **DB-level invariants SQLite can't express** (the `results.status > 0` CHECK,
   which Postgres enforced via `ALTER TABLE ADD CONSTRAINT` — unsupported in
   SQLite post-create) are guaranteed by the service layer instead: HAL never
@@ -100,25 +100,26 @@ Acadia-Server's PostgreSQL/Drogon — flagged in `server_update/10_arches_port.m
 - **Serialize all `stream->Write()` on one writer thread:** gRPC forbids
   concurrent writes on a single bidi stream. `Connect` runs a dedicated
   out-bound writer thread draining `out_queue` (run-control + acks); the read
-  loop enqueues acks to `out_queue` instead of writing inline. Acadia wrote acks
-  inline from the read thread and never wrote run-control, so it had no
-  concurrency hazard — Arches adds the writer because it pushes run-control.
+  loop enqueues acks to `out_queue` instead of writing inline. The prior reference
+  implementation wrote acks inline from the read thread and never wrote run-control,
+  so it had no concurrency hazard — Arches adds the writer because it pushes run-control.
 - **`batch.state()` mapping (gap-closure #2):** on a terminal batch call
   `RunService::set_run_status(run_id, batch.state())`, which maps
   `RunState→runs.status` (`run_state_to_status`: COMPLETED→completed, FAILED→
   failed, CANCELLED→cancelled, PAUSED→paused, RUNNING→running, CONFIGURED→queued,
   UNSPECIFIED→rejected). Terminal states set `ended_at` via `set_ended`; RUNNING
-  sets `started_at`; others `update_status`. This replaces Acadia's blind
-  `complete_run("completed")` on every terminal batch.
+  sets `started_at`; others `update_status`. This replaces the prior reference
+  implementation's blind `complete_run("completed")` on every terminal batch.
 - **`switch` over a protobuf open enum needs a `default:`** — protoc emits
   `_INT_MIN_SENTINEL_DO_NOT_USE_` / `_INT_MAX_SENTINEL_DO_NOT_USE_` values;
   `-Wswitch` (under `-Wall`, on the path to `-Werror`) warns if they're unhandled.
   Add `default:` even when the trailing return already covers the fallback.
 - **`results.mode` stores the `ExecutionMode` int as a string** (`std::to_string(
-  static_cast<int>(batch.mode()))`) — a faithful port of Acadia's quirk, flagged
-  for Phase-2 cleanup. `runs.mode` uses the readable name (`single_shot` etc.)
-  via the file-local `execution_mode_name` in `RunService.cc`. Don't "fix" one
-  without the other — they diverge by design (mirrors Acadia).
+  static_cast<int>(batch.mode()))`) — a faithful port of the prior reference
+  implementation's quirk, flagged for Phase-2 cleanup. `runs.mode` uses the readable
+  name (`single_shot` etc.) via the file-local `execution_mode_name` in
+  `RunService.cc`. Don't "fix" one without the other — they diverge by design
+  (mirrors the prior reference implementation).
 - **`main.cpp` wiring order (Step 7):** `load_settings()` → spdlog (stdout_color_mt
   + `set_level(level::from_str(log_level))`) → `db::init_db_client(db_path)` →
   `MigrationRunner{ARCHES_MIGRATIONS_DIR}.run()` → `ModuleRegistry::load` →
@@ -201,7 +202,8 @@ Acadia-Server's PostgreSQL/Drogon — flagged in `server_update/10_arches_port.m
   `LEFT JOIN ... UNION ... anti-join`. The trend/distribution/compare queries that
   used them are Phase 2 (deferred).
 - **Don't use `std::mktime` to parse UTC ISO-8601** — it interprets the `tm` as
-  local time (Acadia's `parse_iso8601` had this latent bug). Use `timegm`.
+  local time (the prior reference implementation's `parse_iso8601` had this
+  latent bug). Use `timegm`.
 - **Don't leave unused helpers in an anonymous namespace** — `-Wunused-function`
   fires (and `-Werror` is the §12 option). Removed `add_clause` from
   `LogRepository.cc`.

@@ -1,6 +1,6 @@
 # ---------------------------------------------------------------------------
 # src/registry/CMakeLists.txt — HAL module registry (modules.yaml loader).
-# Ported from Acadia-Server (YAML, no DB). Static lib used by HalServiceImpl
+# Ported from the prior reference implementation (YAML, no DB). Static lib used by HalServiceImpl
 # for module validation + ListModules. Carries result_type_url per module —
 # the §5 dispatch key.
 # ---------------------------------------------------------------------------

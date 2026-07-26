@@ -17,7 +17,7 @@ namespace {
 using arches::server::util::generate_uuid;
 
 // ExecutionMode enum -> runs.mode TEXT name. File-local: no new public surface.
-// (The client's batch.mode() -> results.mode path keeps Acadia's int-string form;
+// (The client's batch.mode() -> results.mode path keeps the prior reference implementation's int-string form;
 //  see the porting note quirk. runs.mode always uses the readable name.)
 std::string execution_mode_name(hal::common::ExecutionMode m) {
     switch (m) {
@@ -55,7 +55,7 @@ Run RunService::start_run(const std::string& board_id,
                  created.id, board_id, module_id, created.mode);
 
     // Push ConfigureRun, then StartRun, to the owning client's stream.
-    acadia::stream::ServerMessage cfg_msg;
+    arches::stream::ServerMessage cfg_msg;
     auto* cfg = cfg_msg.mutable_configure_run();
     cfg->set_run_id(created.id);
     cfg->set_module_id(module_id);
@@ -67,7 +67,7 @@ Run RunService::start_run(const std::string& board_id,
                      board_id, created.id);
     }
 
-    acadia::stream::ServerMessage start_msg;
+    arches::stream::ServerMessage start_msg;
     start_msg.mutable_start_run()->set_run_id(created.id);
     if (!push_to_owner(created.id, start_msg)) {
         spdlog::warn("run: board_id={} not connected; StartRun for run_id={} not delivered",
@@ -109,26 +109,26 @@ Result RunService::ingest_test_result(const hal::common::TestResult& tr,
 }
 
 void RunService::pause_run(const std::string& run_id) {
-    acadia::stream::ServerMessage msg;
+    arches::stream::ServerMessage msg;
     msg.mutable_pause_run()->set_run_id(run_id);
     push_to_owner(run_id, msg);
 }
 
 void RunService::resume_run(const std::string& run_id) {
-    acadia::stream::ServerMessage msg;
+    arches::stream::ServerMessage msg;
     msg.mutable_resume_run()->set_run_id(run_id);
     push_to_owner(run_id, msg);
 }
 
 void RunService::stop_run(const std::string& run_id) {
-    acadia::stream::ServerMessage msg;
+    arches::stream::ServerMessage msg;
     msg.mutable_stop_run()->set_run_id(run_id);
     push_to_owner(run_id, msg);
 }
 
 void RunService::restart_run(const std::string& old_run_id,
                                const std::string& new_run_id) {
-    acadia::stream::ServerMessage msg;
+    arches::stream::ServerMessage msg;
     auto* r = msg.mutable_restart_run();
     r->set_old_run_id(old_run_id);
     r->set_new_run_id(new_run_id);
@@ -147,15 +147,15 @@ void RunService::cancel_run(const std::string& run_id) {
 }
 
 // static
-std::string RunService::run_state_to_status(acadia::stream::RunState s) {
+std::string RunService::run_state_to_status(arches::stream::RunState s) {
     switch (s) {
-    case acadia::stream::COMPLETED:            return "completed";
-    case acadia::stream::FAILED:               return "failed";
-    case acadia::stream::CANCELLED:            return "cancelled";
-    case acadia::stream::PAUSED:               return "paused";
-    case acadia::stream::RUNNING:              return "running";
-    case acadia::stream::CONFIGURED:           return "queued";
-    case acadia::stream::RUN_STATE_UNSPECIFIED: return "unspecified";
+    case arches::stream::COMPLETED:            return "completed";
+    case arches::stream::FAILED:               return "failed";
+    case arches::stream::CANCELLED:            return "cancelled";
+    case arches::stream::PAUSED:               return "paused";
+    case arches::stream::RUNNING:              return "running";
+    case arches::stream::CONFIGURED:           return "queued";
+    case arches::stream::RUN_STATE_UNSPECIFIED: return "unspecified";
     // protobuf open enums emit _INT_MIN/MAX_SENTINEL_DO_NOT_USE_ values; a
     // default clause silences -Wswitch over those sentinels.
     default:                                   return "unspecified";
@@ -163,22 +163,22 @@ std::string RunService::run_state_to_status(acadia::stream::RunState s) {
 }
 
 // static
-bool RunService::run_state_is_terminal(acadia::stream::RunState s) {
-    return s == acadia::stream::COMPLETED
-        || s == acadia::stream::FAILED
-        || s == acadia::stream::CANCELLED;
+bool RunService::run_state_is_terminal(arches::stream::RunState s) {
+    return s == arches::stream::COMPLETED
+        || s == arches::stream::FAILED
+        || s == arches::stream::CANCELLED;
 }
 
 void RunService::set_run_status(const std::string& run_id,
-                                  acadia::stream::RunState state) {
-    if (state == acadia::stream::RUN_STATE_UNSPECIFIED) {
+                                  arches::stream::RunState state) {
+    if (state == arches::stream::RUN_STATE_UNSPECIFIED) {
         spdlog::warn("run: ignoring UNSPECIFIED RunState for run_id={}", run_id);
         return;
     }
     const std::string status = run_state_to_status(state);
     if (run_state_is_terminal(state)) {
         run_repo_.set_ended(run_id, status);
-    } else if (state == acadia::stream::RUNNING) {
+    } else if (state == arches::stream::RUNNING) {
         run_repo_.set_started(run_id);  // status="running" + started_at=now
     } else {
         run_repo_.update_status(run_id, status);  // CONFIGURED->queued, PAUSED->paused
@@ -212,7 +212,7 @@ int RunService::reconcile_stale_runs() {
 }
 
 bool RunService::push_to_owner(const std::string& run_id,
-                                const acadia::stream::ServerMessage& msg) {
+                                const arches::stream::ServerMessage& msg) {
     auto opt = run_repo_.find_by_id(run_id);
     if (!opt) {
         spdlog::warn("run: push_to_owner run_id={} not found", run_id);

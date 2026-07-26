@@ -6,7 +6,7 @@
 // ARCHES_SHUTDOWN_TIMEOUT_SEC) in config/Settings.cc. GrpcServerRunner (Step 6)
 // and HalServiceImpl already depend on this struct, so it is introduced here.
 //
-// Deviation from Acadia-Server: Acadia carries a TOML `internal/config` stack +
+// Deviation from the prior reference implementation: it carries a TOML `internal/config` stack +
 // a `NetworkSettings` sub-struct; Arches collapses both into one env-var-driven
 // struct (per the plan: "Drop the TOML internal/config legacy stack entirely").
 

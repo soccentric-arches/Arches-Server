@@ -1,13 +1,13 @@
 #pragma once
-// repositories/LogRepository.h — SQLite port of Acadia-Server's LogRepository.
+// repositories/LogRepository.h — SQLite port of the prior reference implementation's LogRepository.
 //
 // Ingests client LogBatch lines (LogService) and serves log queries. Phase 1
 // implements insert + list + count. The per-user bookmark / saved-view surfaces
 // (Phase 2 Dashboard) are deferred.
 //
-// SQLite adaptation: Acadia's `to_tsvector('english', message) @@ plainto_tsquery`
+// SQLite adaptation: the prior reference implementation's `to_tsvector('english', message) @@ plainto_tsquery`
 // full-text search is replaced with `LIKE '%query%'` (message is short log text;
-// FTS5 is a Phase-2 optimisation). Acadia's `count()` ignored its filter (a
+// FTS5 is a Phase-2 optimisation). the prior reference implementation's `count()` ignored its filter (a
 // pre-existing bug); the port applies the filter.
 
 #include <cstdint>

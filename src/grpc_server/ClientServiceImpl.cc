@@ -18,11 +18,11 @@ ClientServiceImpl::ClientServiceImpl(RunService& run_svc, LogService& log_svc,
 
 // ── §5 unpack: drain a TestResultBatch into per-TestResult ingest work ──────────
 void ClientServiceImpl::handle_result_batch(
-    const acadia::stream::TestResultBatch& batch,
+    const arches::stream::TestResultBatch& batch,
     BoundedQueue<IngestWork>&              ingest_queue) {
 
     // NOTE: results.mode stores the ExecutionMode int as a string, matching
-    // Acadia-Server's behaviour (a known quirk flagged in the porting note for
+    // the prior reference implementation's behaviour (a known quirk flagged in the porting note for
     // Phase-2 cleanup; runs.mode uses the readable name via RunService).
     const std::string mode = std::to_string(static_cast<int>(batch.mode()));
 
@@ -65,7 +65,7 @@ void ClientServiceImpl::handle_result_batch(
 }
 
 // ── Handle a LogBatch ──────────────────────────────────────────────────────────
-void ClientServiceImpl::handle_log_batch(const acadia::stream::LogBatch& batch) {
+void ClientServiceImpl::handle_log_batch(const arches::stream::LogBatch& batch) {
     for (const auto& line : batch.lines()) {
         LogEntry e;
         e.run_id   = line.run_id().empty() ? batch.run_id() : line.run_id();
@@ -79,8 +79,8 @@ void ClientServiceImpl::handle_log_batch(const acadia::stream::LogBatch& batch) 
 // ── Connect (bidi stream) ───────────────────────────────────────────────────────
 ::grpc::Status ClientServiceImpl::Connect(
     ::grpc::ServerContext* ctx,
-    ::grpc::ServerReaderWriter<acadia::stream::ServerMessage,
-                                acadia::stream::ClientMessage>* stream) {
+    ::grpc::ServerReaderWriter<arches::stream::ServerMessage,
+                                arches::stream::ClientMessage>* stream) {
 
     BoundedQueue<IngestWork> ingest_queue{queue_capacity_};
     // Outbound queue: run-control (from RunService via the registry) + acks
@@ -119,10 +119,10 @@ void ClientServiceImpl::handle_log_batch(const acadia::stream::LogBatch& batch) 
     std::string registered_board_id;
     bool registered = false;
 
-    acadia::stream::ClientMessage msg;
+    arches::stream::ClientMessage msg;
     while (!ctx->IsCancelled() && stream->Read(&msg)) {
         switch (msg.payload_case()) {
-        case acadia::stream::ClientMessage::kHello: {
+        case arches::stream::ClientMessage::kHello: {
             const auto& hello = msg.hello();
             registered_board_id = hello.board_id();
             stream_registry_.register_stream(registered_board_id, out_queue);
@@ -132,12 +132,12 @@ void ClientServiceImpl::handle_log_batch(const acadia::stream::LogBatch& batch) 
             break;
         }
 
-        case acadia::stream::ClientMessage::kResultBatch: {
+        case arches::stream::ClientMessage::kResultBatch: {
             const auto& batch = msg.result_batch();
             handle_result_batch(batch, ingest_queue);
 
             // Send BatchAck via the outbound queue (serialized with run-control).
-            acadia::stream::ServerMessage ack_msg;
+            arches::stream::ServerMessage ack_msg;
             auto* ack = ack_msg.mutable_batch_ack();
             ack->set_run_id(batch.run_id());
             ack->set_batch_seq(batch.batch_seq());
@@ -147,7 +147,7 @@ void ClientServiceImpl::handle_log_batch(const acadia::stream::LogBatch& batch) 
             }
 
             // Consume batch.state(): map the client's RunState -> runs.status
-            // instead of Acadia's blind complete_run("completed").
+            // instead of the prior reference implementation's blind complete_run("completed").
             if (batch.terminal()) {
                 try {
                     run_svc_.set_run_status(batch.run_id(), batch.state());
@@ -159,11 +159,11 @@ void ClientServiceImpl::handle_log_batch(const acadia::stream::LogBatch& batch) 
             break;
         }
 
-        case acadia::stream::ClientMessage::kLogBatch: {
+        case arches::stream::ClientMessage::kLogBatch: {
             const auto& batch = msg.log_batch();
             handle_log_batch(batch);
 
-            acadia::stream::ServerMessage ack_msg;
+            arches::stream::ServerMessage ack_msg;
             auto* ack = ack_msg.mutable_log_batch_ack();
             ack->set_run_id(batch.run_id());
             ack->set_batch_seq(batch.batch_seq());
@@ -174,14 +174,14 @@ void ClientServiceImpl::handle_log_batch(const acadia::stream::LogBatch& batch) 
             break;
         }
 
-        case acadia::stream::ClientMessage::kStateReport: {
+        case arches::stream::ClientMessage::kStateReport: {
             spdlog::debug("client_svc: StateReport board_id={} state={}",
                           msg.state_report().board_id(),
                           static_cast<int>(msg.state_report().overall_state()));
             break;
         }
 
-        case acadia::stream::ClientMessage::kConfigureAck: {
+        case arches::stream::ClientMessage::kConfigureAck: {
             const auto& ack = msg.configure_ack();
             if (!ack.ok()) {
                 spdlog::warn("client_svc: ConfigureAck NACK run_id={} field={} error={}",

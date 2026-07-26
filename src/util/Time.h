@@ -1,5 +1,5 @@
 #pragma once
-// util/Time.h — timestamp helpers (port of Acadia-Server util/Time.h).
+// util/Time.h — timestamp helpers (port of the prior reference implementation util/Time.h).
 #include <chrono>
 #include <string>
 
