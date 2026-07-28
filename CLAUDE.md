@@ -257,3 +257,10 @@ the prior reference implementation's PostgreSQL/Drogon stack — flagged in `ser
   ~8s — the two `wait_for` polls (status→"completed", result_repo.count≥1)
   approach their 4s budgets; revisit DB-writer / set_run_status latency in
   Phase 2.
+<!-- BEGIN loop-engine -->
+## Do's and Don'ts (maintained by the Loop Engine)
+
+*Appended by the Loop Engine on loop close; curated by a human when approving a
+loop out of `in-review/`. Nothing outside this fence is engine-writable.*
+
+<!-- END loop-engine -->
