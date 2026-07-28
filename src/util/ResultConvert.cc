@@ -1,5 +1,6 @@
 #include "util/ResultConvert.h"
 #include "repositories/ResultRepository.h"  // arches::server::Result
+#include "repositories/RunRepository.h"     // arches::server::Run
 #include "util/Time.h"
 
 #include <google/protobuf/descriptor.h>
@@ -276,6 +277,79 @@ std::vector<hal::common::TestResult> unpack_module_results(
     if (tr.ParseFromString(payload.value())) {
         out.push_back(std::move(tr));
     }
+    return out;
+}
+
+// ── JSON serialisation for the SSE live-run stream ───────────────────────────
+
+std::string json_escape_string(const std::string& s) {
+    return json_escape(s);
+}
+
+namespace {
+// Emit a JSON object member `"key":value` with a leading comma when `first` is
+// false, and flip `first` to false afterwards.
+void emit_member(std::string& out, bool& first, const char* key, const std::string& value) {
+    if (!first) out += ",";
+    first = false;
+    out += "\"";
+    out += key;
+    out += "\":";
+    out += value;
+}
+std::string json_string(const std::string& s) {
+    return "\"" + json_escape(s) + "\"";
+}
+std::string json_string_or_null(const std::string& s) {
+    return s.empty() ? "null" : json_string(s);
+}
+// Embed an already-JSON string column (reason/metrics/monitoring/event) as a
+// nested value, falling back to {} when empty so the field is always a valid
+// JSON object on the wire.
+std::string json_raw_object(const std::string& s) {
+    return s.empty() ? "{}" : s;
+}
+}  // namespace
+
+std::string result_to_json(const Result& r) {
+    std::string out = "{";
+    bool first = true;
+    emit_member(out, first, "id",             json_string(r.id));
+    emit_member(out, first, "run_id",         json_string(r.run_id));
+    emit_member(out, first, "module_id",      json_string(r.module_id));
+    emit_member(out, first, "module_version", json_string(r.module_version));
+    emit_member(out, first, "test_id",        json_string(r.test_id));
+    emit_member(out, first, "name",           json_string(r.test_name));
+    emit_member(out, first, "sequence",       std::to_string(r.sequence));
+    emit_member(out, first, "timestamp",      json_string_or_null(r.timestamp));
+    emit_member(out, first, "duration_ns",    std::to_string(r.duration_ns));
+    emit_member(out, first, "status",         json_string(status_to_string(r.status)));
+    emit_member(out, first, "severity",       json_string(severity_to_string(r.severity)));
+    emit_member(out, first, "mode",           json_string(r.mode));
+    emit_member(out, first, "error_message",  json_string(r.error_message));
+    emit_member(out, first, "reason",         json_raw_object(r.reason_json));
+    emit_member(out, first, "metrics",        json_raw_object(r.metrics_json));
+    emit_member(out, first, "monitoring",     json_raw_object(r.monitoring_json));
+    emit_member(out, first, "event",          json_raw_object(r.event_json));
+    emit_member(out, first, "parent_id",
+                r.parent_id ? json_string(*r.parent_id) : "null");
+    out += "}";
+    return out;
+}
+
+std::string run_to_json(const Run& r) {
+    std::string out = "{";
+    bool first = true;
+    emit_member(out, first, "id",           json_string(r.id));
+    emit_member(out, first, "name",         json_string(r.name));
+    emit_member(out, first, "mode",         json_string(r.mode));
+    emit_member(out, first, "status",       json_string(r.status));
+    emit_member(out, first, "board_id",     json_string_or_null(r.board_id));
+    emit_member(out, first, "started_at",   json_string_or_null(r.started_at));
+    emit_member(out, first, "ended_at",     json_string_or_null(r.ended_at));
+    emit_member(out, first, "created_at",   json_string_or_null(r.created_at));
+    emit_member(out, first, "error_message", json_string(r.error_message));
+    out += "}";
     return out;
 }
 

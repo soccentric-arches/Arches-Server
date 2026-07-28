@@ -61,6 +61,24 @@ gtest_discover_tests(arches-streambackpressure-test
     PROPERTIES LABELS "arches_server" ENVIRONMENT "GTEST_COLOR=1"
 )
 
+# ── RunStreamRegistry unit test (SSE fan-out primitives) ──────────────────────
+add_executable(arches-runstreamregistry-test
+    unit/stream_registry/RunStreamRegistryTest.cc
+)
+target_link_libraries(arches-runstreamregistry-test PRIVATE
+    arches_stream_registry
+    GTest::gtest
+    GTest::gtest_main
+    Threads::Threads
+)
+target_include_directories(arches-runstreamregistry-test PRIVATE
+    ${CMAKE_SOURCE_DIR}/src
+)
+set_compiler_warnings(arches-runstreamregistry-test)
+gtest_discover_tests(arches-runstreamregistry-test
+  PROPERTIES LABELS "arches_server" ENVIRONMENT "GTEST_COLOR=1"
+)
+
 # ── RunStateMapping unit test (RunState -> runs.status, static, no DB) ─────────
 add_executable(arches-runstatemap-test
     unit/grpc/RunStateMappingTest.cc
@@ -102,5 +120,36 @@ target_include_directories(arches-clientstream-interop-test PRIVATE
 )
 set_compiler_warnings(arches-clientstream-interop-test)
 gtest_discover_tests(arches-clientstream-interop-test
+    PROPERTIES LABELS "arches_server" ENVIRONMENT "GTEST_COLOR=1"
+)
+
+# ── HTTP/SSE integration test (live-run monitoring loop) ──────────────────────
+# Spins up the real HTTP/SSE server in-process against a temp SQLite DB; drives
+# a run over the minimal run-control REST surface and asserts the SSE event
+# order, multi-viewer fan-out, and slow-viewer isolation through the real
+# cpp-httplib stack. Uses httplib::Client (same vendored header) as the peer.
+add_executable(arches-httpsse-interop-test
+    integration/HttpSseInteropTest.cc
+)
+target_link_libraries(arches-httpsse-interop-test PRIVATE
+    arches_http
+    arches_services
+    arches_stream_registry
+    arches_repos
+    arches_db
+    arches_config
+    arches_util
+    hal_protos_shared
+    spdlog::spdlog
+    GTest::gtest
+    GTest::gtest_main
+    Threads::Threads
+)
+target_include_directories(arches-httpsse-interop-test PRIVATE
+    ${CMAKE_SOURCE_DIR}/src
+    ${CMAKE_SOURCE_DIR}/src/http
+)
+set_compiler_warnings(arches-httpsse-interop-test)
+gtest_discover_tests(arches-httpsse-interop-test
     PROPERTIES LABELS "arches_server" ENVIRONMENT "GTEST_COLOR=1"
 )

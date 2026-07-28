@@ -23,6 +23,7 @@
 #include "services/RunService.h"
 #include "services/LogService.h"
 #include "stream_registry/ClientStreamRegistry.h"
+#include "stream_registry/RunStreamRegistry.h"
 #include "grpc_server/HalServiceImpl.h"
 #include "grpc_server/ClientServiceImpl.h"
 #include "grpc_server/GrpcServerRunner.h"
@@ -145,7 +146,8 @@ protected:
 
         // Full stack (mirrors main.cpp), minus loading modules.yaml.
         stream_registry_ = std::make_unique<ClientStreamRegistry>();
-        run_svc_ = std::make_unique<RunService>(*stream_registry_);
+        run_stream_registry_ = std::make_unique<arches::server::grpc::RunStreamRegistry>();
+        run_svc_ = std::make_unique<RunService>(*stream_registry_, *run_stream_registry_);
         log_svc_ = std::make_unique<LogService>();
         modules_ = std::make_unique<registry::ModuleRegistry>();  // empty
         hal_svc_ = std::make_unique<HalServiceImpl>(*run_svc_, *log_svc_,
@@ -185,6 +187,7 @@ protected:
         log_svc_.reset();
         modules_.reset();
         stream_registry_.reset();
+        run_stream_registry_.reset();
         runner_.reset();
         db_.reset();
     }
@@ -212,6 +215,7 @@ protected:
     std::unique_ptr<TempDb> db_;
     config::Settings settings_;
     std::unique_ptr<ClientStreamRegistry> stream_registry_;
+    std::unique_ptr<arches::server::grpc::RunStreamRegistry> run_stream_registry_;
     std::unique_ptr<RunService> run_svc_;
     std::unique_ptr<LogService> log_svc_;
     std::unique_ptr<registry::ModuleRegistry> modules_;

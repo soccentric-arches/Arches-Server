@@ -43,6 +43,7 @@ std::size_t env_size(const char* name, std::size_t fallback) {
 Settings load_settings() {
     Settings s;
     s.grpc_listen        = env("ARCHES_GRPC_LISTEN",       s.grpc_listen);
+    s.http_listen        = env("ARCHES_HTTP_LISTEN",       s.http_listen);
     s.db_path           = env("ARCHES_DB_PATH",           s.db_path);
     s.registry_path     = env("ARCHES_REGISTRY_PATH",     s.registry_path);
     s.stream_queue_size = env_size("ARCHES_STREAM_QUEUE_SIZE", s.stream_queue_size);

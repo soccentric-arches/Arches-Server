@@ -133,6 +133,22 @@ std::int64_t ResultRepository::count_for_run(const std::string& run_id) {
     return stmt.column_int64(0);
 }
 
+std::vector<Result> ResultRepository::list_for_run(const std::string& run_id) {
+    // Top-level rows only (parent_id IS NULL), oldest first — the order a live
+    // viewer would have seen them arrive. Subtests are fetched on demand via
+    // get_subtests; the SSE replay sends top-level results and lets the client
+    // request subtests if it ever needs them (Phase 1 dashboard doesn't).
+    PreparedStatement stmt(std::string("SELECT ") + kSelectColumns +
+                           " FROM results WHERE run_id = ? AND parent_id IS NULL"
+                           " ORDER BY timestamp ASC, sequence ASC");
+    stmt.bind(1, run_id);
+    std::vector<Result> out;
+    while (stmt.step()) {
+        out.push_back(read_result(stmt));
+    }
+    return out;
+}
+
 std::vector<RunModuleSummary> ResultRepository::find_last_per_module(const std::string& run_id) {
     PreparedStatement stmt(
         "SELECT module_id, test_id, last_status, last_severity, last_timestamp, result_count "

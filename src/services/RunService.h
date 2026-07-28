@@ -19,6 +19,7 @@
 #include "repositories/RunRepository.h"
 #include "repositories/ResultRepository.h"
 #include "stream_registry/ClientStreamRegistry.h"
+#include "stream_registry/RunStreamRegistry.h"
 
 #include "client_service.pb.h"
 #include "common.pb.h"
@@ -26,15 +27,22 @@
 #include <google/protobuf/any.pb.h>
 
 #include <cstdint>
+#include <mutex>
 #include <optional>
 #include <string>
+#include <unordered_map>
+#include <unordered_set>
 #include <vector>
 
 namespace arches::server {
 
 class RunService {
 public:
-    explicit RunService(grpc::ClientStreamRegistry& stream_registry);
+    // `run_stream_registry` is the SSE viewer fan-out for live run monitoring.
+    // It may be a no-op registry when the HTTP layer is not wired (e.g. unit
+    // tests of static mapping), but in production main.cpp wires the real one.
+    explicit RunService(grpc::ClientStreamRegistry& stream_registry,
+                        grpc::RunStreamRegistry&    run_stream_registry);
 
     // ── Run lifecycle ────────────────────────────────────────────────────────
 
@@ -104,6 +112,32 @@ public:
     std::vector<RunModuleSummary> get_module_summaries(const std::string& run_id);
     std::vector<Result> get_subtests(const std::string& parent_id);
 
+    // SSE live-run endpoint support: replay already-landed top-level results
+    // for a run (oldest first) and the total result count. Read-only on the
+    // shared SQLite connection via PreparedStatement's lifetime-locked mutex.
+    std::vector<Result> list_results(const std::string& run_id);
+    std::int64_t        count_results(const std::string& run_id);
+
+    // ── Minimal HTTP run-control surface (live-run monitoring loop) ───────────
+    // These create / transition / ingest rows WITHOUT going through the gRPC
+    // ClientService stream, so the HTTP live-run view and its contract tests
+    // can drive a run end-to-end over HTTP when no embedded Client is connected.
+    // The full REST API remains Phase 2; these are the minimal write-side
+    // companions to the SSE read endpoint.
+    Run create_run_row(const std::string& mode,
+                       const std::string& board_id,
+                       const std::string& name);
+    // Inject a synthetic result row for a run (assigns id, persists, broadcasts
+    // the `result` SSE event + a `module.transition` running event on first
+    // sight of the module). `status` is a hal::common::TestStatus int (1=PASS…).
+    Result inject_result(const std::string& run_id,
+                         const std::string& module_id,
+                         const std::string& test_id,
+                         const std::string& test_name,
+                         std::int16_t status,
+                         std::int64_t sequence,
+                         const std::string& mode);
+
     // On-startup reconciliation: mark any runs still 'running' or 'queued' as
     // 'failed' (the server crashed before completing them). Returns the count.
     int reconcile_stale_runs();
@@ -114,9 +148,29 @@ private:
     bool push_to_owner(const std::string& run_id,
                        const arches::stream::ServerMessage& msg);
 
+    // ── SSE live-run publishing helpers (non-blocking fan-out) ───────────────
+    // Publish a `result` event (and a `module.transition` running event when a
+    // module is seen for the first time in this run). Called from the ingest
+    // path after the row is persisted.
+    void publish_result(const std::string& run_id, const Result& saved);
+    // Publish a `run.start` event for a run that just transitioned to running.
+    void publish_run_start(const std::string& run_id);
+    // Publish `module.transition` done events for every seen module, then a
+    // terminal `run.complete` event. Called from every terminal path.
+    void publish_run_complete(const std::string& run_id, const std::string& status);
+
+    // Track which module_ids have been seen per run (for module.transition
+    // running/done signals). Returns true if `module_id` was newly inserted.
+    bool note_module(const std::string& run_id, const std::string& module_id);
+    std::vector<std::string> seen_modules(const std::string& run_id);
+
     repositories::RunRepository    run_repo_;
     repositories::ResultRepository result_repo_;
     grpc::ClientStreamRegistry&    stream_registry_;
+    grpc::RunStreamRegistry&       run_stream_registry_;
+
+    std::mutex                                                         seen_mutex_;
+    std::unordered_map<std::string, std::unordered_set<std::string>> seen_modules_;
 };
 
 }  // namespace arches::server

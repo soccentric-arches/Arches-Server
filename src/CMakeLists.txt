@@ -18,6 +18,10 @@ add_subdirectory(registry)
 add_subdirectory(stream_registry)
 add_subdirectory(services)
 add_subdirectory(grpc_server)
+# arches_http is a sibling lib for the SSE/HTTP layer (live-run monitoring).
+# It depends on arches_services + arches_stream_registry and is OUT of the
+# three-layer services->grpc link graph (no arches_grpc dependency).
+add_subdirectory(http)
 
 add_executable(arches-server
     main.cpp
@@ -42,6 +46,7 @@ target_link_libraries(arches-server PRIVATE
     arches_util
     arches_db
     arches_config
+    arches_http
     spdlog::spdlog
     yaml-cpp::yaml-cpp
 )

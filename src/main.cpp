@@ -23,9 +23,11 @@
 #include "services/RunService.h"
 #include "services/LogService.h"
 #include "stream_registry/ClientStreamRegistry.h"
+#include "stream_registry/RunStreamRegistry.h"
 #include "grpc_server/HalServiceImpl.h"
 #include "grpc_server/ClientServiceImpl.h"
 #include "grpc_server/GrpcServerRunner.h"
+#include "http/HttpServer.h"
 
 #include <spdlog/spdlog.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
@@ -46,8 +48,8 @@ int main() {
     spdlog::set_default_logger(logger);
     spdlog::set_level(spdlog::level::from_str(settings.log_level));
     spdlog::info("arches-server {} starting", ARCHES_SERVER_VERSION);
-    spdlog::info("arches-server: grpc_listen={} db_path={} registry={}",
-                 settings.grpc_listen, settings.db_path, settings.registry_path);
+    spdlog::info("arches-server: grpc_listen={} http_listen={} db_path={} registry={}",
+                 settings.grpc_listen, settings.http_listen, settings.db_path, settings.registry_path);
 
     try {
         // ── SQLite DB + migrations ──────────────────────────────────────────
@@ -65,7 +67,8 @@ int main() {
         // ambiguous between grpcpp's top-level ::grpc and arches::server::grpc
         // under `using namespace arches::server`.
         arches::server::grpc::ClientStreamRegistry stream_registry;
-        RunService run_svc{stream_registry};
+        arches::server::grpc::RunStreamRegistry    run_stream_registry;
+        RunService run_svc{stream_registry, run_stream_registry};
         LogService log_svc;
 
         const int reconciled = run_svc.reconcile_stale_runs();
@@ -79,6 +82,26 @@ int main() {
                                                             settings.stream_queue_size};
         arches::server::grpc::GrpcServerRunner  runner{hal_svc, client_svc, settings};
 
+        // ── HTTP/SSE server (live run monitoring view) ──────────────────────
+        // Runs on its own thread; disabled when http_listen is empty. Shutdown
+        // mirrors the gRPC runner — HttpServer::stop() is thread-safe and is
+        // called from the sigwait worker (not a raw signal handler).
+        std::unique_ptr<http::HttpServer> http_svc;
+        std::unique_ptr<std::thread>      http_thread;
+        if (!settings.http_listen.empty()) {
+            http_svc = std::make_unique<http::HttpServer>(run_svc, run_stream_registry, settings);
+            // Block signals in the HTTP thread BEFORE it starts so it inherits
+            // the blocked mask (sigwait in the dedicated thread below is the
+            // sole signal consumer), mirroring the gRPC runner thread.
+            http_thread = std::make_unique<std::thread>([&http_svc] {
+                try { http_svc->start(); } catch (const std::exception& e) {
+                    spdlog::error("arches-server: http server error: {}", e.what());
+                }
+            });
+        } else {
+            spdlog::info("arches-server: http_listen empty — SSE server disabled");
+        }
+
         // ── Signal handling: block SIGINT/SIGTERM here, sigwait in a thread ──
         // (async-signal-safe: the worker thread, not a handler, calls shutdown).
         sigset_t mask;
@@ -87,18 +110,24 @@ int main() {
         sigaddset(&mask, SIGTERM);
         pthread_sigmask(SIG_BLOCK, &mask, nullptr);
 
-        std::thread sig_thread([&runner, &mask] {
+        std::thread sig_thread([&] {
             int sig = 0;
             sigwait(&mask, &sig);
             spdlog::info("arches-server: received signal {} — shutting down", sig);
             try { runner.shutdown(); } catch (const std::exception& e) {
                 spdlog::error("arches-server: shutdown error: {}", e.what());
             }
+            if (http_svc) {
+                try { http_svc->stop(); } catch (const std::exception& e) {
+                    spdlog::error("arches-server: http shutdown error: {}", e.what());
+                }
+            }
         });
 
         // ── Start (blocks until shutdown) ───────────────────────────────────
         runner.start();
         sig_thread.join();
+        if (http_thread && http_thread->joinable()) http_thread->join();
 
         spdlog::info("arches-server: stopped");
         db::shutdown_db_client();

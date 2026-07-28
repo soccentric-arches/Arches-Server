@@ -19,6 +19,10 @@ struct Settings {
     // gRPC listen address (host:port).
     std::string grpc_listen = "0.0.0.0:50051";
 
+    // HTTP/SSE listen address (host:port) for the live-run monitoring view.
+    // Empty disables the HTTP server. NEW for the live-run-monitoring loop.
+    std::string http_listen = "0.0.0.0:8080";
+
     // SQLite database file path.
     std::string db_path = "/var/lib/arches/server.db";
 

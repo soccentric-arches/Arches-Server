@@ -82,6 +82,11 @@ public:
     std::optional<Result> find_by_id(const std::string& id);
     std::int64_t count_for_run(const std::string& run_id);
 
+    // All top-level results for a run, ordered by timestamp ascending. Used by
+    // the SSE live-run endpoint to replay already-landed rows to a viewer
+    // joining (or reconnecting) mid-run. Excludes subtest rows (parent_id NULL).
+    std::vector<Result> list_for_run(const std::string& run_id);
+
     // Latest result summary per (module, test) for a run — reads run_summaries.
     std::vector<RunModuleSummary> find_last_per_module(const std::string& run_id);
 

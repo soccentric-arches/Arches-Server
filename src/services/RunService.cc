@@ -31,8 +31,10 @@ std::string execution_mode_name(hal::common::ExecutionMode m) {
 
 }  // namespace
 
-RunService::RunService(grpc::ClientStreamRegistry& stream_registry)
-    : stream_registry_(stream_registry) {}
+RunService::RunService(grpc::ClientStreamRegistry& stream_registry,
+                       grpc::RunStreamRegistry&    run_stream_registry)
+    : stream_registry_(stream_registry),
+      run_stream_registry_(run_stream_registry) {}
 
 Run RunService::start_run(const std::string& board_id,
                            const std::string& module_id,
@@ -86,10 +88,13 @@ Run RunService::get_run(const std::string& id) {
 void RunService::mark_running(const std::string& run_id) {
     run_repo_.set_started(run_id);
     spdlog::info("run: started id={}", run_id);
+    publish_run_start(run_id);
 }
 
 Result RunService::ingest_result(const Result& r) {
-    return result_repo_.insert(r);
+    auto saved = result_repo_.insert(r);
+    publish_result(r.run_id, saved);
+    return saved;
 }
 
 Result RunService::ingest_test_result(const hal::common::TestResult& tr,
@@ -105,6 +110,7 @@ Result RunService::ingest_test_result(const hal::common::TestResult& tr,
     auto saved = result_repo_.insert(r);
     spdlog::debug("run: ingested result run_id={} module_id={} test_id={} status={}",
                   run_id, saved.module_id, saved.test_id, saved.status);
+    publish_result(run_id, saved);
     return saved;
 }
 
@@ -139,11 +145,13 @@ void RunService::complete_run(const std::string& run_id, const std::string& stat
                                 const std::string& error) {
     run_repo_.set_ended(run_id, status, error);
     spdlog::info("run: {} id={}", status, run_id);
+    publish_run_complete(run_id, status);
 }
 
 void RunService::cancel_run(const std::string& run_id) {
     run_repo_.update_status(run_id, "cancelled");
     spdlog::info("run: cancelled id={}", run_id);
+    publish_run_complete(run_id, "cancelled");
 }
 
 // static
@@ -185,6 +193,15 @@ void RunService::set_run_status(const std::string& run_id,
     }
     spdlog::info("run: state->status run_id={} state={} -> {}",
                  run_id, static_cast<int>(state), status);
+
+    // Broadcast the transition to SSE viewers: RUNNING -> run.start, terminal ->
+    // run.complete. PAUSED/CONFIGURED produce no SSE event (no terminal banner,
+    // and the dashboard reads status from run.start/run.complete only).
+    if (state == arches::stream::RUNNING) {
+        publish_run_start(run_id);
+    } else if (run_state_is_terminal(state)) {
+        publish_run_complete(run_id, status);
+    }
 }
 
 std::optional<Result> RunService::get_result(const std::string& id) {
@@ -197,6 +214,55 @@ std::vector<RunModuleSummary> RunService::get_module_summaries(const std::string
 
 std::vector<Result> RunService::get_subtests(const std::string& parent_id) {
     return result_repo_.get_subtests(parent_id);
+}
+
+std::vector<Result> RunService::list_results(const std::string& run_id) {
+    return result_repo_.list_for_run(run_id);
+}
+
+std::int64_t RunService::count_results(const std::string& run_id) {
+    return result_repo_.count_for_run(run_id);
+}
+
+Run RunService::create_run_row(const std::string& mode,
+                                const std::string& board_id,
+                                const std::string& name) {
+    Run r;
+    r.id       = generate_uuid();
+    r.name     = name.empty() ? "Run" : name;
+    r.mode     = mode.empty() ? "single_shot" : mode;
+    r.board_id = board_id;
+    r.status   = "queued";
+    r.test_config_snapshot_json = "{}";
+    auto created = run_repo_.create(r);
+    spdlog::info("run: http-created id={} board_id={} mode={}",
+                 created.id, board_id, created.mode);
+    return created;
+}
+
+Result RunService::inject_result(const std::string& run_id,
+                                  const std::string& module_id,
+                                  const std::string& test_id,
+                                  const std::string& test_name,
+                                  std::int16_t status,
+                                  std::int64_t sequence,
+                                  const std::string& mode) {
+    Result r;
+    r.run_id         = run_id;
+    r.module_id      = module_id;
+    r.test_id        = test_id;
+    r.test_name      = test_name;
+    r.status         = status;
+    r.severity       = 0;
+    r.sequence       = sequence;
+    r.mode           = mode.empty() ? "single_shot" : mode;
+    r.timestamp      = util::utc_now_iso8601();
+    r.parent_id      = std::nullopt;
+    auto saved = result_repo_.insert(r);
+    publish_result(run_id, saved);
+    spdlog::debug("run: http-injected result run_id={} module_id={} status={}",
+                  run_id, saved.module_id, saved.status);
+    return saved;
 }
 
 int RunService::reconcile_stale_runs() {
@@ -223,6 +289,88 @@ bool RunService::push_to_owner(const std::string& run_id,
         return false;
     }
     return stream_registry_.push(opt->board_id, msg);
+}
+
+// ── SSE live-run publishing (non-blocking fan-out via RunStreamRegistry) ─────
+
+bool RunService::note_module(const std::string& run_id, const std::string& module_id) {
+    std::lock_guard<std::mutex> lock{seen_mutex_};
+    return seen_modules_[run_id].insert(module_id).second;
+}
+
+std::vector<std::string> RunService::seen_modules(const std::string& run_id) {
+    std::lock_guard<std::mutex> lock{seen_mutex_};
+    std::vector<std::string> out;
+    auto it = seen_modules_.find(run_id);
+    if (it != seen_modules_.end()) {
+        out.assign(it->second.begin(), it->second.end());
+    }
+    return out;
+}
+
+void RunService::publish_result(const std::string& run_id, const Result& saved) {
+    // A new module seen in this run -> emit a module.transition running event
+    // before the result so a viewer sees pending->running->result.
+    if (note_module(run_id, saved.module_id)) {
+        grpc::SseEvent tr;
+        tr.name = "module.transition";
+        tr.data = "{\"module_id\":\"" + util::json_escape_string(saved.module_id) +
+                  "\",\"state\":\"running\"}";
+        tr.critical = false;
+        run_stream_registry_.publish(run_id, tr);
+    }
+    grpc::SseEvent ev;
+    ev.name      = "result";
+    ev.data      = util::result_to_json(saved);
+    ev.critical  = false;
+    ev.dedup_key = saved.id;
+    run_stream_registry_.publish(run_id, ev);
+}
+
+void RunService::publish_run_start(const std::string& run_id) {
+    auto opt = run_repo_.find_by_id(run_id);
+    if (!opt) return;
+    // Build run.start payload: {run: <run json>, modules: [...seen...]}.
+    std::string modules_json = "[";
+    bool first = true;
+    for (const auto& m : seen_modules(run_id)) {
+        if (!first) modules_json += ",";
+        first = false;
+        modules_json += "\"" + util::json_escape_string(m) + "\"";
+    }
+    modules_json += "]";
+    grpc::SseEvent ev;
+    ev.name     = "run.start";
+    ev.data     = "{\"run\":" + util::run_to_json(*opt) +
+                  ",\"modules\":" + modules_json + "}";
+    ev.critical = true;
+    run_stream_registry_.publish(run_id, ev);
+}
+
+void RunService::publish_run_complete(const std::string& run_id, const std::string& status) {
+    // module.transition done for every seen module, then the terminal event.
+    for (const auto& m : seen_modules(run_id)) {
+        grpc::SseEvent tr;
+        tr.name = "module.transition";
+        tr.data = "{\"module_id\":\"" + util::json_escape_string(m) +
+                  "\",\"state\":\"done\"}";
+        tr.critical = false;
+        run_stream_registry_.publish(run_id, tr);
+    }
+    auto opt = run_repo_.find_by_id(run_id);
+    const std::int64_t total = result_repo_.count_for_run(run_id);
+    grpc::SseEvent ev;
+    ev.name     = "run.complete";
+    ev.critical = true;
+    if (opt) {
+        ev.data = "{\"run\":" + util::run_to_json(*opt) +
+                  ",\"total\":" + std::to_string(total) + "}";
+    } else {
+        ev.data = "{\"run_id\":\"" + util::json_escape_string(run_id) +
+                  "\",\"status\":\"" + util::json_escape_string(status) +
+                  "\",\"total\":" + std::to_string(total) + "}";
+    }
+    run_stream_registry_.publish(run_id, ev);
 }
 
 }  // namespace arches::server

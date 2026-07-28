@@ -15,6 +15,7 @@
 # ---------------------------------------------------------------------------
 add_library(arches_stream_registry STATIC
     ClientStreamRegistry.cc
+    RunStreamRegistry.cc
 )
 target_include_directories(arches_stream_registry PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/..

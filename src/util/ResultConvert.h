@@ -27,6 +27,7 @@
 namespace arches::server {
 // Forward-declare to avoid circular include with repositories/ResultRepository.h.
 struct Result;
+struct Run;
 }  // namespace arches::server
 
 namespace arches::server::util {
@@ -87,5 +88,23 @@ std::vector<hal::common::TestResult> unpack_module_results(
 
 // Build the type_url string for a module Result (mirror of the client helper).
 std::string module_result_type_url(const std::string& module_id);
+
+// ── JSON serialisation for the SSE live-run stream ───────────────────────────
+//
+// Minimal helpers (no JsonCpp) used by the HTTP/SSE layer to serialise run and
+// result rows for `run.start` / `result` / `run.complete` events. Reuses the
+// same json_escape primitive as the TypedValue/string-map serializers above.
+
+// Escape a string for inclusion in a JSON string literal.
+std::string json_escape_string(const std::string& s);
+
+// Serialise a Result DB row to a JSON object. Embeds the already-JSON
+// reason/metrics/monitoring/event columns verbatim as nested objects.
+std::string result_to_json(const Result& r);
+
+// Serialise the basic fields of a Run row to a JSON object (no module list —
+// the caller composes the run.start event with a separately-derived module
+// list, since the runs table has no module_id column).
+std::string run_to_json(const Run& r);
 
 }  // namespace arches::server::util
