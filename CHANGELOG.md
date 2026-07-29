@@ -5,3 +5,6 @@ newest first, appended on loop close (pass or fail) and committed on the loop's
 own feature branch. See the master repo's `Arches-Loop-Orchestration-Spec-v2.md` §11.1.
 
 Entries written by hand are fine; the engine inserts directly under this header.
+
+## 2026-07-28 — [20260728-dashboard-live-run-monitor] Live run monitoring view in the Dashboard
+- Status: SUCCESS (try 2 of 2)
