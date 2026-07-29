@@ -278,4 +278,38 @@ wrong, fix it yourself or raise it in the loop's Lessons Learned.
 *Appended by the Loop Engine on loop close; curated by a human when approving a
 loop out of `in-review/`. Nothing outside this fence is engine-writable.*
 
+### 20260728-dashboard-live-run-monitor (closed to in-review, try 2/2)
+
+- The Server's existing stack is **gRPC only** — there is no HTTP/REST/SSE
+  surface. REST is explicitly Phase 2. A loop that needs a browser/dashboard to
+  reach the Server over HTTP must add a minimal HTTP endpoint here (as this
+  loop did with `cpp-httplib` under `src/http/`); do not assume an HTTP layer
+  exists. The new `arches_http` lib is a sibling to the
+  `arches_stream_registry` → `arches_services` → `arches_grpc` link graph and
+  depends on `arches_services`/`arches_repos` only — keep it out of the HAL
+  subproject and out of the gRPC link graph.
+- **Do not regenerate HAL protos** when adding the HTTP layer — the new
+  endpoint reads run state from `RunService`/`ResultRepository` and serializes
+  JSON via the existing minimal `util::ResultConvert` serializer. No JsonCpp,
+  no OpenSSL (per the repo's existing "Don't" list).
+- **SSE fan-out for slow-viewer isolation:** `RunStreamRegistry` (mirror of
+  `ClientStreamRegistry`) holds `run_id → set<shared_ptr<BoundedQueue<event>>>`.
+  The publishing path is non-blocking (`try_enqueue`, drop oldest non-critical
+  + emit `flow.paused` when full) — a slow/stalled viewer must never block
+  ingestion. State is read once per event from the publishing path and fanned
+  out in memory; no per-viewer DB query. Verified by a 10-viewer unit test
+  (`TenViewersShareOnePublishCallWithoutDbMultiplication`) + a 10-viewer
+  integration test (`TenConcurrentViewersGetRunCompleteWithoutDbMultiplication`).
+- **`BoundedEventQueue` drop policy:** when the queue is full, drop until
+  `size + 2 <= capacity` so there is room for BOTH the `flow.paused` marker AND
+  the new event — an earlier version dropped exactly one slot and then could
+  not fit both, silently dropping the marker.
+- **`HttpServer::start()` port binding:** use `bind_to_port` for a nonzero
+  `ARCHES_HTTP_LISTEN` port; keep `bind_to_any_port` only for `port==0`
+  (integration-test harness). An earlier version always bound ephemeral,
+  ignoring the configured port.
+- **`validate.sh full` exits 77 on hosts without clang-tidy/clang-format.**
+  Build + `ctest -L arches_server` pass inside the gate regardless. This is a
+  host-tooling gap, not a code issue.
+
 <!-- END loop-engine -->
