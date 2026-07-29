@@ -8,11 +8,24 @@
 #
 #   0        every check ran and passed          -> QA verdict PASS
 #   1..76    a check ran and failed              -> QA verdict FAIL
-#   77       a check could not run at all        -> QA verdict BLOCKED
+#   77       a check could not run at all        -> QA verdict GATE-BLOCKED
 #
 # The whole point of 77 is honesty. A leaf Makefile that skips cppcheck because
 # cppcheck isn't installed still exits 0 — a green light that checked nothing.
-# This layer refuses to inherit that: an absent toolchain is BLOCKED, never PASS.
+# This layer refuses to inherit that: an absent toolchain is 77, never PASS.
+#
+# READ 77 FROM A GATE CORRECTLY. Everywhere else in this engine, 77 means "the
+# hardware isn't there, a human must intervene" and QA records a BLOCKED that
+# rides along to in-review/ as a checklist item. A 77 from THIS layer means
+# something different and stricter: this host was never provisioned to check
+# anything, so the repo's baseline is unverified and every acceptance criterion
+# measured against it sits on an unknown floor. It is a provisioning failure of
+# the host, not a property of the loop, and it must never close a loop.
+# See .claude/agents/qa.md ("GATE-BLOCKED") and loop/tools/preflight.sh, which
+# runs before the Executor so this case is caught in seconds rather than after
+# an hour of work. It went wrong once: 20260728-dashboard-live-run-monitor
+# try-1 recorded Arches-Server's 77 (clang-tidy, clang-format absent) as a
+# BLOCKED, and the loop closed green with nothing built.
 #
 # HUMAN-OWNED. The Loop Engine may run these scripts. It may never edit them.
 # An agent that can rewrite its own gate does not have a gate.
@@ -27,6 +40,7 @@ EXIT_BLOCKED=77
 _n_pass=0
 _n_fail=0
 _n_blocked=0
+_n_note=0
 _lines=()
 
 # Longest single check, in seconds. A build that hangs is a FAIL, not a BLOCKED —
@@ -59,6 +73,7 @@ _record() {
     PASS)    _n_pass=$((_n_pass + 1)) ;;
     FAIL)    _n_fail=$((_n_fail + 1)) ;;
     BLOCKED) _n_blocked=$((_n_blocked + 1)) ;;
+    NOTE)    _n_note=$((_n_note + 1)) ;;
   esac
 }
 
@@ -113,6 +128,21 @@ strip_comments() { sed -E 's://.*$::; s:(^|[[:space:]])#.*$::'; }
 # a check that could have run.
 block() { _record BLOCKED "$1" "$2"; }
 
+# note <name> <detail> — record a KNOWN, TRACKED divergence without affecting
+# the exit code.
+#
+# This exists for one narrow case: a repo state that is wrong-but-intended, where
+# a filed loop already owns the fix. The alternative is a gate that fails every
+# run for a reason nobody is going to act on today — and a permanently red gate
+# teaches people to ignore gates, which costs more than the check is worth.
+#
+# The bar is deliberately high. A note MUST name the loop or issue that tracks
+# it. If nothing tracks it, it is a FAIL and you should file the loop. Never use
+# note() to soften a check you'd rather not see fail, and never for anything the
+# loop under test could have caused — that is laundering a regression into a
+# footnote, and the auditor reads these lines specifically looking for it.
+note() { _record NOTE "$1" "$2"; }
+
 report() {
   local tier="$1" repo
   repo="$(basename "$(_repo_root)")"
@@ -121,20 +151,28 @@ report() {
   echo
   printf '%s\n' "${_lines[@]}"
   echo
-  echo "Summary: ${_n_pass} passed, ${_n_fail} failed, ${_n_blocked} blocked"
+  if [ "$_n_note" -gt 0 ]; then
+    echo "Summary: ${_n_pass} passed, ${_n_fail} failed, ${_n_blocked} blocked," \
+         "${_n_note} tracked divergence(s) noted"
+  else
+    echo "Summary: ${_n_pass} passed, ${_n_fail} failed, ${_n_blocked} blocked"
+  fi
 
   if [ "$_n_fail" -gt 0 ]; then
     echo "Result: FAIL"
     return "$EXIT_FAIL"
   fi
   if [ "$_n_blocked" -gt 0 ] && [ "$ARCHES_VALIDATE_ALLOW_PARTIAL" != "1" ]; then
-    echo "Result: BLOCKED — ${_n_blocked} check(s) never ran. Install the missing"
-    echo "        tooling, or re-run with ARCHES_VALIDATE_ALLOW_PARTIAL=1 to accept"
-    echo "        a partial run. Not treated as a pass."
+    echo "Result: GATE-BLOCKED (77) — ${_n_blocked} check(s) never ran, so this"
+    echo "        repo's baseline is UNVERIFIED. This is a host-provisioning"
+    echo "        failure, not a hardware BLOCKED: it must not close a loop."
+    echo "        Install the missing tooling above, or re-run with"
+    echo "        ARCHES_VALIDATE_ALLOW_PARTIAL=1 to accept a partial run"
+    echo "        knowingly. Never treated as a pass."
     return "$EXIT_BLOCKED"
   fi
   if [ "$_n_pass" -eq 0 ]; then
-    echo "Result: BLOCKED — no check ran."
+    echo "Result: GATE-BLOCKED (77) — no check ran at all."
     return "$EXIT_BLOCKED"
   fi
   echo "Result: PASS"
