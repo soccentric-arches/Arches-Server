@@ -155,11 +155,19 @@ void HttpServer::start() {
         port = 8080;
     }
 
-    // bind_to_any_port lets the kernel choose a free port when port==0, then
-    // listen_after_bind blocks. publish the chosen port (or -1 on bind failure)
-    // via port_future_ so tests can connect to the real port and a bind failure
-    // surfaces as a clean test failure (mirrors GrpcServerRunner).
-    int bound = svr_->bind_to_any_port(host.c_str());
+    // Honor the requested port when nonzero (so ARCHES_HTTP_LISTEN=...:8080
+    // actually binds to 8080 for the Dashboard contract tests); when port==0
+    // let the kernel choose a free port via bind_to_any_port (used by the
+    // integration test, which reads the actual port via port_future()).
+    // Publish the bound port (or -1 on bind failure) via port_future_ so tests
+    // can connect to the real port and a bind failure surfaces as a clean test
+    // failure (mirrors GrpcServerRunner).
+    int bound = -1;
+    if (port == 0) {
+        bound = svr_->bind_to_any_port(host.c_str());
+    } else if (svr_->bind_to_port(host.c_str(), port)) {
+        bound = port;
+    }
     if (bound < 0) {
         port_promise_.set_exception(std::make_exception_ptr(
             std::runtime_error("HTTP server failed to bind on " + settings_.http_listen)));
