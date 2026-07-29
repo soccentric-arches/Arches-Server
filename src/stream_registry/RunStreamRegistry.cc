@@ -16,23 +16,19 @@ bool BoundedEventQueue::try_enqueue(SseEvent ev) {
         return true;
     }
 
-    // Queue is full. Drop oldest non-critical events to make room for the new
-    // event (and, if we dropped anything, a flow.paused marker notifying the
-    // viewer that a drop happened). The queue MUST stay bounded at capacity_:
-    // dropping one item frees one slot, which we use for the new event; a
-    // flow.paused marker is only emitted when a SECOND slot can be freed so
-    // marker + new event both fit without growing past capacity_.
+    // Queue is full. We want to place the new event, and if we drop any
+    // non-critical event, also emit a flow.paused marker before it. That
+    // requires room for (marker + ev) = 2 slots when dropping. Drop
+    // non-critical events until there's room for both (size + 2 <= capacity_),
+    // or until only critical events remain. The queue never grows past
+    // capacity_.
     bool dropped = false;
-    while (queue_.size() >= capacity_) {
+    while (queue_.size() + 2 > capacity_) {
         auto it = std::find_if(queue_.begin(), queue_.end(),
                                [](const SseEvent& e) { return !e.critical; });
         if (it == queue_.end()) break;  // only critical events in flight
         queue_.erase(it);
         dropped = true;
-        // Stop once there's room for the new event (and, if we've dropped,
-        // potentially a marker too — we want size <= capacity_ - 2 so marker+ev
-        // both fit; otherwise size <= capacity_ - 1 for just ev).
-        if (dropped && queue_.size() <= capacity_ - 2) break;
     }
 
     if (queue_.size() < capacity_) {
