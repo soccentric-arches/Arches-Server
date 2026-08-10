@@ -124,7 +124,7 @@ if(DOXYGEN_FOUND)
   set(DOXYFILE_IN  "${CMAKE_SOURCE_DIR}/Doxyfile.in")
   set(DOXYFILE_OUT "${PROJECT_BINARY_DIR}/Doxyfile")
   configure_file("${DOXYFILE_IN}" "${DOXYFILE_OUT}" @ONLY)
-  add_custom_target(doc_doxygen
+  add_custom_target(arches_server_doc_doxygen
     COMMAND ${DOXYGEN_EXECUTABLE} "${DOXYFILE_OUT}"
     WORKING_DIRECTORY "${PROJECT_BINARY_DIR}"
     VERBATIM
@@ -144,14 +144,14 @@ if(CLANG_FORMAT_EXE)
        CONFIGURE_DEPENDS
        "${CMAKE_SOURCE_DIR}/src/*.cc" "${CMAKE_SOURCE_DIR}/src/*.h"
        "${CMAKE_SOURCE_DIR}/tests/*.cc")
-  add_custom_target(format
+  add_custom_target(arches_server_format
     COMMAND "${CLANG_FORMAT_EXE}" -i --style=file ${ARCHES_FORMAT_SOURCES}
     WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
     VERBATIM
     COMMENT "Running clang-format on Arches-Server sources"
   )
 else()
-  add_custom_target(format
+  add_custom_target(arches_server_format
     COMMAND ${CMAKE_COMMAND} -E echo "clang-format not installed; skipping format."
     VERBATIM
   )
