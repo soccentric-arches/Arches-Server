@@ -16,7 +16,7 @@ constexpr const char* kSelectColumns =
     "id, name, hostname, model, os_version, hal_version, client_version, "
     "tags, hal_module_inventory, first_seen, last_seen, status";
 
-Board read_board(PreparedStatement& stmt) {
+Board read_board(const PreparedStatement& stmt) {
     Board b;
     b.id                       = stmt.column_text(0);
     b.name                     = stmt.column_text(1);

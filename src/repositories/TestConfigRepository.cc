@@ -15,7 +15,7 @@ using arches::server::db::PreparedStatement;
 constexpr const char* kSelectColumns =
     "id, name, description, mode, common_config, modules, created_at, is_archived";
 
-TestConfig read_config(PreparedStatement& stmt) {
+TestConfig read_config(const PreparedStatement& stmt) {
     TestConfig c;
     c.id                  = stmt.column_text(0);
     c.name                = stmt.column_text(1);

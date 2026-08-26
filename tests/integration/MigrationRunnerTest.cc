@@ -27,11 +27,9 @@ namespace {
 // RAII temp file: a unique path in the temp dir, removed on destruction.
 class TempFile {
 public:
-    TempFile() {
-        // The build forbids Date/time/random in workflow scripts, but this is a
-        // normal test binary — use the PID + a counter for uniqueness.
-        path_ = (std::filesystem::temp_directory_path()
-                 / ("arches_mig_test_" + std::to_string(getpid()) + ".db")).string();
+    TempFile()
+        : path_((std::filesystem::temp_directory_path()
+                 / ("arches_mig_test_" + std::to_string(getpid()) + ".db")).string()) {
         std::filesystem::remove(path_);  // start clean
     }
     ~TempFile() {

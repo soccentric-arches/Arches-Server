@@ -22,7 +22,7 @@ constexpr const char* kSelectColumns =
     "payload_bytes, payload_type_url";
 
 // Read a row from the current cursor position into a Result.
-Result read_result(PreparedStatement& stmt) {
+Result read_result(const PreparedStatement& stmt) {
     Result r;
     r.id               = stmt.column_text(0);
     r.run_id           = stmt.column_text(1);

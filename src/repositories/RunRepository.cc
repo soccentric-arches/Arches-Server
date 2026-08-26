@@ -19,7 +19,7 @@ constexpr const char* kSelectColumns =
     "started_at, ended_at, error_message, tags, notes, baseline_flag, "
     "attached_files, created_at";
 
-Run read_run(PreparedStatement& stmt) {
+Run read_run(const PreparedStatement& stmt) {
     Run r;
     r.id                          = stmt.column_text(0);
     r.name                        = stmt.column_text(1);

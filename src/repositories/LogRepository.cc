@@ -11,7 +11,7 @@ namespace {
 
 using arches::server::db::PreparedStatement;
 
-LogEntry read_entry(PreparedStatement& stmt) {
+LogEntry read_entry(const PreparedStatement& stmt) {
     LogEntry e;
     e.id            = stmt.column_text(0);
     e.source        = stmt.column_text(1);

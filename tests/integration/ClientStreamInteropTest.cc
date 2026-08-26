@@ -70,9 +70,9 @@ bool wait_for(Pred pred, int timeout_ms = 4000) {
 // A throwaway SQLite DB file (PID-based name, with -wal/-shm siblings).
 struct TempDb {
     std::string path;
-    explicit TempDb(const std::string& tag) {
-        path = "/tmp/arches_interop_" + tag + "_" +
-               std::to_string(::getpid()) + ".db";
+    explicit TempDb(const std::string& tag)
+        : path("/tmp/arches_interop_" + tag + "_" +
+               std::to_string(::getpid()) + ".db") {
         remove_files();
         db::init_db_client(path);
         db::MigrationRunner{ARCHES_MIGRATIONS_DIR}.run();

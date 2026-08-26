@@ -1,0 +1,1941 @@
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/audio_interfaces/audio_interfaces.cpp:447:7: style: Condition '!passed' is always false [knownConditionTrueFalse]
+  if (!passed) {
+      ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/audio_interfaces/audio_interfaces.cpp:408:17: note: Assignment 'passed=true', assigned value is 1
+  bool passed = true;
+                ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/audio_interfaces/audio_interfaces.cpp:416:30: note: Assuming container is not empty
+  for (const auto &cardDir : cardDirs) {
+                             ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/audio_interfaces/audio_interfaces.cpp:419:31: note: Assuming container is not empty
+    for (const auto &pcmDir : pcmDirs) {
+                              ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/audio_interfaces/audio_interfaces.cpp:447:7: note: Condition '!passed' is always false
+  if (!passed) {
+      ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/module_helpers.h:87:20: style: Consider using std::any_of algorithm instead of a raw loop. [useStlAlgorithm]
+      if (t == os) {
+                   ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/audio_interfaces/audio_interfaces.cpp:88:14: style: Consider using std::copy_if algorithm instead of a raw loop. [useStlAlgorithm]
+      matches.push_back(e);
+             ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/audio_interfaces/audio_interfaces.cpp:146:50: style: Consider using std::find_if algorithm instead of a raw loop. [useStlAlgorithm]
+          e.find("admaif") != std::string::npos) {
+                                                 ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/audio_interfaces/audio_interfaces.cpp:200:18: style: Consider using std::copy_if algorithm instead of a raw loop. [useStlAlgorithm]
+      captureDevs.push_back(d);
+                 ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/audio_interfaces/audio_interfaces.cpp:249:19: style: Consider using std::copy_if algorithm instead of a raw loop. [useStlAlgorithm]
+      playbackDevs.push_back(d);
+                  ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/audio_interfaces/audio_interfaces.cpp:381:48: style: Consider using std::any_of algorithm instead of a raw loop. [useStlAlgorithm]
+      if (fmt.find(bits) != std::string::npos) {
+                                               ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/camera_interfaces_lib/camera_interfaces_lib.cpp:151:51: style: Condition 'isModuleLoaded("unicam")' is always false [knownConditionTrueFalse]
+    if (isModuleLoaded("unicam") || isModuleLoaded("unicam")) {
+                                                  ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/camera_interfaces_lib/camera_interfaces_lib.cpp:151:23: note: Assuming that condition 'isModuleLoaded("unicam")' is not redundant
+    if (isModuleLoaded("unicam") || isModuleLoaded("unicam")) {
+                      ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/camera_interfaces_lib/camera_interfaces_lib.cpp:151:51: note: Condition 'isModuleLoaded("unicam")' is always false
+    if (isModuleLoaded("unicam") || isModuleLoaded("unicam")) {
+                                                  ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/camera_interfaces_lib/camera_interfaces_lib.cpp:683:21: style: Condition 'passed' is always true [knownConditionTrueFalse]
+      _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/camera_interfaces_lib/camera_interfaces_lib.cpp:673:17: note: Assignment 'passed=true', assigned value is 1
+  bool passed = true;
+                ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/camera_interfaces_lib/camera_interfaces_lib.cpp:683:21: note: Condition 'passed' is always true
+      _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/camera_interfaces_lib/camera_interfaces_lib.cpp:684:23: style: Condition 'passed' is always true [knownConditionTrueFalse]
+      _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                      ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/camera_interfaces_lib/camera_interfaces_lib.cpp:673:17: note: Assignment 'passed=true', assigned value is 1
+  bool passed = true;
+                ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/camera_interfaces_lib/camera_interfaces_lib.cpp:684:23: note: Condition 'passed' is always true
+      _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                      ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/camera_interfaces_lib/camera_interfaces_lib.cpp:740:21: style: Condition 'passed' is always true [knownConditionTrueFalse]
+      _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/camera_interfaces_lib/camera_interfaces_lib.cpp:730:17: note: Assignment 'passed=true', assigned value is 1
+  bool passed = true;
+                ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/camera_interfaces_lib/camera_interfaces_lib.cpp:740:21: note: Condition 'passed' is always true
+      _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/camera_interfaces_lib/camera_interfaces_lib.cpp:741:23: style: Condition 'passed' is always true [knownConditionTrueFalse]
+      _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                      ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/camera_interfaces_lib/camera_interfaces_lib.cpp:730:17: note: Assignment 'passed=true', assigned value is 1
+  bool passed = true;
+                ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/camera_interfaces_lib/camera_interfaces_lib.cpp:741:23: note: Condition 'passed' is always true
+      _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                      ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/camera_interfaces_lib/camera_interfaces_lib.cpp:797:21: style: Condition 'passed' is always true [knownConditionTrueFalse]
+      _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/camera_interfaces_lib/camera_interfaces_lib.cpp:787:17: note: Assignment 'passed=true', assigned value is 1
+  bool passed = true;
+                ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/camera_interfaces_lib/camera_interfaces_lib.cpp:797:21: note: Condition 'passed' is always true
+      _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/camera_interfaces_lib/camera_interfaces_lib.cpp:798:23: style: Condition 'passed' is always true [knownConditionTrueFalse]
+      _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                      ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/camera_interfaces_lib/camera_interfaces_lib.cpp:787:17: note: Assignment 'passed=true', assigned value is 1
+  bool passed = true;
+                ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/camera_interfaces_lib/camera_interfaces_lib.cpp:798:23: note: Condition 'passed' is always true
+      _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                      ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/camera_interfaces_lib/camera_interfaces_lib.cpp:854:21: style: Condition 'passed' is always true [knownConditionTrueFalse]
+      _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/camera_interfaces_lib/camera_interfaces_lib.cpp:844:17: note: Assignment 'passed=true', assigned value is 1
+  bool passed = true;
+                ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/camera_interfaces_lib/camera_interfaces_lib.cpp:854:21: note: Condition 'passed' is always true
+      _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/camera_interfaces_lib/camera_interfaces_lib.cpp:855:23: style: Condition 'passed' is always true [knownConditionTrueFalse]
+      _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                      ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/camera_interfaces_lib/camera_interfaces_lib.cpp:844:17: note: Assignment 'passed=true', assigned value is 1
+  bool passed = true;
+                ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/camera_interfaces_lib/camera_interfaces_lib.cpp:855:23: note: Condition 'passed' is always true
+      _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                      ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/camera_interfaces_lib/camera_interfaces_lib.cpp:912:21: style: Condition 'passed' is always true [knownConditionTrueFalse]
+      _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/camera_interfaces_lib/camera_interfaces_lib.cpp:902:17: note: Assignment 'passed=true', assigned value is 1
+  bool passed = true;
+                ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/camera_interfaces_lib/camera_interfaces_lib.cpp:912:21: note: Condition 'passed' is always true
+      _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/camera_interfaces_lib/camera_interfaces_lib.cpp:913:23: style: Condition 'passed' is always true [knownConditionTrueFalse]
+      _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                      ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/camera_interfaces_lib/camera_interfaces_lib.cpp:902:17: note: Assignment 'passed=true', assigned value is 1
+  bool passed = true;
+                ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/camera_interfaces_lib/camera_interfaces_lib.cpp:913:23: note: Condition 'passed' is always true
+      _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                      ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/camera_interfaces_lib/camera_interfaces_lib.cpp:982:21: style: Condition 'passed' is always true [knownConditionTrueFalse]
+      _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/camera_interfaces_lib/camera_interfaces_lib.cpp:972:17: note: Assignment 'passed=true', assigned value is 1
+  bool passed = true;
+                ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/camera_interfaces_lib/camera_interfaces_lib.cpp:982:21: note: Condition 'passed' is always true
+      _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/camera_interfaces_lib/camera_interfaces_lib.cpp:983:23: style: Condition 'passed' is always true [knownConditionTrueFalse]
+      _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                      ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/camera_interfaces_lib/camera_interfaces_lib.cpp:972:17: note: Assignment 'passed=true', assigned value is 1
+  bool passed = true;
+                ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/camera_interfaces_lib/camera_interfaces_lib.cpp:983:23: note: Condition 'passed' is always true
+      _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                      ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/camera_interfaces_lib/camera_interfaces_lib.cpp:1128:21: style: Condition 'passed' is always true [knownConditionTrueFalse]
+      _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/camera_interfaces_lib/camera_interfaces_lib.cpp:1118:17: note: Assignment 'passed=true', assigned value is 1
+  bool passed = true;
+                ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/camera_interfaces_lib/camera_interfaces_lib.cpp:1128:21: note: Condition 'passed' is always true
+      _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/camera_interfaces_lib/camera_interfaces_lib.cpp:1129:23: style: Condition 'passed' is always true [knownConditionTrueFalse]
+      _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                      ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/camera_interfaces_lib/camera_interfaces_lib.cpp:1118:17: note: Assignment 'passed=true', assigned value is 1
+  bool passed = true;
+                ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/camera_interfaces_lib/camera_interfaces_lib.cpp:1129:23: note: Condition 'passed' is always true
+      _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                      ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/camera_interfaces_lib/camera_interfaces_lib.cpp:1198:21: style: Condition 'passed' is always true [knownConditionTrueFalse]
+      _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/camera_interfaces_lib/camera_interfaces_lib.cpp:1188:17: note: Assignment 'passed=true', assigned value is 1
+  bool passed = true;
+                ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/camera_interfaces_lib/camera_interfaces_lib.cpp:1198:21: note: Condition 'passed' is always true
+      _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/camera_interfaces_lib/camera_interfaces_lib.cpp:1199:23: style: Condition 'passed' is always true [knownConditionTrueFalse]
+      _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                      ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/camera_interfaces_lib/camera_interfaces_lib.cpp:1188:17: note: Assignment 'passed=true', assigned value is 1
+  bool passed = true;
+                ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/camera_interfaces_lib/camera_interfaces_lib.cpp:1199:23: note: Condition 'passed' is always true
+      _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                      ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/camera_interfaces_lib/camera_interfaces_lib.cpp:151:34: style: Same expression on both sides of '||'. [duplicateExpression]
+    if (isModuleLoaded("unicam") || isModuleLoaded("unicam")) {
+                                 ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/camera_interfaces_lib/camera_interfaces_lib.cpp:237:45: style: Same expression on both sides of '||'. [duplicateExpression]
+  bool modLoaded = isModuleLoaded("unicam") || isModuleLoaded("unicam");
+                                            ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/camera_interfaces_lib/camera_interfaces_lib.cpp:127:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/camera_interfaces_lib/camera_interfaces_lib.cpp:232:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/camera_interfaces_lib/camera_interfaces_lib.cpp:305:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/camera_interfaces_lib/camera_interfaces_lib.cpp:374:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/camera_interfaces_lib/camera_interfaces_lib.cpp:450:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/camera_interfaces_lib/camera_interfaces_lib.cpp:508:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/camera_interfaces_lib/camera_interfaces_lib.cpp:590:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/camera_interfaces_lib/camera_interfaces_lib.cpp:1029:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/camera_interfaces_lib/camera_interfaces_lib.cpp:1253:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/camera_interfaces_lib/camera_interfaces_lib.cpp:1310:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/camera_interfaces_lib/camera_interfaces_lib.cpp:1374:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/camera_interfaces_lib/camera_interfaces_lib.cpp:1434:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/camera_interfaces_lib/camera_interfaces_lib.cpp:1488:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/camera_interfaces_lib/camera_interfaces_lib.cpp:1536:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/camera_interfaces_lib/camera_interfaces_lib.cpp:1591:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/camera_interfaces_lib/camera_interfaces_lib.cpp:141:7: style: Consider using std::find_if algorithm instead of a raw loop. [useStlAlgorithm]
+      {
+      ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/camera_interfaces_lib/camera_interfaces_lib.cpp:258:54: style: Consider using std::find_if algorithm instead of a raw loop. [useStlAlgorithm]
+          e.find("1f00110000") != std::string::npos) {
+                                                     ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/camera_interfaces_lib/camera_interfaces_lib.cpp:316:24: style: Consider using std::find_if algorithm instead of a raw loop. [useStlAlgorithm]
+    if (pathExists(p)) {
+                       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/camera_interfaces_lib/camera_interfaces_lib.cpp:522:50: style: Consider using std::any_of algorithm instead of a raw loop. [useStlAlgorithm]
+        if (cname.find(kw) != std::string::npos) {
+                                                 ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/camera_interfaces_lib/camera_interfaces_lib.cpp:545:52: style: Consider using std::any_of algorithm instead of a raw loop. [useStlAlgorithm]
+          if (cname.find(kw) != std::string::npos) {
+                                                   ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/camera_interfaces_lib/camera_interfaces_lib.cpp:1044:49: style: Consider using std::any_of algorithm instead of a raw loop. [useStlAlgorithm]
+        if (base.find(id) != std::string::npos) {
+                                                ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/camera_interfaces_lib/camera_interfaces_lib.cpp:152:19: style: Variable 'unicamFound' is assigned a value that is never used. [unreadVariable]
+      unicamFound = true;
+                  ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/camera_interfaces_lib/camera_interfaces_lib.cpp:525:30: style: Variable 'refcnt' is assigned a value that is never used. [unreadVariable]
+          std::string refcnt = readFile(entry + "/refcnt");
+                             ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/camera_interfaces_lib/camera_interfaces_lib.cpp:1285:15: style: Variable 'afFound' is assigned a value that is never used. [unreadVariable]
+      afFound = true;
+              ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/clock_and_timing_lib/clock_and_timing_lib.cpp:488:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/clock_and_timing_lib/clock_and_timing_lib.cpp:277:20: style: Variable 'entry' can be declared as pointer to const [constVariablePointer]
+    struct dirent *entry;
+                   ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/clock_and_timing_lib/clock_and_timing_lib.cpp:360:20: style: Variable 'e' can be declared as pointer to const [constVariablePointer]
+    struct dirent *e;
+                   ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/clock_and_timing_lib/clock_and_timing_lib.cpp:440:18: style: Variable 'e' can be declared as pointer to const [constVariablePointer]
+  struct dirent *e;
+                 ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/clock_and_timing_lib/clock_and_timing_lib.cpp:848:14: style: Variable 'sysTmPtr' can be declared as pointer to const [constVariablePointer]
+  struct tm *sysTmPtr = ::gmtime(&sysEpoch);
+             ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/clock_and_timing_lib/clock_and_timing_lib.cpp:1063:14: style: Variable 'futureTm' can be declared as pointer to const [constVariablePointer]
+  struct tm *futureTm = ::gmtime(&futureEpoch);
+             ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/clock_and_timing_lib/clock_and_timing_lib.cpp:347:26: style: Consider using std::find_if algorithm instead of a raw loop. [useStlAlgorithm]
+      if (pathExists(p)) {
+                         ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/clock_and_timing_lib/clock_and_timing_lib.cpp:454:12: style: Consider using std::transform algorithm instead of a raw loop. [useStlAlgorithm]
+      data.push_back("Network interface: " + iface);
+           ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/clock_and_timing_lib/clock_and_timing_lib.cpp:721:9: style: Consider using std::accumulate algorithm instead of a raw loop. [useStlAlgorithm]
+    sum += v;
+        ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/clock_and_timing_lib/clock_and_timing_lib.cpp:670:17: style: Variable 'pllpFound' is assigned a value that is never used. [unreadVariable]
+      pllpFound = true;
+                ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/communication_interface_lib/communication_interface_lib.cpp:1090:19: style: Condition 'allOk' is always true [knownConditionTrueFalse]
+    _out.status = allOk ? hal::Status::PASS : hal::Status::FAIL;
+                  ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/communication_interface_lib/communication_interface_lib.cpp:1050:16: note: Assignment 'allOk=true', assigned value is 1
+  bool allOk = true;
+               ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/communication_interface_lib/communication_interface_lib.cpp:1053:10: note: Assuming condition is false
+  if (fd < 0) {
+         ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/communication_interface_lib/communication_interface_lib.cpp:1090:19: note: Condition 'allOk' is always true
+    _out.status = allOk ? hal::Status::PASS : hal::Status::FAIL;
+                  ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/communication_interface_lib/communication_interface_lib.cpp:1091:21: style: Condition 'allOk' is always true [knownConditionTrueFalse]
+    _out.severity = allOk ? hal::Severity::INFO : hal::Severity::ERROR;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/communication_interface_lib/communication_interface_lib.cpp:1050:16: note: Assignment 'allOk=true', assigned value is 1
+  bool allOk = true;
+               ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/communication_interface_lib/communication_interface_lib.cpp:1053:10: note: Assuming condition is false
+  if (fd < 0) {
+         ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/communication_interface_lib/communication_interface_lib.cpp:1091:21: note: Condition 'allOk' is always true
+    _out.severity = allOk ? hal::Severity::INFO : hal::Severity::ERROR;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/communication_interface_lib/communication_interface_lib.cpp:1881:19: style: Condition 'allOk' is always true [knownConditionTrueFalse]
+    _out.status = allOk ? hal::Status::PASS : hal::Status::FAIL;
+                  ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/communication_interface_lib/communication_interface_lib.cpp:1865:16: note: Assignment 'allOk=true', assigned value is 1
+  bool allOk = true;
+               ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/communication_interface_lib/communication_interface_lib.cpp:1866:28: note: Assuming container is not empty
+  for (const auto &iface : canIfaces) {
+                           ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/communication_interface_lib/communication_interface_lib.cpp:1881:19: note: Condition 'allOk' is always true
+    _out.status = allOk ? hal::Status::PASS : hal::Status::FAIL;
+                  ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/communication_interface_lib/communication_interface_lib.cpp:1882:21: style: Condition 'allOk' is always true [knownConditionTrueFalse]
+    _out.severity = allOk ? hal::Severity::INFO : hal::Severity::ERROR;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/communication_interface_lib/communication_interface_lib.cpp:1865:16: note: Assignment 'allOk=true', assigned value is 1
+  bool allOk = true;
+               ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/communication_interface_lib/communication_interface_lib.cpp:1866:28: note: Assuming container is not empty
+  for (const auto &iface : canIfaces) {
+                           ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/communication_interface_lib/communication_interface_lib.cpp:1882:21: note: Condition 'allOk' is always true
+    _out.severity = allOk ? hal::Severity::INFO : hal::Severity::ERROR;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/communication_interface_lib/communication_interface_lib.cpp:1994:17: style: Condition '!canIfaces.empty()' is always true [knownConditionTrueFalse]
+  if (!anyFd && !canIfaces.empty()) {
+                ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/communication_interface_lib/communication_interface_lib.cpp:1942:22: note: Assuming that condition 'canIfaces.empty()' is not redundant
+  if (canIfaces.empty()) {
+                     ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/communication_interface_lib/communication_interface_lib.cpp:1994:17: note: Condition '!canIfaces.empty()' is always true
+  if (!anyFd && !canIfaces.empty()) {
+                ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/communication_interface_lib/communication_interface_lib.cpp:423:8: style: The scope of the variable 'allOk' can be reduced. [variableScope]
+  bool allOk = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/communication_interface_lib/communication_interface_lib.cpp:496:8: style: The scope of the variable 'allOk' can be reduced. [variableScope]
+  bool allOk = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/communication_interface_lib/communication_interface_lib.cpp:1865:8: style: The scope of the variable 'allOk' can be reduced. [variableScope]
+  bool allOk = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/communication_interface_lib/communication_interface_lib.cpp:62:18: style: Variable 'de' can be declared as pointer to const [constVariablePointer]
+  struct dirent *de;
+                 ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/communication_interface_lib/communication_interface_lib.cpp:704:27: performance: Ineffective call of function 'substr' because a prefix of the string is assigned to itself. Use resize() or pop_back() instead. [uselessCallsSubstr]
+          consoleDevice = consoleDevice.substr(0, comma);
+                          ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/communication_interface_lib/communication_interface_lib.cpp:609:12: style: Consider using std::transform algorithm instead of a raw loop. [useStlAlgorithm]
+      data.push_back("  " + irq);
+           ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/communication_interface_lib/communication_interface_lib.cpp:653:14: style: Consider using std::transform algorithm instead of a raw loop. [useStlAlgorithm]
+        data.push_back("[PASS] IRQ: " + line);
+             ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/communication_interface_lib/communication_interface_lib.cpp:763:12: style: Consider using std::transform algorithm instead of a raw loop. [useStlAlgorithm]
+      data.push_back("[PASS] " + d + ": present");
+           ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/communication_interface_lib/communication_interface_lib.cpp:968:12: style: Consider using std::transform algorithm instead of a raw loop. [useStlAlgorithm]
+      data.push_back("[INFO] " + sp.first + " (" + std::to_string(sp.second) +
+           ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/communication_interface_lib/communication_interface_lib.cpp:1038:12: style: Consider using std::transform algorithm instead of a raw loop. [useStlAlgorithm]
+      data.push_back("[INFO] " + m.first + ": supported by hardware");
+           ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/communication_interface_lib/communication_interface_lib.cpp:1266:12: style: Consider using std::transform algorithm instead of a raw loop. [useStlAlgorithm]
+      data.push_back("  " + dev);
+           ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/communication_interface_lib/communication_interface_lib.cpp:1759:12: style: Consider using std::transform algorithm instead of a raw loop. [useStlAlgorithm]
+      data.push_back("  " + irq);
+           ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/communication_interface_lib/communication_interface_lib.cpp:2029:12: style: Consider using std::transform algorithm instead of a raw loop. [useStlAlgorithm]
+      data.push_back("[INFO] " + br + " bps: supported by mttcan");
+           ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/communication_interface_lib/communication_interface_lib.cpp:2124:12: style: Consider using std::transform algorithm instead of a raw loop. [useStlAlgorithm]
+      data.push_back("  " + irq);
+           ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/communication_interface_lib/communication_interface_lib.cpp:2044:25: style: Variable 'bitrate' is assigned a value that is never used. [unreadVariable]
+    std::string bitrate =
+                        ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/cpu_lib/cpu_lib.cpp:553:19: style: Condition 'passed' is always true [knownConditionTrueFalse]
+    _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                  ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/cpu_lib/cpu_lib.cpp:514:17: note: Assignment 'passed=true', assigned value is 1
+  bool passed = true;
+                ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/cpu_lib/cpu_lib.cpp:524:21: note: Assuming condition is false
+      if (name.empty())
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/cpu_lib/cpu_lib.cpp:553:19: note: Condition 'passed' is always true
+    _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                  ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/cpu_lib/cpu_lib.cpp:554:21: style: Condition 'passed' is always true [knownConditionTrueFalse]
+    _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/cpu_lib/cpu_lib.cpp:514:17: note: Assignment 'passed=true', assigned value is 1
+  bool passed = true;
+                ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/cpu_lib/cpu_lib.cpp:524:21: note: Assuming condition is false
+      if (name.empty())
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/cpu_lib/cpu_lib.cpp:554:21: note: Condition 'passed' is always true
+    _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/cpu_lib/cpu_lib.cpp:655:19: style: Condition 'passed' is always true [knownConditionTrueFalse]
+    _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                  ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/cpu_lib/cpu_lib.cpp:623:17: note: Assignment 'passed=true', assigned value is 1
+  bool passed = true;
+                ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/cpu_lib/cpu_lib.cpp:655:19: note: Condition 'passed' is always true
+    _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                  ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/cpu_lib/cpu_lib.cpp:656:21: style: Condition 'passed' is always true [knownConditionTrueFalse]
+    _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/cpu_lib/cpu_lib.cpp:623:17: note: Assignment 'passed=true', assigned value is 1
+  bool passed = true;
+                ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/cpu_lib/cpu_lib.cpp:656:21: note: Condition 'passed' is always true
+    _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/cpu_lib/cpu_lib.cpp:701:19: style: Condition 'passed' is always true [knownConditionTrueFalse]
+    _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                  ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/cpu_lib/cpu_lib.cpp:670:17: note: Assignment 'passed=true', assigned value is 1
+  bool passed = true;
+                ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/cpu_lib/cpu_lib.cpp:701:19: note: Condition 'passed' is always true
+    _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                  ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/cpu_lib/cpu_lib.cpp:702:21: style: Condition 'passed' is always true [knownConditionTrueFalse]
+    _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/cpu_lib/cpu_lib.cpp:670:17: note: Assignment 'passed=true', assigned value is 1
+  bool passed = true;
+                ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/cpu_lib/cpu_lib.cpp:702:21: note: Condition 'passed' is always true
+    _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/cpu_lib/cpu_lib.cpp:868:19: style: Condition 'passed' is always true [knownConditionTrueFalse]
+    _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                  ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/cpu_lib/cpu_lib.cpp:815:17: note: Assignment 'passed=true', assigned value is 1
+  bool passed = true;
+                ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/cpu_lib/cpu_lib.cpp:868:19: note: Condition 'passed' is always true
+    _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                  ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/cpu_lib/cpu_lib.cpp:869:21: style: Condition 'passed' is always true [knownConditionTrueFalse]
+    _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/cpu_lib/cpu_lib.cpp:815:17: note: Assignment 'passed=true', assigned value is 1
+  bool passed = true;
+                ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/cpu_lib/cpu_lib.cpp:869:21: note: Condition 'passed' is always true
+    _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/cpu_lib/cpu_lib.cpp:1099:19: style: Condition 'passed' is always true [knownConditionTrueFalse]
+    _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                  ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/cpu_lib/cpu_lib.cpp:1039:17: note: Assignment 'passed=true', assigned value is 1
+  bool passed = true;
+                ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/cpu_lib/cpu_lib.cpp:1043:25: note: Assuming condition is false
+  if (pipe(pipeAB) != 0 || pipe(pipeBA) != 0) {
+                        ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/cpu_lib/cpu_lib.cpp:1099:19: note: Condition 'passed' is always true
+    _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                  ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/cpu_lib/cpu_lib.cpp:1100:21: style: Condition 'passed' is always true [knownConditionTrueFalse]
+    _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/cpu_lib/cpu_lib.cpp:1039:17: note: Assignment 'passed=true', assigned value is 1
+  bool passed = true;
+                ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/cpu_lib/cpu_lib.cpp:1043:25: note: Assuming condition is false
+  if (pipe(pipeAB) != 0 || pipe(pipeBA) != 0) {
+                        ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/cpu_lib/cpu_lib.cpp:1100:21: note: Condition 'passed' is always true
+    _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/cpu_lib/cpu_lib.cpp:514:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/cpu_lib/cpu_lib.cpp:567:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/cpu_lib/cpu_lib.cpp:623:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/cpu_lib/cpu_lib.cpp:670:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/cpu_lib/cpu_lib.cpp:715:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/cpu_lib/cpu_lib.cpp:815:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/cpu_lib/cpu_lib.cpp:1039:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/cpu_lib/cpu_lib.cpp:135:12: style: Consider using std::transform algorithm instead of a raw loop. [useStlAlgorithm]
+      data.push_back("  Core " + std::to_string(c) + " is offline.");
+           ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/cpu_lib/cpu_lib.cpp:828:13: style: struct member 'PaddedVal::pad' is never used. [unusedStructMember]
+    uint8_t pad[56];
+            ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/debug_and_development_interfaces/debug_and_development_interfaces.cpp:82:18: style: Variable 'ent' can be declared as pointer to const [constVariablePointer]
+  struct dirent *ent;
+                 ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/debug_and_development_interfaces/debug_and_development_interfaces.cpp:99:9: style: Consider using std::count_if algorithm instead of a raw loop. [useStlAlgorithm]
+      ++count;
+        ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/debug_and_development_interfaces/debug_and_development_interfaces.cpp:267:10: style: Consider using std::transform algorithm instead of a raw loop. [useStlAlgorithm]
+    data.push_back("  " + d);
+         ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/debug_and_development_interfaces/debug_and_development_interfaces.cpp:306:10: style: Consider using std::transform algorithm instead of a raw loop. [useStlAlgorithm]
+    data.push_back("  " + d);
+         ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/debug_and_development_interfaces/debug_and_development_interfaces.cpp:309:12: style: Variable 'passed' is assigned a value that is never used. [unreadVariable]
+    passed = false;
+           ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/debug_and_development_interfaces/debug_and_development_interfaces.cpp:348:30: style: Variable 'driverLink' is assigned a value that is never used. [unreadVariable]
+      std::string driverLink = sysPath + "/device/driver";
+                             ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/debug_and_development_interfaces/debug_and_development_interfaces.cpp:531:12: style: Variable 'passed' is assigned a value that is never used. [unreadVariable]
+    passed = false;
+           ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/debug_and_development_interfaces/debug_and_development_interfaces.cpp:558:12: style: Variable 'passed' is assigned a value that is never used. [unreadVariable]
+    passed = false;
+           ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/deep_learning_accelerator_lib/deep_learning_accelerator_lib.cpp:1264:19: style: Condition 'passed' is always true [knownConditionTrueFalse]
+    _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                  ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/deep_learning_accelerator_lib/deep_learning_accelerator_lib.cpp:1216:17: note: Assignment 'passed=true', assigned value is 1
+  bool passed = true;
+                ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/deep_learning_accelerator_lib/deep_learning_accelerator_lib.cpp:1264:19: note: Condition 'passed' is always true
+    _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                  ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/deep_learning_accelerator_lib/deep_learning_accelerator_lib.cpp:1265:21: style: Condition 'passed' is always true [knownConditionTrueFalse]
+    _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/deep_learning_accelerator_lib/deep_learning_accelerator_lib.cpp:1216:17: note: Assignment 'passed=true', assigned value is 1
+  bool passed = true;
+                ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/deep_learning_accelerator_lib/deep_learning_accelerator_lib.cpp:1265:21: note: Condition 'passed' is always true
+    _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/deep_learning_accelerator_lib/deep_learning_accelerator_lib.cpp:1383:19: style: Condition 'passed' is always true [knownConditionTrueFalse]
+    _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                  ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/deep_learning_accelerator_lib/deep_learning_accelerator_lib.cpp:1337:17: note: Assignment 'passed=true', assigned value is 1
+  bool passed = true;
+                ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/deep_learning_accelerator_lib/deep_learning_accelerator_lib.cpp:1383:19: note: Condition 'passed' is always true
+    _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                  ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/deep_learning_accelerator_lib/deep_learning_accelerator_lib.cpp:1384:21: style: Condition 'passed' is always true [knownConditionTrueFalse]
+    _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/deep_learning_accelerator_lib/deep_learning_accelerator_lib.cpp:1337:17: note: Assignment 'passed=true', assigned value is 1
+  bool passed = true;
+                ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/deep_learning_accelerator_lib/deep_learning_accelerator_lib.cpp:1384:21: note: Condition 'passed' is always true
+    _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/deep_learning_accelerator_lib/deep_learning_accelerator_lib.cpp:1525:18: style: Condition 'currentClk>0' is always false [knownConditionTrueFalse]
+  if (currentClk > 0) {
+                 ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/deep_learning_accelerator_lib/deep_learning_accelerator_lib.cpp:1524:27: note: Assignment 'currentClk=-1LL', assigned value is -1
+  long long currentClk = -1LL; // Hailo-8 clock not exposed via Pi5 sysfs
+                          ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/deep_learning_accelerator_lib/deep_learning_accelerator_lib.cpp:1525:18: note: Condition 'currentClk>0' is always false
+  if (currentClk > 0) {
+                 ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/deep_learning_accelerator_lib/deep_learning_accelerator_lib.cpp:833:8: style: Redundant initialization for 'bnOk'. The initialized value is overwritten before it is read. [redundantInitialization]
+  bnOk = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/deep_learning_accelerator_lib/deep_learning_accelerator_lib.cpp:827:13: note: bnOk is initialized
+  bool bnOk =
+            ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/deep_learning_accelerator_lib/deep_learning_accelerator_lib.cpp:833:8: note: bnOk is overwritten
+  bnOk = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/deep_learning_accelerator_lib/deep_learning_accelerator_lib.cpp:881:11: style: Same expression used in consecutive assignments of 'got' and 'exp'. [duplicateAssignExpression]
+    float got = A[i] + B[i];
+          ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/deep_learning_accelerator_lib/deep_learning_accelerator_lib.cpp:882:11: note: Same expression used in consecutive assignments of 'got' and 'exp'.
+    float exp = A[i] + B[i];
+          ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/deep_learning_accelerator_lib/deep_learning_accelerator_lib.cpp:881:11: note: Same expression used in consecutive assignments of 'got' and 'exp'.
+    float got = A[i] + B[i];
+          ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/deep_learning_accelerator_lib/deep_learning_accelerator_lib.cpp:892:11: style: Same expression used in consecutive assignments of 'got' and 'exp'. [duplicateAssignExpression]
+    float got = A[i] * B[i];
+          ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/deep_learning_accelerator_lib/deep_learning_accelerator_lib.cpp:893:11: note: Same expression used in consecutive assignments of 'got' and 'exp'.
+    float exp = A[i] * B[i];
+          ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/deep_learning_accelerator_lib/deep_learning_accelerator_lib.cpp:892:11: note: Same expression used in consecutive assignments of 'got' and 'exp'.
+    float got = A[i] * B[i];
+          ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/deep_learning_accelerator_lib/deep_learning_accelerator_lib.cpp:206:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/deep_learning_accelerator_lib/deep_learning_accelerator_lib.cpp:258:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/deep_learning_accelerator_lib/deep_learning_accelerator_lib.cpp:378:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/deep_learning_accelerator_lib/deep_learning_accelerator_lib.cpp:1135:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/deep_learning_accelerator_lib/deep_learning_accelerator_lib.cpp:1216:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/deep_learning_accelerator_lib/deep_learning_accelerator_lib.cpp:1337:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/deep_learning_accelerator_lib/deep_learning_accelerator_lib.cpp:157:14: style: Variable 'hm' can be declared as reference to const [constVariableReference]
+  for (auto &hm : hwmons) {
+             ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/deep_learning_accelerator_lib/deep_learning_accelerator_lib.cpp:164:14: style: Variable 'd' can be declared as reference to const [constVariableReference]
+  for (auto &d : i2cDev) {
+             ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/deep_learning_accelerator_lib/deep_learning_accelerator_lib.cpp:269:14: style: Variable 'd' can be declared as reference to const [constVariableReference]
+  for (auto &d : usbDirs) {
+             ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/deep_learning_accelerator_lib/deep_learning_accelerator_lib.cpp:317:14: style: Variable 'd' can be declared as reference to const [constVariableReference]
+  for (auto &d : usbDirs) {
+             ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/deep_learning_accelerator_lib/deep_learning_accelerator_lib.cpp:394:14: style: Variable 'd' can be declared as reference to const [constVariableReference]
+  for (auto &d : pcieDevs) {
+             ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/deep_learning_accelerator_lib/deep_learning_accelerator_lib.cpp:451:14: style: Variable 'd' can be declared as reference to const [constVariableReference]
+  for (auto &d : pcieDevs) {
+             ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/deep_learning_accelerator_lib/deep_learning_accelerator_lib.cpp:1155:14: style: Variable 'd' can be declared as reference to const [constVariableReference]
+  for (auto &d : devfreqDirs) {
+             ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/deep_learning_accelerator_lib/deep_learning_accelerator_lib.cpp:613:9: style: Variable 'x' can be declared as const array [constVariable]
+  float x[M] = {5.0f, 6.0f, 7.0f, 8.0f};
+        ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/deep_learning_accelerator_lib/deep_learning_accelerator_lib.cpp:1157:46: style: Consider using std::find_if algorithm instead of a raw loop. [useStlAlgorithm]
+        d.find("pcie") != std::string::npos) {
+                                             ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/deep_learning_accelerator_lib/deep_learning_accelerator_lib.cpp:1006:11: style: struct member 'Fp16Check::maxAbsErr' is never used. [unusedStructMember]
+    float maxAbsErr;
+          ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/deep_learning_accelerator_lib/deep_learning_accelerator_lib.cpp:117:21: style: Variable 'lspci' is assigned a value that is never used. [unreadVariable]
+  std::string lspci =
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/display_interfaces/display_interfaces.cpp:58:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/display_interfaces/display_interfaces.cpp:94:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/display_interfaces/display_interfaces.cpp:141:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/display_interfaces/display_interfaces.cpp:182:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/display_interfaces/display_interfaces.cpp:216:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/display_interfaces/display_interfaces.cpp:250:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/display_interfaces/display_interfaces.cpp:288:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/display_interfaces/display_interfaces.cpp:193:25: style: Variable 'vcModes' is assigned a value that is never used. [unreadVariable]
+    std::string vcModes = dispRunCmd("vcgencmd get_display_power 2>/dev/null");
+                        ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/ethernet_lib/ethernet_lib.cpp:109:21: style: Condition 'passed' is always false [knownConditionTrueFalse]
+      _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/ethernet_lib/ethernet_lib.cpp:105:14: note: Assignment 'passed=false', assigned value is 0
+    passed = false;
+             ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/ethernet_lib/ethernet_lib.cpp:109:21: note: Condition 'passed' is always false
+      _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/ethernet_lib/ethernet_lib.cpp:110:23: style: Condition 'passed' is always false [knownConditionTrueFalse]
+      _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                      ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/ethernet_lib/ethernet_lib.cpp:105:14: note: Assignment 'passed=false', assigned value is 0
+    passed = false;
+             ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/ethernet_lib/ethernet_lib.cpp:110:23: note: Condition 'passed' is always false
+      _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                      ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/ethernet_lib/ethernet_lib.cpp:549:19: style: Condition 'passed' is always true [knownConditionTrueFalse]
+    _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                  ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/ethernet_lib/ethernet_lib.cpp:535:17: note: Assignment 'passed=true', assigned value is 1
+  bool passed = true;
+                ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/ethernet_lib/ethernet_lib.cpp:549:19: note: Condition 'passed' is always true
+    _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                  ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/ethernet_lib/ethernet_lib.cpp:550:21: style: Condition 'passed' is always true [knownConditionTrueFalse]
+    _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/ethernet_lib/ethernet_lib.cpp:535:17: note: Assignment 'passed=true', assigned value is 1
+  bool passed = true;
+                ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/ethernet_lib/ethernet_lib.cpp:550:21: note: Condition 'passed' is always true
+    _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/ethernet_lib/ethernet_lib.cpp:571:19: style: Condition 'passed' is always true [knownConditionTrueFalse]
+    _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                  ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/ethernet_lib/ethernet_lib.cpp:562:17: note: Assignment 'passed=true', assigned value is 1
+  bool passed = true;
+                ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/ethernet_lib/ethernet_lib.cpp:571:19: note: Condition 'passed' is always true
+    _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                  ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/ethernet_lib/ethernet_lib.cpp:572:21: style: Condition 'passed' is always true [knownConditionTrueFalse]
+    _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/ethernet_lib/ethernet_lib.cpp:562:17: note: Assignment 'passed=true', assigned value is 1
+  bool passed = true;
+                ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/ethernet_lib/ethernet_lib.cpp:572:21: note: Condition 'passed' is always true
+    _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/ethernet_lib/ethernet_lib.cpp:596:19: style: Condition 'passed' is always true [knownConditionTrueFalse]
+    _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                  ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/ethernet_lib/ethernet_lib.cpp:584:17: note: Assignment 'passed=true', assigned value is 1
+  bool passed = true;
+                ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/ethernet_lib/ethernet_lib.cpp:596:19: note: Condition 'passed' is always true
+    _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                  ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/ethernet_lib/ethernet_lib.cpp:597:21: style: Condition 'passed' is always true [knownConditionTrueFalse]
+    _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/ethernet_lib/ethernet_lib.cpp:584:17: note: Assignment 'passed=true', assigned value is 1
+  bool passed = true;
+                ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/ethernet_lib/ethernet_lib.cpp:597:21: note: Condition 'passed' is always true
+    _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/ethernet_lib/ethernet_lib.cpp:623:19: style: Condition 'passed' is always true [knownConditionTrueFalse]
+    _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                  ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/ethernet_lib/ethernet_lib.cpp:609:17: note: Assignment 'passed=true', assigned value is 1
+  bool passed = true;
+                ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/ethernet_lib/ethernet_lib.cpp:623:19: note: Condition 'passed' is always true
+    _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                  ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/ethernet_lib/ethernet_lib.cpp:624:21: style: Condition 'passed' is always true [knownConditionTrueFalse]
+    _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/ethernet_lib/ethernet_lib.cpp:609:17: note: Assignment 'passed=true', assigned value is 1
+  bool passed = true;
+                ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/ethernet_lib/ethernet_lib.cpp:624:21: note: Condition 'passed' is always true
+    _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/ethernet_lib/ethernet_lib.cpp:659:19: style: Condition 'passed' is always true [knownConditionTrueFalse]
+    _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                  ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/ethernet_lib/ethernet_lib.cpp:636:17: note: Assignment 'passed=true', assigned value is 1
+  bool passed = true;
+                ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/ethernet_lib/ethernet_lib.cpp:659:19: note: Condition 'passed' is always true
+    _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                  ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/ethernet_lib/ethernet_lib.cpp:660:21: style: Condition 'passed' is always true [knownConditionTrueFalse]
+    _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/ethernet_lib/ethernet_lib.cpp:636:17: note: Assignment 'passed=true', assigned value is 1
+  bool passed = true;
+                ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/ethernet_lib/ethernet_lib.cpp:660:21: note: Condition 'passed' is always true
+    _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/ethernet_lib/ethernet_lib.cpp:384:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/ethernet_lib/ethernet_lib.cpp:420:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/ethernet_lib/ethernet_lib.cpp:462:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/ethernet_lib/ethernet_lib.cpp:493:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/ethernet_lib/ethernet_lib.cpp:535:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/ethernet_lib/ethernet_lib.cpp:562:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/ethernet_lib/ethernet_lib.cpp:584:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/ethernet_lib/ethernet_lib.cpp:609:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/ethernet_lib/ethernet_lib.cpp:636:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/ethernet_lib/ethernet_lib.cpp:672:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/ethernet_lib/ethernet_lib.cpp:755:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/ethernet_lib/ethernet_lib.cpp:790:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/ethernet_lib/ethernet_lib.cpp:819:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/ethernet_lib/ethernet_lib.cpp:351:22: style: Variable 'driver' is assigned a value that is never used. [unreadVariable]
+  std::string driver = ethReadFile("/sys/class/net/" + std::string(ETH_IFACE) +
+                     ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/ethernet_lib/ethernet_lib.cpp:682:19: style: Variable 'ptp' is assigned a value that is never used. [unreadVariable]
+  std::string ptp =
+                  ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/gpio_lib/gpio_lib.cpp:35:3: performance: Variable 'transport_' is assigned in constructor body. Consider performing initialization in initialization list. [useInitializationList]
+  transport_ = std::make_unique<Stm32Transport>();
+  ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/gpu_lib/gpu_lib.cpp:301:7: style: Condition 'passed' is always true [knownConditionTrueFalse]
+  if (passed)
+      ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/gpu_lib/gpu_lib.cpp:275:17: note: Assignment 'passed=true', assigned value is 1
+  bool passed = true;
+                ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/gpu_lib/gpu_lib.cpp:301:7: note: Condition 'passed' is always true
+  if (passed)
+      ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/gpu_lib/gpu_lib.cpp:306:19: style: Condition 'passed' is always true [knownConditionTrueFalse]
+    _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                  ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/gpu_lib/gpu_lib.cpp:275:17: note: Assignment 'passed=true', assigned value is 1
+  bool passed = true;
+                ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/gpu_lib/gpu_lib.cpp:306:19: note: Condition 'passed' is always true
+    _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                  ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/gpu_lib/gpu_lib.cpp:307:21: style: Condition 'passed' is always true [knownConditionTrueFalse]
+    _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/gpu_lib/gpu_lib.cpp:275:17: note: Assignment 'passed=true', assigned value is 1
+  bool passed = true;
+                ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/gpu_lib/gpu_lib.cpp:307:21: note: Condition 'passed' is always true
+    _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/gpu_lib/gpu_lib.cpp:800:7: style: Condition 'passed' is always true [knownConditionTrueFalse]
+  if (passed)
+      ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/gpu_lib/gpu_lib.cpp:749:17: note: Assignment 'passed=true', assigned value is 1
+  bool passed = true;
+                ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/gpu_lib/gpu_lib.cpp:800:7: note: Condition 'passed' is always true
+  if (passed)
+      ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/gpu_lib/gpu_lib.cpp:804:19: style: Condition 'passed' is always true [knownConditionTrueFalse]
+    _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                  ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/gpu_lib/gpu_lib.cpp:749:17: note: Assignment 'passed=true', assigned value is 1
+  bool passed = true;
+                ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/gpu_lib/gpu_lib.cpp:804:19: note: Condition 'passed' is always true
+    _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                  ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/gpu_lib/gpu_lib.cpp:805:21: style: Condition 'passed' is always true [knownConditionTrueFalse]
+    _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/gpu_lib/gpu_lib.cpp:749:17: note: Assignment 'passed=true', assigned value is 1
+  bool passed = true;
+                ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/gpu_lib/gpu_lib.cpp:805:21: note: Condition 'passed' is always true
+    _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/gpu_lib/gpu_lib.cpp:947:7: style: Condition 'passed' is always true [knownConditionTrueFalse]
+  if (passed)
+      ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/gpu_lib/gpu_lib.cpp:924:17: note: Assignment 'passed=true', assigned value is 1
+  bool passed = true;
+                ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/gpu_lib/gpu_lib.cpp:947:7: note: Condition 'passed' is always true
+  if (passed)
+      ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/gpu_lib/gpu_lib.cpp:952:19: style: Condition 'passed' is always true [knownConditionTrueFalse]
+    _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                  ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/gpu_lib/gpu_lib.cpp:924:17: note: Assignment 'passed=true', assigned value is 1
+  bool passed = true;
+                ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/gpu_lib/gpu_lib.cpp:952:19: note: Condition 'passed' is always true
+    _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                  ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/gpu_lib/gpu_lib.cpp:953:21: style: Condition 'passed' is always true [knownConditionTrueFalse]
+    _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/gpu_lib/gpu_lib.cpp:924:17: note: Assignment 'passed=true', assigned value is 1
+  bool passed = true;
+                ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/gpu_lib/gpu_lib.cpp:953:21: note: Condition 'passed' is always true
+    _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/gpu_lib/gpu_lib.cpp:1086:7: style: Condition 'passed' is always true [knownConditionTrueFalse]
+  if (passed)
+      ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/gpu_lib/gpu_lib.cpp:1063:17: note: Assignment 'passed=true', assigned value is 1
+  bool passed = true;
+                ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/gpu_lib/gpu_lib.cpp:1086:7: note: Condition 'passed' is always true
+  if (passed)
+      ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/gpu_lib/gpu_lib.cpp:1090:19: style: Condition 'passed' is always true [knownConditionTrueFalse]
+    _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                  ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/gpu_lib/gpu_lib.cpp:1063:17: note: Assignment 'passed=true', assigned value is 1
+  bool passed = true;
+                ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/gpu_lib/gpu_lib.cpp:1090:19: note: Condition 'passed' is always true
+    _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                  ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/gpu_lib/gpu_lib.cpp:1091:21: style: Condition 'passed' is always true [knownConditionTrueFalse]
+    _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/gpu_lib/gpu_lib.cpp:1063:17: note: Assignment 'passed=true', assigned value is 1
+  bool passed = true;
+                ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/gpu_lib/gpu_lib.cpp:1091:21: note: Condition 'passed' is always true
+    _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/gpu_lib/gpu_lib.cpp:1132:7: style: Condition 'passed' is always true [knownConditionTrueFalse]
+  if (passed)
+      ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/gpu_lib/gpu_lib.cpp:1105:17: note: Assignment 'passed=true', assigned value is 1
+  bool passed = true;
+                ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/gpu_lib/gpu_lib.cpp:1132:7: note: Condition 'passed' is always true
+  if (passed)
+      ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/gpu_lib/gpu_lib.cpp:1136:19: style: Condition 'passed' is always true [knownConditionTrueFalse]
+    _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                  ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/gpu_lib/gpu_lib.cpp:1105:17: note: Assignment 'passed=true', assigned value is 1
+  bool passed = true;
+                ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/gpu_lib/gpu_lib.cpp:1136:19: note: Condition 'passed' is always true
+    _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                  ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/gpu_lib/gpu_lib.cpp:1137:21: style: Condition 'passed' is always true [knownConditionTrueFalse]
+    _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/gpu_lib/gpu_lib.cpp:1105:17: note: Assignment 'passed=true', assigned value is 1
+  bool passed = true;
+                ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/gpu_lib/gpu_lib.cpp:1137:21: note: Condition 'passed' is always true
+    _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/gpu_lib/gpu_lib.cpp:1078:26: style: Variable 'C[i*N_dim+j]' is assigned a value that is never used. [unreadVariable]
+        C[i * N_dim + j] += A[i * K + k] * B[k * N_dim + j];
+                         ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/lib_base.cpp:361:26: style: Consider using std::any_of algorithm instead of a raw loop. [useStlAlgorithm]
+      if (avail == name) {
+                         ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/mcu_interface_lib/mcu_interface_lib.cpp:275:11: style: Consider using std::transform algorithm instead of a raw loop. [useStlAlgorithm]
+    lines.push_back("  " + line);
+          ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/pcie_lib/pcie_lib.cpp:528:12: style: The scope of the variable 'dummy' can be reduced. [variableScope]
+      char dummy[16];
+           ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/pcie_lib/pcie_lib.cpp:714:14: style: The scope of the variable 'dummy' can be reduced. [variableScope]
+        char dummy[16];
+             ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/pcie_lib/pcie_lib.cpp:887:8: style: The scope of the variable 'overallPass' can be reduced. [variableScope]
+  bool overallPass = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/pcie_lib/pcie_lib.cpp:2039:20: style: Variable 'entry' can be declared as pointer to const [constVariablePointer]
+    struct dirent *entry;
+                   ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/pcie_lib/pcie_lib.cpp:1275:14: style: Consider using std::transform algorithm instead of a raw loop. [useStlAlgorithm]
+        data.push_back("  - " + d);
+             ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/pcie_lib/pcie_lib.cpp:1525:29: style: Consider using std::any_of algorithm instead of a raw loop. [useStlAlgorithm]
+          if (vendor == sv) {
+                            ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/poe_hat_lib/poe_hat_lib.cpp:69:18: style: Variable 'e' can be declared as pointer to const [constVariablePointer]
+  struct dirent *e;
+                 ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/poe_hat_lib/poe_hat_lib.cpp:272:13: style: Variable 'found' is assigned a value that is never used. [unreadVariable]
+      found = true;
+            ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/power_management_lib/power_management_lib.cpp:148:19: style: Condition 'passed' is always true [knownConditionTrueFalse]
+    _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                  ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/power_management_lib/power_management_lib.cpp:118:17: note: Assignment 'passed=true', assigned value is 1
+  bool passed = true;
+                ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/power_management_lib/power_management_lib.cpp:148:19: note: Condition 'passed' is always true
+    _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                  ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/power_management_lib/power_management_lib.cpp:149:21: style: Condition 'passed' is always true [knownConditionTrueFalse]
+    _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/power_management_lib/power_management_lib.cpp:118:17: note: Assignment 'passed=true', assigned value is 1
+  bool passed = true;
+                ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/power_management_lib/power_management_lib.cpp:149:21: note: Condition 'passed' is always true
+    _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/power_management_lib/power_management_lib.cpp:223:19: style: Condition 'passed' is always true [knownConditionTrueFalse]
+    _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                  ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/power_management_lib/power_management_lib.cpp:202:17: note: Assignment 'passed=true', assigned value is 1
+  bool passed = true;
+                ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/power_management_lib/power_management_lib.cpp:223:19: note: Condition 'passed' is always true
+    _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                  ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/power_management_lib/power_management_lib.cpp:224:21: style: Condition 'passed' is always true [knownConditionTrueFalse]
+    _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/power_management_lib/power_management_lib.cpp:202:17: note: Assignment 'passed=true', assigned value is 1
+  bool passed = true;
+                ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/power_management_lib/power_management_lib.cpp:224:21: note: Condition 'passed' is always true
+    _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/power_management_lib/power_management_lib.cpp:267:19: style: Condition 'passed' is always true [knownConditionTrueFalse]
+    _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                  ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/power_management_lib/power_management_lib.cpp:236:17: note: Assignment 'passed=true', assigned value is 1
+  bool passed = true;
+                ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/power_management_lib/power_management_lib.cpp:248:21: note: Assuming condition is false
+      if (name.empty())
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/power_management_lib/power_management_lib.cpp:267:19: note: Condition 'passed' is always true
+    _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                  ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/power_management_lib/power_management_lib.cpp:268:21: style: Condition 'passed' is always true [knownConditionTrueFalse]
+    _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/power_management_lib/power_management_lib.cpp:236:17: note: Assignment 'passed=true', assigned value is 1
+  bool passed = true;
+                ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/power_management_lib/power_management_lib.cpp:248:21: note: Assuming condition is false
+      if (name.empty())
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/power_management_lib/power_management_lib.cpp:268:21: note: Condition 'passed' is always true
+    _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/power_management_lib/power_management_lib.cpp:396:19: style: Condition 'passed' is always true [knownConditionTrueFalse]
+    _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                  ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/power_management_lib/power_management_lib.cpp:388:17: note: Assignment 'passed=true', assigned value is 1
+  bool passed = true;
+                ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/power_management_lib/power_management_lib.cpp:396:19: note: Condition 'passed' is always true
+    _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                  ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/power_management_lib/power_management_lib.cpp:397:21: style: Condition 'passed' is always true [knownConditionTrueFalse]
+    _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/power_management_lib/power_management_lib.cpp:388:17: note: Assignment 'passed=true', assigned value is 1
+  bool passed = true;
+                ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/power_management_lib/power_management_lib.cpp:397:21: note: Condition 'passed' is always true
+    _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/power_management_lib/power_management_lib.cpp:822:19: style: Condition 'passed' is always true [knownConditionTrueFalse]
+    _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                  ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/power_management_lib/power_management_lib.cpp:801:17: note: Assignment 'passed=true', assigned value is 1
+  bool passed = true;
+                ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/power_management_lib/power_management_lib.cpp:822:19: note: Condition 'passed' is always true
+    _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                  ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/power_management_lib/power_management_lib.cpp:823:21: style: Condition 'passed' is always true [knownConditionTrueFalse]
+    _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/power_management_lib/power_management_lib.cpp:801:17: note: Assignment 'passed=true', assigned value is 1
+  bool passed = true;
+                ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/power_management_lib/power_management_lib.cpp:823:21: note: Condition 'passed' is always true
+    _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/power_management_lib/power_management_lib.cpp:864:19: style: Condition 'passed' is always true [knownConditionTrueFalse]
+    _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                  ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/power_management_lib/power_management_lib.cpp:835:17: note: Assignment 'passed=true', assigned value is 1
+  bool passed = true;
+                ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/power_management_lib/power_management_lib.cpp:847:27: note: Assuming container is not empty
+  for (const char *path : battPaths) {
+                          ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/power_management_lib/power_management_lib.cpp:864:19: note: Condition 'passed' is always true
+    _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                  ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/power_management_lib/power_management_lib.cpp:865:21: style: Condition 'passed' is always true [knownConditionTrueFalse]
+    _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/power_management_lib/power_management_lib.cpp:835:17: note: Assignment 'passed=true', assigned value is 1
+  bool passed = true;
+                ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/power_management_lib/power_management_lib.cpp:847:27: note: Assuming container is not empty
+  for (const char *path : battPaths) {
+                          ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/power_management_lib/power_management_lib.cpp:865:21: note: Condition 'passed' is always true
+    _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/power_management_lib/power_management_lib.cpp:906:19: style: Condition 'passed' is always true [knownConditionTrueFalse]
+    _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                  ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/power_management_lib/power_management_lib.cpp:877:17: note: Assignment 'passed=true', assigned value is 1
+  bool passed = true;
+                ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/power_management_lib/power_management_lib.cpp:886:27: note: Assuming container is not empty
+  for (const char *path : upsPaths) {
+                          ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/power_management_lib/power_management_lib.cpp:906:19: note: Condition 'passed' is always true
+    _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                  ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/power_management_lib/power_management_lib.cpp:907:21: style: Condition 'passed' is always true [knownConditionTrueFalse]
+    _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/power_management_lib/power_management_lib.cpp:877:17: note: Assignment 'passed=true', assigned value is 1
+  bool passed = true;
+                ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/power_management_lib/power_management_lib.cpp:886:27: note: Assuming container is not empty
+  for (const char *path : upsPaths) {
+                          ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/power_management_lib/power_management_lib.cpp:907:21: note: Condition 'passed' is always true
+    _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/power_management_lib/power_management_lib.cpp:69:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/power_management_lib/power_management_lib.cpp:118:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/power_management_lib/power_management_lib.cpp:161:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/power_management_lib/power_management_lib.cpp:202:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/power_management_lib/power_management_lib.cpp:236:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/power_management_lib/power_management_lib.cpp:280:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/power_management_lib/power_management_lib.cpp:318:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/power_management_lib/power_management_lib.cpp:356:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/power_management_lib/power_management_lib.cpp:388:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/power_management_lib/power_management_lib.cpp:409:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/power_management_lib/power_management_lib.cpp:469:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/power_management_lib/power_management_lib.cpp:503:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/power_management_lib/power_management_lib.cpp:584:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/power_management_lib/power_management_lib.cpp:627:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/power_management_lib/power_management_lib.cpp:655:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/power_management_lib/power_management_lib.cpp:684:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/power_management_lib/power_management_lib.cpp:713:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/power_management_lib/power_management_lib.cpp:765:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/power_management_lib/power_management_lib.cpp:801:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/power_management_lib/power_management_lib.cpp:835:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/power_management_lib/power_management_lib.cpp:877:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/security_features_lib/security_features_lib.cpp:222:19: style: Condition 'passed' is always true [knownConditionTrueFalse]
+    _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                  ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/security_features_lib/security_features_lib.cpp:186:17: note: Assignment 'passed=true', assigned value is 1
+  bool passed = true;
+                ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/security_features_lib/security_features_lib.cpp:222:19: note: Condition 'passed' is always true
+    _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                  ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/security_features_lib/security_features_lib.cpp:223:21: style: Condition 'passed' is always true [knownConditionTrueFalse]
+    _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/security_features_lib/security_features_lib.cpp:186:17: note: Assignment 'passed=true', assigned value is 1
+  bool passed = true;
+                ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/security_features_lib/security_features_lib.cpp:223:21: note: Condition 'passed' is always true
+    _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/security_features_lib/security_features_lib.cpp:305:19: style: Condition 'passed' is always true [knownConditionTrueFalse]
+    _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                  ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/security_features_lib/security_features_lib.cpp:278:17: note: Assignment 'passed=true', assigned value is 1
+  bool passed = true;
+                ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/security_features_lib/security_features_lib.cpp:305:19: note: Condition 'passed' is always true
+    _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                  ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/security_features_lib/security_features_lib.cpp:306:21: style: Condition 'passed' is always true [knownConditionTrueFalse]
+    _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/security_features_lib/security_features_lib.cpp:278:17: note: Assignment 'passed=true', assigned value is 1
+  bool passed = true;
+                ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/security_features_lib/security_features_lib.cpp:306:21: note: Condition 'passed' is always true
+    _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/security_features_lib/security_features_lib.cpp:479:19: style: Condition 'passed' is always true [knownConditionTrueFalse]
+    _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                  ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/security_features_lib/security_features_lib.cpp:449:17: note: Assignment 'passed=true', assigned value is 1
+  bool passed = true;
+                ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/security_features_lib/security_features_lib.cpp:479:19: note: Condition 'passed' is always true
+    _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                  ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/security_features_lib/security_features_lib.cpp:480:21: style: Condition 'passed' is always true [knownConditionTrueFalse]
+    _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/security_features_lib/security_features_lib.cpp:449:17: note: Assignment 'passed=true', assigned value is 1
+  bool passed = true;
+                ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/security_features_lib/security_features_lib.cpp:480:21: note: Condition 'passed' is always true
+    _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/security_features_lib/security_features_lib.cpp:525:19: style: Condition 'passed' is always true [knownConditionTrueFalse]
+    _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                  ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/security_features_lib/security_features_lib.cpp:492:17: note: Assignment 'passed=true', assigned value is 1
+  bool passed = true;
+                ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/security_features_lib/security_features_lib.cpp:525:19: note: Condition 'passed' is always true
+    _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                  ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/security_features_lib/security_features_lib.cpp:526:21: style: Condition 'passed' is always true [knownConditionTrueFalse]
+    _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/security_features_lib/security_features_lib.cpp:492:17: note: Assignment 'passed=true', assigned value is 1
+  bool passed = true;
+                ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/security_features_lib/security_features_lib.cpp:526:21: note: Condition 'passed' is always true
+    _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/security_features_lib/security_features_lib.cpp:60:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/security_features_lib/security_features_lib.cpp:102:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/security_features_lib/security_features_lib.cpp:144:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/security_features_lib/security_features_lib.cpp:186:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/security_features_lib/security_features_lib.cpp:235:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/security_features_lib/security_features_lib.cpp:278:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/security_features_lib/security_features_lib.cpp:318:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/security_features_lib/security_features_lib.cpp:449:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/security_features_lib/security_features_lib.cpp:492:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/security_features_lib/security_features_lib.cpp:538:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/security_features_lib/security_features_lib.cpp:295:23: style: Variable 'fscrypt' is assigned a value that is never used. [unreadVariable]
+  std::string fscrypt =
+                      ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/security_features_lib/security_features_lib.cpp:471:21: style: Variable 'smaps' is assigned a value that is never used. [unreadVariable]
+  std::string smaps = secRunCmd("cat /proc/1/smaps 2>/dev/null | grep -c 'ss'");
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/sense_hat_lib/sense_hat_lib.cpp:70:18: style: Variable 'e' can be declared as pointer to const [constVariablePointer]
+  struct dirent *e;
+                 ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/sense_hat_lib/sense_hat_lib.cpp:473:13: style: Consider using std::count_if algorithm instead of a raw loop. [useStlAlgorithm]
+          ++present;
+            ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/sense_hat_lib/sense_hat_lib.cpp:97:23: style: Variable 'cmdline' is assigned a value that is never used. [unreadVariable]
+  std::string cmdline = shReadFile("/boot/firmware/config.txt");
+                      ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/stm32_transport.cpp:114:24: style: Local variable 'config' shadows outer function [shadowFunction]
+  Stm32TransportConfig config;
+                       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/stm32_transport.h:59:31: note: Shadowed declaration
+  const Stm32TransportConfig &config() const;
+                              ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/stm32_transport.cpp:114:24: note: Shadow variable
+  Stm32TransportConfig config;
+                       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/stm32_transport.cpp:83:27: style: Consider using std::find_if algorithm instead of a raw loop. [useStlAlgorithm]
+    if (pathExists(path)) {
+                          ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/stm32_transport.cpp:311:11: style: Consider using std::accumulate algorithm instead of a raw loop. [useStlAlgorithm]
+    value ^= byte;
+          ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/storage_lib/storage_lib.cpp:197:21: style: Condition 'passed' is always false [knownConditionTrueFalse]
+      _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/storage_lib/storage_lib.cpp:192:14: note: Assignment 'passed=false', assigned value is 0
+    passed = false;
+             ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/storage_lib/storage_lib.cpp:197:21: note: Condition 'passed' is always false
+      _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/storage_lib/storage_lib.cpp:198:23: style: Condition 'passed' is always false [knownConditionTrueFalse]
+      _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                      ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/storage_lib/storage_lib.cpp:192:14: note: Assignment 'passed=false', assigned value is 0
+    passed = false;
+             ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/storage_lib/storage_lib.cpp:198:23: note: Condition 'passed' is always false
+      _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                      ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/storage_lib/storage_lib.cpp:598:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/storage_lib/storage_lib.cpp:798:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/storage_lib/storage_lib.cpp:1014:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/storage_lib/storage_lib.cpp:1060:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/storage_lib/storage_lib.cpp:136:22: style: Variable 'szPath' is assigned a value that is never used. [unreadVariable]
+  std::string szPath = "/sys/block/";
+                     ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/storage_lib/storage_lib.cpp:211:18: style: Variable 'hs' is assigned a value that is never used. [unreadVariable]
+  std::string hs =
+                 ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/storage_lib/storage_lib.cpp:433:26: style: Variable 'videoClass' is assigned a value that is never used. [unreadVariable]
+  std::string videoClass =
+                         ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/system_integration_lib/system_integration_lib.cpp:146:25: style: Variable 'swapTotal' is assigned a value that is never used. [unreadVariable]
+  std::string swapTotal = siReadFile("/proc/meminfo");
+                        ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/system_integration_lib/system_integration_lib.cpp:235:19: style: Variable 'ver' is assigned a value that is never used. [unreadVariable]
+  std::string ver = siRunCmd("cat /proc/version 2>/dev/null");
+                  ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/system_memory_lib/system_memory_lib.cpp:516:17: style: Redundant condition: The condition 'latNs > 0' is redundant since 'latNs > 500.0' is sufficient. [redundantCondition]
+  if (latNs > 0 && latNs > 500.0) {
+                ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/system_memory_lib/system_memory_lib.cpp:229:19: style: Condition 'passed' is always true [knownConditionTrueFalse]
+    _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                  ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/system_memory_lib/system_memory_lib.cpp:214:17: note: Assignment 'passed=true', assigned value is 1
+  bool passed = true;
+                ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/system_memory_lib/system_memory_lib.cpp:229:19: note: Condition 'passed' is always true
+    _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                  ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/system_memory_lib/system_memory_lib.cpp:230:21: style: Condition 'passed' is always true [knownConditionTrueFalse]
+    _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/system_memory_lib/system_memory_lib.cpp:214:17: note: Assignment 'passed=true', assigned value is 1
+  bool passed = true;
+                ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/system_memory_lib/system_memory_lib.cpp:230:21: note: Condition 'passed' is always true
+    _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/system_memory_lib/system_memory_lib.cpp:272:19: style: Condition 'passed' is always true [knownConditionTrueFalse]
+    _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                  ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/system_memory_lib/system_memory_lib.cpp:243:17: note: Assignment 'passed=true', assigned value is 1
+  bool passed = true;
+                ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/system_memory_lib/system_memory_lib.cpp:272:19: note: Condition 'passed' is always true
+    _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                  ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/system_memory_lib/system_memory_lib.cpp:273:21: style: Condition 'passed' is always true [knownConditionTrueFalse]
+    _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/system_memory_lib/system_memory_lib.cpp:243:17: note: Assignment 'passed=true', assigned value is 1
+  bool passed = true;
+                ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/system_memory_lib/system_memory_lib.cpp:273:21: note: Condition 'passed' is always true
+    _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/system_memory_lib/system_memory_lib.cpp:173:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/system_memory_lib/system_memory_lib.cpp:214:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/system_memory_lib/system_memory_lib.cpp:243:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/system_memory_lib/system_memory_lib.cpp:367:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/system_memory_lib/system_memory_lib.cpp:769:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/system_memory_lib/system_memory_lib.cpp:249:24: style: Variable 'dmiSpeed' is assigned a value that is never used. [unreadVariable]
+  std::string dmiSpeed = memReadFile("/sys/class/dmi/id/product_version");
+                       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/system_memory_lib/system_memory_lib.cpp:251:21: style: Variable 'vcArm' is assigned a value that is never used. [unreadVariable]
+  std::string vcArm = memReadFile("/proc/device-tree/memory/reg");
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/usb_lib/usb_lib.cpp:77:18: style: Variable 'entry' can be declared as pointer to const [constVariablePointer]
+  struct dirent *entry;
+                 ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/usb_lib/usb_lib.cpp:213:18: style: Variable 'entry' can be declared as pointer to const [constVariablePointer]
+  struct dirent *entry;
+                 ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/usb_lib/usb_lib.cpp:475:20: style: Variable 'entry' can be declared as pointer to const [constVariablePointer]
+    struct dirent *entry;
+                   ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/usb_lib/usb_lib.cpp:933:20: style: Variable 'entry' can be declared as pointer to const [constVariablePointer]
+    struct dirent *entry;
+                   ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/usb_lib/usb_lib.cpp:146:19: style: Variable 'driverPresent' is assigned a value that is never used. [unreadVariable]
+    driverPresent = true;
+                  ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/usb_lib/usb_lib.cpp:778:28: style: Variable 'ifProtocol' is assigned a value that is never used. [unreadVariable]
+    std::string ifProtocol = readSysfs(dev + "/bInterfaceProtocol");
+                           ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/usb_lib/usb_lib.cpp:779:24: style: Variable 'driver' is assigned a value that is never used. [unreadVariable]
+    std::string driver = readSysfs(dev + "/driver"); // symlink target name
+                       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/usb_lib/usb_lib.cpp:1143:23: style: Variable 'ifSub' is assigned a value that is never used. [unreadVariable]
+    std::string ifSub = readSysfs(dev + "/bInterfaceSubClass");
+                      ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/video_encode_decode_lib/video_encode_decode_lib.cpp:436:21: style: Condition 'passed' is always false [knownConditionTrueFalse]
+      _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/video_encode_decode_lib/video_encode_decode_lib.cpp:431:14: note: Assignment 'passed=false', assigned value is 0
+    passed = false;
+             ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/video_encode_decode_lib/video_encode_decode_lib.cpp:436:21: note: Condition 'passed' is always false
+      _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/video_encode_decode_lib/video_encode_decode_lib.cpp:437:23: style: Condition 'passed' is always false [knownConditionTrueFalse]
+      _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                      ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/video_encode_decode_lib/video_encode_decode_lib.cpp:431:14: note: Assignment 'passed=false', assigned value is 0
+    passed = false;
+             ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/video_encode_decode_lib/video_encode_decode_lib.cpp:437:23: note: Condition 'passed' is always false
+      _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                      ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/video_encode_decode_lib/video_encode_decode_lib.cpp:511:21: style: Condition 'passed' is always false [knownConditionTrueFalse]
+      _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/video_encode_decode_lib/video_encode_decode_lib.cpp:506:14: note: Assignment 'passed=false', assigned value is 0
+    passed = false;
+             ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/video_encode_decode_lib/video_encode_decode_lib.cpp:511:21: note: Condition 'passed' is always false
+      _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/video_encode_decode_lib/video_encode_decode_lib.cpp:512:23: style: Condition 'passed' is always false [knownConditionTrueFalse]
+      _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                      ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/video_encode_decode_lib/video_encode_decode_lib.cpp:506:14: note: Assignment 'passed=false', assigned value is 0
+    passed = false;
+             ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/video_encode_decode_lib/video_encode_decode_lib.cpp:512:23: note: Condition 'passed' is always false
+      _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                      ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/video_encode_decode_lib/video_encode_decode_lib.cpp:575:21: style: Condition 'passed' is always false [knownConditionTrueFalse]
+      _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/video_encode_decode_lib/video_encode_decode_lib.cpp:570:14: note: Assignment 'passed=false', assigned value is 0
+    passed = false;
+             ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/video_encode_decode_lib/video_encode_decode_lib.cpp:575:21: note: Condition 'passed' is always false
+      _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/video_encode_decode_lib/video_encode_decode_lib.cpp:576:23: style: Condition 'passed' is always false [knownConditionTrueFalse]
+      _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                      ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/video_encode_decode_lib/video_encode_decode_lib.cpp:570:14: note: Assignment 'passed=false', assigned value is 0
+    passed = false;
+             ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/video_encode_decode_lib/video_encode_decode_lib.cpp:576:23: note: Condition 'passed' is always false
+      _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                      ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/video_encode_decode_lib/video_encode_decode_lib.cpp:640:21: style: Condition 'passed' is always false [knownConditionTrueFalse]
+      _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/video_encode_decode_lib/video_encode_decode_lib.cpp:635:14: note: Assignment 'passed=false', assigned value is 0
+    passed = false;
+             ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/video_encode_decode_lib/video_encode_decode_lib.cpp:640:21: note: Condition 'passed' is always false
+      _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/video_encode_decode_lib/video_encode_decode_lib.cpp:641:23: style: Condition 'passed' is always false [knownConditionTrueFalse]
+      _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                      ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/video_encode_decode_lib/video_encode_decode_lib.cpp:635:14: note: Assignment 'passed=false', assigned value is 0
+    passed = false;
+             ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/video_encode_decode_lib/video_encode_decode_lib.cpp:641:23: note: Condition 'passed' is always false
+      _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                      ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/video_encode_decode_lib/video_encode_decode_lib.cpp:698:21: style: Condition 'passed' is always false [knownConditionTrueFalse]
+      _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/video_encode_decode_lib/video_encode_decode_lib.cpp:694:14: note: Assignment 'passed=false', assigned value is 0
+    passed = false;
+             ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/video_encode_decode_lib/video_encode_decode_lib.cpp:698:21: note: Condition 'passed' is always false
+      _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/video_encode_decode_lib/video_encode_decode_lib.cpp:699:23: style: Condition 'passed' is always false [knownConditionTrueFalse]
+      _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                      ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/video_encode_decode_lib/video_encode_decode_lib.cpp:694:14: note: Assignment 'passed=false', assigned value is 0
+    passed = false;
+             ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/video_encode_decode_lib/video_encode_decode_lib.cpp:699:23: note: Condition 'passed' is always false
+      _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                      ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/video_encode_decode_lib/video_encode_decode_lib.cpp:760:21: style: Condition 'passed' is always false [knownConditionTrueFalse]
+      _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/video_encode_decode_lib/video_encode_decode_lib.cpp:756:14: note: Assignment 'passed=false', assigned value is 0
+    passed = false;
+             ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/video_encode_decode_lib/video_encode_decode_lib.cpp:760:21: note: Condition 'passed' is always false
+      _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/video_encode_decode_lib/video_encode_decode_lib.cpp:761:23: style: Condition 'passed' is always false [knownConditionTrueFalse]
+      _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                      ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/video_encode_decode_lib/video_encode_decode_lib.cpp:756:14: note: Assignment 'passed=false', assigned value is 0
+    passed = false;
+             ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/video_encode_decode_lib/video_encode_decode_lib.cpp:761:23: note: Condition 'passed' is always false
+      _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                      ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/video_encode_decode_lib/video_encode_decode_lib.cpp:1089:21: style: Condition 'passed' is always false [knownConditionTrueFalse]
+      _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/video_encode_decode_lib/video_encode_decode_lib.cpp:1085:14: note: Assignment 'passed=false', assigned value is 0
+    passed = false;
+             ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/video_encode_decode_lib/video_encode_decode_lib.cpp:1089:21: note: Condition 'passed' is always false
+      _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/video_encode_decode_lib/video_encode_decode_lib.cpp:1090:23: style: Condition 'passed' is always false [knownConditionTrueFalse]
+      _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                      ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/video_encode_decode_lib/video_encode_decode_lib.cpp:1085:14: note: Assignment 'passed=false', assigned value is 0
+    passed = false;
+             ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/video_encode_decode_lib/video_encode_decode_lib.cpp:1090:23: note: Condition 'passed' is always false
+      _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                      ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/video_encode_decode_lib/video_encode_decode_lib.cpp:1138:21: style: Condition 'passed' is always false [knownConditionTrueFalse]
+      _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/video_encode_decode_lib/video_encode_decode_lib.cpp:1134:14: note: Assignment 'passed=false', assigned value is 0
+    passed = false;
+             ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/video_encode_decode_lib/video_encode_decode_lib.cpp:1138:21: note: Condition 'passed' is always false
+      _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/video_encode_decode_lib/video_encode_decode_lib.cpp:1139:23: style: Condition 'passed' is always false [knownConditionTrueFalse]
+      _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                      ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/video_encode_decode_lib/video_encode_decode_lib.cpp:1134:14: note: Assignment 'passed=false', assigned value is 0
+    passed = false;
+             ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/video_encode_decode_lib/video_encode_decode_lib.cpp:1139:23: note: Condition 'passed' is always false
+      _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                      ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/video_encode_decode_lib/video_encode_decode_lib.cpp:1202:21: style: Condition 'passed' is always false [knownConditionTrueFalse]
+      _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/video_encode_decode_lib/video_encode_decode_lib.cpp:1198:14: note: Assignment 'passed=false', assigned value is 0
+    passed = false;
+             ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/video_encode_decode_lib/video_encode_decode_lib.cpp:1202:21: note: Condition 'passed' is always false
+      _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/video_encode_decode_lib/video_encode_decode_lib.cpp:1203:23: style: Condition 'passed' is always false [knownConditionTrueFalse]
+      _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                      ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/video_encode_decode_lib/video_encode_decode_lib.cpp:1198:14: note: Assignment 'passed=false', assigned value is 0
+    passed = false;
+             ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/video_encode_decode_lib/video_encode_decode_lib.cpp:1203:23: note: Condition 'passed' is always false
+      _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                      ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/video_encode_decode_lib/video_encode_decode_lib.cpp:1260:21: style: Condition 'passed' is always false [knownConditionTrueFalse]
+      _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/video_encode_decode_lib/video_encode_decode_lib.cpp:1256:14: note: Assignment 'passed=false', assigned value is 0
+    passed = false;
+             ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/video_encode_decode_lib/video_encode_decode_lib.cpp:1260:21: note: Condition 'passed' is always false
+      _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/video_encode_decode_lib/video_encode_decode_lib.cpp:1261:23: style: Condition 'passed' is always false [knownConditionTrueFalse]
+      _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                      ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/video_encode_decode_lib/video_encode_decode_lib.cpp:1256:14: note: Assignment 'passed=false', assigned value is 0
+    passed = false;
+             ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/video_encode_decode_lib/video_encode_decode_lib.cpp:1261:23: note: Condition 'passed' is always false
+      _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                      ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/video_encode_decode_lib/video_encode_decode_lib.cpp:1677:21: style: Condition 'passed' is always false [knownConditionTrueFalse]
+      _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/video_encode_decode_lib/video_encode_decode_lib.cpp:1672:14: note: Assignment 'passed=false', assigned value is 0
+    passed = false;
+             ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/video_encode_decode_lib/video_encode_decode_lib.cpp:1677:21: note: Condition 'passed' is always false
+      _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/video_encode_decode_lib/video_encode_decode_lib.cpp:1678:23: style: Condition 'passed' is always false [knownConditionTrueFalse]
+      _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                      ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/video_encode_decode_lib/video_encode_decode_lib.cpp:1672:14: note: Assignment 'passed=false', assigned value is 0
+    passed = false;
+             ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/video_encode_decode_lib/video_encode_decode_lib.cpp:1678:23: note: Condition 'passed' is always false
+      _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                      ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/video_encode_decode_lib/video_encode_decode_lib.cpp:710:10: style: Consider using std::transform algorithm instead of a raw loop. [useStlAlgorithm]
+    data.push_back("  " + std::string(m) + ": SUPPORTED");
+         ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/video_encode_decode_lib/video_encode_decode_lib.cpp:1524:10: style: Consider using std::transform algorithm instead of a raw loop. [useStlAlgorithm]
+    data.push_back("  " + std::string(fmt) + ": SUPPORTED");
+         ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/video_encode_decode_lib/video_encode_decode_lib.cpp:1577:10: style: Consider using std::transform algorithm instead of a raw loop. [useStlAlgorithm]
+    data.push_back("  " + std::string(c.name) + " (" + c.std + ", " + c.range +
+         ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/watchdog_and_reset_lib/watchdog_and_reset_lib.cpp:407:19: style: Condition 'passed' is always true [knownConditionTrueFalse]
+    _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                  ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/watchdog_and_reset_lib/watchdog_and_reset_lib.cpp:382:17: note: Assignment 'passed=true', assigned value is 1
+  bool passed = true;
+                ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/watchdog_and_reset_lib/watchdog_and_reset_lib.cpp:407:19: note: Condition 'passed' is always true
+    _out.status = passed ? hal::Status::PASS : hal::Status::FAIL;
+                  ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/watchdog_and_reset_lib/watchdog_and_reset_lib.cpp:408:21: style: Condition 'passed' is always true [knownConditionTrueFalse]
+    _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/watchdog_and_reset_lib/watchdog_and_reset_lib.cpp:382:17: note: Assignment 'passed=true', assigned value is 1
+  bool passed = true;
+                ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/watchdog_and_reset_lib/watchdog_and_reset_lib.cpp:408:21: note: Condition 'passed' is always true
+    _out.severity = passed ? hal::Severity::INFO : hal::Severity::ERROR;
+                    ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/watchdog_and_reset_lib/watchdog_and_reset_lib.cpp:61:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/watchdog_and_reset_lib/watchdog_and_reset_lib.cpp:135:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/watchdog_and_reset_lib/watchdog_and_reset_lib.cpp:188:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/watchdog_and_reset_lib/watchdog_and_reset_lib.cpp:243:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/watchdog_and_reset_lib/watchdog_and_reset_lib.cpp:293:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/watchdog_and_reset_lib/watchdog_and_reset_lib.cpp:344:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/watchdog_and_reset_lib/watchdog_and_reset_lib.cpp:382:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/watchdog_and_reset_lib/watchdog_and_reset_lib.cpp:421:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/watchdog_and_reset_lib/watchdog_and_reset_lib.cpp:464:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/watchdog_and_reset_lib/watchdog_and_reset_lib.cpp:515:8: style: The scope of the variable 'passed' can be reduced. [variableScope]
+  bool passed = true;
+       ^
+build/native/arches_hal_build/protos/generated/common.pb.h:12:0: error: #error This file was generated by a newer version of protoc which is [preprocessorErrorDirective]
+#error This file was generated by a newer version of protoc which is
+^
+build/native/arches_hal_build/protos/generated/hal_service.pb.h:12:0: error: #error This file was generated by a newer version of protoc which is [preprocessorErrorDirective]
+#error This file was generated by a newer version of protoc which is
+^
+build/native/arches_hal_build/protos/generated/client_service.pb.h:12:0: error: #error This file was generated by a newer version of protoc which is [preprocessorErrorDirective]
+#error This file was generated by a newer version of protoc which is
+^
+build/native/arches_hal_build/protos/generated/modules/accelerometer.pb.h:12:0: error: #error This file was generated by a newer version of protoc which is [preprocessorErrorDirective]
+#error This file was generated by a newer version of protoc which is
+^
+build/native/arches_hal_build/protos/generated/modules/analog_input.pb.h:12:0: error: #error This file was generated by a newer version of protoc which is [preprocessorErrorDirective]
+#error This file was generated by a newer version of protoc which is
+^
+build/native/arches_hal_build/protos/generated/modules/audio_interfaces.pb.h:12:0: error: #error This file was generated by a newer version of protoc which is [preprocessorErrorDirective]
+#error This file was generated by a newer version of protoc which is
+^
+build/native/arches_hal_build/protos/generated/modules/battery.pb.h:12:0: error: #error This file was generated by a newer version of protoc which is [preprocessorErrorDirective]
+#error This file was generated by a newer version of protoc which is
+^
+build/native/arches_hal_build/protos/generated/modules/bluetooth.pb.h:12:0: error: #error This file was generated by a newer version of protoc which is [preprocessorErrorDirective]
+#error This file was generated by a newer version of protoc which is
+^
+build/native/arches_hal_build/protos/generated/modules/camera_interfaces.pb.h:12:0: error: #error This file was generated by a newer version of protoc which is [preprocessorErrorDirective]
+#error This file was generated by a newer version of protoc which is
+^
+build/native/arches_hal_build/protos/generated/modules/camera_module3.pb.h:12:0: error: #error This file was generated by a newer version of protoc which is [preprocessorErrorDirective]
+#error This file was generated by a newer version of protoc which is
+^
+build/native/arches_hal_build/protos/generated/modules/can_bus.pb.h:12:0: error: #error This file was generated by a newer version of protoc which is [preprocessorErrorDirective]
+#error This file was generated by a newer version of protoc which is
+^
+build/native/arches_hal_build/protos/generated/modules/clock_and_timing.pb.h:12:0: error: #error This file was generated by a newer version of protoc which is [preprocessorErrorDirective]
+#error This file was generated by a newer version of protoc which is
+^
+build/native/arches_hal_build/protos/generated/modules/communication_interface.pb.h:12:0: error: #error This file was generated by a newer version of protoc which is [preprocessorErrorDirective]
+#error This file was generated by a newer version of protoc which is
+^
+build/native/arches_hal_build/protos/generated/modules/cpu.pb.h:12:0: error: #error This file was generated by a newer version of protoc which is [preprocessorErrorDirective]
+#error This file was generated by a newer version of protoc which is
+^
+build/native/arches_hal_build/protos/generated/modules/debug_and_development_interfaces.pb.h:12:0: error: #error This file was generated by a newer version of protoc which is [preprocessorErrorDirective]
+#error This file was generated by a newer version of protoc which is
+^
+build/native/arches_hal_build/protos/generated/modules/deep_learning_accelerator.pb.h:12:0: error: #error This file was generated by a newer version of protoc which is [preprocessorErrorDirective]
+#error This file was generated by a newer version of protoc which is
+^
+build/native/arches_hal_build/protos/generated/modules/display_interfaces.pb.h:12:0: error: #error This file was generated by a newer version of protoc which is [preprocessorErrorDirective]
+#error This file was generated by a newer version of protoc which is
+^
+build/native/arches_hal_build/protos/generated/modules/emmc.pb.h:12:0: error: #error This file was generated by a newer version of protoc which is [preprocessorErrorDirective]
+#error This file was generated by a newer version of protoc which is
+^
+build/native/arches_hal_build/protos/generated/modules/environmental.pb.h:12:0: error: #error This file was generated by a newer version of protoc which is [preprocessorErrorDirective]
+#error This file was generated by a newer version of protoc which is
+^
+build/native/arches_hal_build/protos/generated/modules/ethernet.pb.h:12:0: error: #error This file was generated by a newer version of protoc which is [preprocessorErrorDirective]
+#error This file was generated by a newer version of protoc which is
+^
+build/native/arches_hal_build/protos/generated/modules/ethernet_switch.pb.h:12:0: error: #error This file was generated by a newer version of protoc which is [preprocessorErrorDirective]
+#error This file was generated by a newer version of protoc which is
+^
+build/native/arches_hal_build/protos/generated/modules/external_connector.pb.h:12:0: error: #error This file was generated by a newer version of protoc which is [preprocessorErrorDirective]
+#error This file was generated by a newer version of protoc which is
+^
+build/native/arches_hal_build/protos/generated/modules/functional_safety.pb.h:12:0: error: #error This file was generated by a newer version of protoc which is [preprocessorErrorDirective]
+#error This file was generated by a newer version of protoc which is
+^
+build/native/arches_hal_build/protos/generated/modules/gnss.pb.h:12:0: error: #error This file was generated by a newer version of protoc which is [preprocessorErrorDirective]
+#error This file was generated by a newer version of protoc which is
+^
+build/native/arches_hal_build/protos/generated/modules/gpio.pb.h:12:0: error: #error This file was generated by a newer version of protoc which is [preprocessorErrorDirective]
+#error This file was generated by a newer version of protoc which is
+^
+build/native/arches_hal_build/protos/generated/modules/gpu.pb.h:12:0: error: #error This file was generated by a newer version of protoc which is [preprocessorErrorDirective]
+#error This file was generated by a newer version of protoc which is
+^
+build/native/arches_hal_build/protos/generated/modules/i2c.pb.h:12:0: error: #error This file was generated by a newer version of protoc which is [preprocessorErrorDirective]
+#error This file was generated by a newer version of protoc which is
+^
+build/native/arches_hal_build/protos/generated/modules/imu.pb.h:12:0: error: #error This file was generated by a newer version of protoc which is [preprocessorErrorDirective]
+#error This file was generated by a newer version of protoc which is
+^
+build/native/arches_hal_build/protos/generated/modules/mcu_interface.pb.h:12:0: error: #error This file was generated by a newer version of protoc which is [preprocessorErrorDirective]
+#error This file was generated by a newer version of protoc which is
+^
+build/native/arches_hal_build/protos/generated/modules/mipi_csi.pb.h:12:0: error: #error This file was generated by a newer version of protoc which is [preprocessorErrorDirective]
+#error This file was generated by a newer version of protoc which is
+^
+build/native/arches_hal_build/protos/generated/modules/mipi_dsi.pb.h:12:0: error: #error This file was generated by a newer version of protoc which is [preprocessorErrorDirective]
+#error This file was generated by a newer version of protoc which is
+^
+build/native/arches_hal_build/protos/generated/modules/nvme.pb.h:12:0: error: #error This file was generated by a newer version of protoc which is [preprocessorErrorDirective]
+#error This file was generated by a newer version of protoc which is
+^
+build/native/arches_hal_build/protos/generated/modules/pcie.pb.h:12:0: error: #error This file was generated by a newer version of protoc which is [preprocessorErrorDirective]
+#error This file was generated by a newer version of protoc which is
+^
+build/native/arches_hal_build/protos/generated/modules/poe_hat.pb.h:12:0: error: #error This file was generated by a newer version of protoc which is [preprocessorErrorDirective]
+#error This file was generated by a newer version of protoc which is
+^
+build/native/arches_hal_build/protos/generated/modules/power_management.pb.h:12:0: error: #error This file was generated by a newer version of protoc which is [preprocessorErrorDirective]
+#error This file was generated by a newer version of protoc which is
+^
+build/native/arches_hal_build/protos/generated/modules/pwm_output.pb.h:12:0: error: #error This file was generated by a newer version of protoc which is [preprocessorErrorDirective]
+#error This file was generated by a newer version of protoc which is
+^
+build/native/arches_hal_build/protos/generated/modules/reliability.pb.h:12:0: error: #error This file was generated by a newer version of protoc which is [preprocessorErrorDirective]
+#error This file was generated by a newer version of protoc which is
+^
+build/native/arches_hal_build/protos/generated/modules/rs485.pb.h:12:0: error: #error This file was generated by a newer version of protoc which is [preprocessorErrorDirective]
+#error This file was generated by a newer version of protoc which is
+^
+build/native/arches_hal_build/protos/generated/modules/rtc.pb.h:12:0: error: #error This file was generated by a newer version of protoc which is [preprocessorErrorDirective]
+#error This file was generated by a newer version of protoc which is
+^
+build/native/arches_hal_build/protos/generated/modules/sd_card.pb.h:12:0: error: #error This file was generated by a newer version of protoc which is [preprocessorErrorDirective]
+#error This file was generated by a newer version of protoc which is
+^
+build/native/arches_hal_build/protos/generated/modules/security_features.pb.h:12:0: error: #error This file was generated by a newer version of protoc which is [preprocessorErrorDirective]
+#error This file was generated by a newer version of protoc which is
+^
+build/native/arches_hal_build/protos/generated/modules/sense_hat.pb.h:12:0: error: #error This file was generated by a newer version of protoc which is [preprocessorErrorDirective]
+#error This file was generated by a newer version of protoc which is
+^
+build/native/arches_hal_build/protos/generated/modules/serializer_deserializer.pb.h:12:0: error: #error This file was generated by a newer version of protoc which is [preprocessorErrorDirective]
+#error This file was generated by a newer version of protoc which is
+^
+build/native/arches_hal_build/protos/generated/modules/software_interface.pb.h:12:0: error: #error This file was generated by a newer version of protoc which is [preprocessorErrorDirective]
+#error This file was generated by a newer version of protoc which is
+^
+build/native/arches_hal_build/protos/generated/modules/spi.pb.h:12:0: error: #error This file was generated by a newer version of protoc which is [preprocessorErrorDirective]
+#error This file was generated by a newer version of protoc which is
+^
+build/native/arches_hal_build/protos/generated/modules/storage.pb.h:12:0: error: #error This file was generated by a newer version of protoc which is [preprocessorErrorDirective]
+#error This file was generated by a newer version of protoc which is
+^
+build/native/arches_hal_build/protos/generated/modules/system_integration.pb.h:12:0: error: #error This file was generated by a newer version of protoc which is [preprocessorErrorDirective]
+#error This file was generated by a newer version of protoc which is
+^
+build/native/arches_hal_build/protos/generated/modules/system_memory.pb.h:12:0: error: #error This file was generated by a newer version of protoc which is [preprocessorErrorDirective]
+#error This file was generated by a newer version of protoc which is
+^
+build/native/arches_hal_build/protos/generated/modules/thermal_management.pb.h:12:0: error: #error This file was generated by a newer version of protoc which is [preprocessorErrorDirective]
+#error This file was generated by a newer version of protoc which is
+^
+build/native/arches_hal_build/protos/generated/modules/uart.pb.h:12:0: error: #error This file was generated by a newer version of protoc which is [preprocessorErrorDirective]
+#error This file was generated by a newer version of protoc which is
+^
+build/native/arches_hal_build/protos/generated/modules/usb.pb.h:12:0: error: #error This file was generated by a newer version of protoc which is [preprocessorErrorDirective]
+#error This file was generated by a newer version of protoc which is
+^
+build/native/arches_hal_build/protos/generated/modules/video_encode_decode.pb.h:12:0: error: #error This file was generated by a newer version of protoc which is [preprocessorErrorDirective]
+#error This file was generated by a newer version of protoc which is
+^
+build/native/arches_hal_build/protos/generated/modules/vision_accelerator.pb.h:12:0: error: #error This file was generated by a newer version of protoc which is [preprocessorErrorDirective]
+#error This file was generated by a newer version of protoc which is
+^
+build/native/arches_hal_build/protos/generated/modules/watchdog_and_reset.pb.h:12:0: error: #error This file was generated by a newer version of protoc which is [preprocessorErrorDirective]
+#error This file was generated by a newer version of protoc which is
+^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/test_runner.h:177:18: style: Consider using std::copy algorithm instead of a raw loop. [useStlAlgorithm]
+           paths.emplace_back(path);
+                 ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/test_runner.h:211:18: style: Consider using std::copy algorithm instead of a raw loop. [useStlAlgorithm]
+           paths.emplace_back(path);
+                 ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/test_runner.h:255:15: style: Consider using std::any_of algorithm instead of a raw loop. [useStlAlgorithm]
+              for (const auto &t : r) {
+              ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/test_runner.h:264:15: style: Consider using std::all_of or std::none_of algorithm instead of a raw loop. [useStlAlgorithm]
+              for (const auto &t : r) {
+              ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/test_runner.h:273:15: style: Consider using std::all_of or std::none_of algorithm instead of a raw loop. [useStlAlgorithm]
+              for (const auto &t : r) {
+              ^
+/mnt/data/workspace/project-managers/Projects/Arches/Project/Arches-HAL/src/test_runner.h:301:21: style: Consider using std::count_if algorithm instead of a raw loop. [useStlAlgorithm]
+                  ++fails;
+                    ^
+src/repositories/RunRepository.cc:22:33: style: Parameter 'stmt' can be declared as reference to const [constParameterReference]
+Run read_run(PreparedStatement& stmt) {
+                                ^
+src/repositories/ResultRepository.cc:25:39: style: Parameter 'stmt' can be declared as reference to const [constParameterReference]
+Result read_result(PreparedStatement& stmt) {
+                                      ^
+src/repositories/LogRepository.cc:14:40: style: Parameter 'stmt' can be declared as reference to const [constParameterReference]
+LogEntry read_entry(PreparedStatement& stmt) {
+                                       ^
+src/repositories/TargetRepository.cc:19:37: style: Parameter 'stmt' can be declared as reference to const [constParameterReference]
+Board read_board(PreparedStatement& stmt) {
+                                    ^
+src/repositories/TestConfigRepository.cc:18:43: style: Parameter 'stmt' can be declared as reference to const [constParameterReference]
+TestConfig read_config(PreparedStatement& stmt) {
+                                          ^
+tests/integration/MigrationRunnerTest.cc:33:9: performance: Variable 'path_' is assigned in constructor body. Consider performing initialization in initialization list. [useInitializationList]
+        path_ = (std::filesystem::temp_directory_path()
+        ^
