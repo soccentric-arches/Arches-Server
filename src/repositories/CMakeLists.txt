@@ -6,27 +6,16 @@
 # unpack (proto -> TestResult) lives in util/ResultConvert (Step 4), not here.
 # ---------------------------------------------------------------------------
 
-add_library(arches_repos STATIC
-    RunRepository.cc
-    ResultRepository.cc
-    LogRepository.cc
-    TargetRepository.cc
-    TestConfigRepository.cc
-)
+add_library(
+  arches_repos STATIC RunRepository.cc ResultRepository.cc LogRepository.cc
+                      TargetRepository.cc TestConfigRepository.cc)
 
-target_include_directories(arches_repos PUBLIC
-    ${CMAKE_CURRENT_SOURCE_DIR}/..
-)
+target_include_directories(arches_repos PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/..)
 
-target_link_libraries(arches_repos PUBLIC
-    arches_db
-    spdlog::spdlog
-)
+target_link_libraries(arches_repos PUBLIC arches_db spdlog::spdlog)
 
 # Repos use util::utc_now_iso8601 / util::generate_uuid in their .cc only
 # (headers don't include util), so the util link is PRIVATE.
-target_link_libraries(arches_repos PRIVATE
-    arches_util
-)
+target_link_libraries(arches_repos PRIVATE arches_util)
 
 set_compiler_warnings(arches_repos)

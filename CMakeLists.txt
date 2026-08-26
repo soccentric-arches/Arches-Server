@@ -1,5 +1,8 @@
 cmake_minimum_required(VERSION 3.16)
-project(arches-server VERSION 0.1.0 LANGUAGES CXX)
+project(
+  arches-server
+  VERSION 0.1.0
+  LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -13,32 +16,27 @@ include(cmake/CompilerWarnings.cmake)
 include(GNUInstallDirs)
 
 # ---------------------------------------------------------------------------
-# HAL library (sibling directory) — must come before add_subdirectory(src)
-# so the HAL targets are visible to subsystem CMakeLists that link them.
+# HAL library (sibling directory) — must come before add_subdirectory(src) so
+# the HAL targets are visible to subsystem CMakeLists that link them.
 #
-# Linking strategy (mirrors Arches-Client, validated by its build):
-#   - hal_protos_shared : SHARED generated protobuf + gRPC contracts (common,
-#                         hal_service, client_service, every module .proto).
-#                         Carries protobuf + gRPC transitively (PUBLIC), so the
-#                         server gets the proto message types, grpc++ runtime,
-#                         and protobuf includes WITHOUT generating any proto
-#                         sources locally. Linking it also registers every
-#                         hal.modules.<id>.Result descriptor in the generated
-#                         DescriptorPool — which the §5 reflection-based
-#                         module-Result unpack relies on. Single source of
-#                         generated proto symbols → no ODR/duplicate-symbol risk.
+# Linking strategy (mirrors Arches-Client, validated by its build): -
+# hal_protos_shared : SHARED generated protobuf + gRPC contracts (common,
+# hal_service, client_service, every module .proto). Carries protobuf + gRPC
+# transitively (PUBLIC), so the server gets the proto message types, grpc++
+# runtime, and protobuf includes WITHOUT generating any proto sources locally.
+# Linking it also registers every hal.modules.<id>.Result descriptor in the
+# generated DescriptorPool — which the §5 reflection-based module-Result unpack
+# relies on. Single source of generated proto symbols → no ODR/duplicate-symbol
+# risk.
 #
-# Unlike the prior reference server (which self-generates 3 protos via protoc), Arches-Server
-# consumes the HAL subproject's protos, exactly like Arches-Client does. No
-# find_package(gRPC/Protobuf) here, no local protoc invocation.
+# Unlike the prior reference server (which self-generates 3 protos via protoc),
+# Arches-Server consumes the HAL subproject's protos, exactly like Arches-Client
+# does. No find_package(gRPC/Protobuf) here, no local protoc invocation.
 # ---------------------------------------------------------------------------
-find_package(Threads REQUIRED)  # HAL requires Threads::Threads
+find_package(Threads REQUIRED) # HAL requires Threads::Threads
 
-add_subdirectory(
-    ${CMAKE_SOURCE_DIR}/../Arches-HAL
-    ${CMAKE_BINARY_DIR}/arches_hal_build
-    EXCLUDE_FROM_ALL
-)
+add_subdirectory(${CMAKE_SOURCE_DIR}/../Arches-HAL
+                 ${CMAKE_BINARY_DIR}/arches_hal_build EXCLUDE_FROM_ALL)
 
 # ---------------------------------------------------------------------------
 # Optional sanitizers (ASan + UBSan). Applied as DIRECTORY-level flags here —
@@ -58,7 +56,8 @@ endif()
 
 # ---------------------------------------------------------------------------
 # Host dependencies. The HAL subproject finds protobuf + gRPC itself; we do not
-# regenerate protos here, so protoc / grpc_cpp_plugin are NOT required on the host.
+# regenerate protos here, so protoc / grpc_cpp_plugin are NOT required on the
+# host.
 # ---------------------------------------------------------------------------
 find_package(spdlog REQUIRED)
 
@@ -72,8 +71,8 @@ if(NOT TARGET yaml-cpp::yaml-cpp)
   add_library(yaml-cpp::yaml-cpp ALIAS yaml-cpp-wrapper)
 endif()
 
-# SQLite3 (master §4: *-Server is gRPC + SQLite; deviation from the prior reference server's
-# PostgreSQL, flagged in the porting note).
+# SQLite3 (master §4: *-Server is gRPC + SQLite; deviation from the prior
+# reference server's PostgreSQL, flagged in the porting note).
 find_package(SQLite3 REQUIRED)
 
 # Position independent code for shared linking.
@@ -94,73 +93,75 @@ add_subdirectory(src)
 option(BUILD_TESTS "Build unit and integration tests" ON)
 if(BUILD_TESTS)
   find_package(GTest REQUIRED)
-  include(GoogleTest)  # gtest_discover_tests + LABELS for `ctest -L arches_server`
+  include(GoogleTest) # gtest_discover_tests + LABELS for `ctest -L
+                      # arches_server`
   enable_testing()
   add_subdirectory(tests)
 endif()
 
 # ---------------------------------------------------------------------------
-# Generated version header (parity with the prior reference server; the arches-server target
-# also gets ARCHES_SERVER_VERSION as a compile definition — this header is for
-# TUs that prefer to #include it).
+# Generated version header (parity with the prior reference server; the
+# arches-server target also gets ARCHES_SERVER_VERSION as a compile definition —
+# this header is for TUs that prefer to #include it).
 # ---------------------------------------------------------------------------
 set(GENERATED_DIR "${PROJECT_BINARY_DIR}/generated")
 file(MAKE_DIRECTORY "${GENERATED_DIR}")
-configure_file(
-  "${CMAKE_SOURCE_DIR}/cmake/version.hpp.in"
-  "${GENERATED_DIR}/version.hpp"
-  @ONLY
-)
+configure_file("${CMAKE_SOURCE_DIR}/cmake/version.hpp.in"
+               "${GENERATED_DIR}/version.hpp" @ONLY)
 
 # ---------------------------------------------------------------------------
-# Doxygen docs target (§12 mandatory for *-Server; the prior reference server shipped a
-# Doxyfile but never wired the target — Arches-Server wires it). Builds the
-# `doc_doxygen` target that the Makefile `doc` target drives via `ninja
-# doc_doxygen`. Best-effort: if Doxygen is not installed, configure succeeds
-# but the target is absent (the Makefile reports this).
+# Doxygen docs target (§12 mandatory for *-Server; the prior reference server
+# shipped a Doxyfile but never wired the target — Arches-Server wires it).
+# Builds the `doc_doxygen` target that the Makefile `doc` target drives via
+# `ninja doc_doxygen`. Best-effort: if Doxygen is not installed, configure
+# succeeds but the target is absent (the Makefile reports this).
 # ---------------------------------------------------------------------------
 find_package(Doxygen QUIET)
 if(DOXYGEN_FOUND)
-  set(DOXYFILE_IN  "${CMAKE_SOURCE_DIR}/Doxyfile.in")
+  set(DOXYFILE_IN "${CMAKE_SOURCE_DIR}/Doxyfile.in")
   set(DOXYFILE_OUT "${PROJECT_BINARY_DIR}/Doxyfile")
   configure_file("${DOXYFILE_IN}" "${DOXYFILE_OUT}" @ONLY)
-  add_custom_target(arches_server_doc_doxygen
+  add_custom_target(
+    arches_server_doc_doxygen
     COMMAND ${DOXYGEN_EXECUTABLE} "${DOXYFILE_OUT}"
     WORKING_DIRECTORY "${PROJECT_BINARY_DIR}"
     VERBATIM
-    COMMENT "Generating Doxygen HTML docs for Arches-Server"
-  )
+    COMMENT "Generating Doxygen HTML docs for Arches-Server")
 else()
-  message(STATUS "Doxygen not found — `ninja doc_doxygen` / `make doc` will skip (install doxygen to enable).")
+  message(
+    STATUS
+      "Doxygen not found — `ninja doc_doxygen` / `make doc` will skip (install doxygen to enable)."
+  )
 endif()
 
 # ---------------------------------------------------------------------------
 # clang-format target (drives the Makefile `format` target via `ninja format`).
 # Best-effort: if clang-format is not installed, the target prints a notice.
 # ---------------------------------------------------------------------------
-find_program(CLANG_FORMAT_EXE NAMES clang-format clang-format-15 clang-format-14)
+find_program(CLANG_FORMAT_EXE NAMES clang-format clang-format-15
+                                    clang-format-14)
 if(CLANG_FORMAT_EXE)
-  file(GLOB_RECURSE ARCHES_FORMAT_SOURCES
-       CONFIGURE_DEPENDS
+  file(GLOB_RECURSE ARCHES_FORMAT_SOURCES CONFIGURE_DEPENDS
        "${CMAKE_SOURCE_DIR}/src/*.cc" "${CMAKE_SOURCE_DIR}/src/*.h"
        "${CMAKE_SOURCE_DIR}/tests/*.cc")
-  add_custom_target(arches_server_format
+  add_custom_target(
+    arches_server_format
     COMMAND "${CLANG_FORMAT_EXE}" -i --style=file ${ARCHES_FORMAT_SOURCES}
     WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
     VERBATIM
-    COMMENT "Running clang-format on Arches-Server sources"
-  )
+    COMMENT "Running clang-format on Arches-Server sources")
 else()
-  add_custom_target(arches_server_format
-    COMMAND ${CMAKE_COMMAND} -E echo "clang-format not installed; skipping format."
-    VERBATIM
-  )
+  add_custom_target(
+    arches_server_format
+    COMMAND ${CMAKE_COMMAND} -E echo
+            "clang-format not installed; skipping format."
+    VERBATIM)
 endif()
 
 # ---------------------------------------------------------------------------
-# CPack packaging (§12: .deb, .rpm, .ipk for Yocto/opkg). The prior reference server had no
-# CPack wiring; Arches-Server adds it. .ipk is produced by the DEB generator
-# with an opkg-compatible rename (Yocto consumes .ipk).
+# CPack packaging (§12: .deb, .rpm, .ipk for Yocto/opkg). The prior reference
+# server had no CPack wiring; Arches-Server adds it. .ipk is produced by the DEB
+# generator with an opkg-compatible rename (Yocto consumes .ipk).
 # ---------------------------------------------------------------------------
 set(CPACK_PACKAGE_NAME "arches-server")
 set(CPACK_PACKAGE_VERSION "${PROJECT_VERSION}")
@@ -177,7 +178,8 @@ set(CPACK_PACKAGE_FILE_NAME
 # Debian / .deb (also the basis for the .ipk Yocto/opkg variant).
 set(CPACK_DEBIAN_PACKAGE_MAINTAINER "SoCcentric IV&V")
 set(CPACK_DEBIAN_PACKAGE_SECTION "devel")
-set(CPACK_DEBIAN_PACKAGE_DEPENDS "libsqlite3-0, libspdlog1, libyaml-cpp0.7, libgrpc++1, libprotobuf23")
+set(CPACK_DEBIAN_PACKAGE_DEPENDS
+    "libsqlite3-0, libspdlog1, libyaml-cpp0.7, libgrpc++1, libprotobuf23")
 
 # RPM.
 set(CPACK_RPM_PACKAGE_LICENSE "Proprietary")
@@ -189,9 +191,6 @@ include(CPack)
 # ---------------------------------------------------------------------------
 # Install
 # ---------------------------------------------------------------------------
-install(TARGETS arches-server
-  RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-)
+install(TARGETS arches-server RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
 install(DIRECTORY "${CMAKE_SOURCE_DIR}/migrations/"
-  DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/arches/migrations"
-)
+        DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/arches/migrations")
