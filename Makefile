@@ -42,6 +42,8 @@ test: build ## Run Arches-Server tests (ctest -L arches_server)
 
 run: build ## Run arches-server locally
 	@echo "Running arches-server..."
+	mkdir -p $(NATIVE_BUILD_DIR)/data
+	ARCHES_DB_PATH=$(NATIVE_BUILD_DIR)/data/arches.db \
 	LD_LIBRARY_PATH=$(NATIVE_BUILD_DIR)/lib $(NATIVE_BUILD_DIR)/bin/arches-server
 
 # =============================================================================
