@@ -1,119 +1,224 @@
-# Master Makefile for Arches Server (gRPC IV&V server — runs on the x86 host,
-# not on the Jetson target; native-only build, no cross-build/deploy needed).
-#
-# The server links the Arches-HAL subproject (../Arches-HAL) for the shared
-# generated protos (hal_protos_shared) — single source of proto symbols, mirroring
-# Arches-Client. Per §12 the Makefile is the single entry point for build/test/lint.
+# Master Makefile for ACU Full Test Project
+# Docker-based builds: the default (and only) build path is Docker.
 
 .DEFAULT_GOAL := help
 
-.PHONY: all build configure clean test lint cppcheck doc installer run help
+.PHONY: all build clean test format cppcheck doc help
+.PHONY: docker-build docker-configure docker-clean docker-shell docker-install docker-image docker-test
+.PHONY: docker-image-server docker-build-server docker-test-server docker-clean-server docker-shell-server
+.PHONY: deploy deploy-a deploy-b run-a run-b list setup-completion
 
-# Build directory
-NATIVE_BUILD_DIR := build/native
+# Build directories (separate to avoid CMake cache conflicts)
+CROSS_BUILD_DIR  := build/cross
 
 # Parallel jobs (override with make JOBS=N)
 JOBS := $(shell nproc)
+# QEMU ARM64 emulation can't sustain as many parallel GCC processes as the
+# host; cap Docker cross-builds to avoid cc1plus segfaults under heavy load.
+DOCKER_JOBS := $(shell echo $$(( $(shell nproc) < 4 ? $(shell nproc) : 4 )))
+DOCKER_IMAGE := arches
 
-# CTest label applied to all Arches-Server unit/integration tests.
-# The HAL subproject's enable_testing() also registers ~36 unbuilt HAL tests,
-# so we always filter on this label rather than running the full CTest set.
+# Mount the *parent* Arches/ directory so both Arches-Client, Arches-Server, and
+# Arches-HAL are visible inside the container.
+Arches_ROOT := $(shell dirname $(realpath $(CURDIR)))
+DOCKER_SRC_DIR         := /workspace/Arches-Client
+DOCKER_CROSS_BUILD_DIR := $(DOCKER_SRC_DIR)/build/cross
+
+# Server (x86 Ubuntu) Docker settings - use the unified image we just built
+DOCKER_SERVER_IMAGE     := arches-dev
+DOCKER_SERVER_SRC_DIR   := /workspace/Arches-Server
+DOCKER_SERVER_BUILD_DIR := $(DOCKER_SERVER_SRC_DIR)/build/docker
+
+# CTest label for Arches-Server tests (HAL subproject registers unbuilt tests)
 SERVER_TEST_LABEL := arches_server
 
+# Host architecture as shown by file(1) (e.g. x86-64, aarch64)
+HOST_ARCH := $(shell uname -m | sed 's/x86_64/x86-64/')
+
+# IP addresses for NVIDIA devices
+IP_A := 192.168.1.3
+IP_B := 192.168.1.13
+
+# User/Password for SSH/SCP
+USER := nvidia
+PASS := nvidia
+SSHPASS := sshpass -p $(PASS)
+SSH := $(SSHPASS) ssh -o StrictHostKeyChecking=no
+SCP := $(SSHPASS) scp -o StrictHostKeyChecking=no
+
 # Default target
-all: build
+all: docker-build-server ## Default target: x86 production build (Docker)
 
-# =============================================================================
-# Native builds (host architecture)
-# =============================================================================
+# Deploy to remote target: $(1)=IP address
+define deploy_remote
+	@echo "Deploying to $(1)..."
+	$(SSH) $(USER)@$(1) "rm -rf /tmp/arches-client && mkdir -p /tmp/arches-client"
+	$(SCP) -r $(CROSS_BUILD_DIR)/lib $(USER)@$(1):/tmp/arches-client/
+	$(SCP) -r $(CROSS_BUILD_DIR)/bin $(USER)@$(1):/tmp/arches-client/
+endef
 
-configure: ## Configure the project with CMake/Ninja
-	@echo "Configuring project with Ninja..."
-	mkdir -p $(NATIVE_BUILD_DIR)
-	cd $(NATIVE_BUILD_DIR) && cmake -GNinja -DBUILD_TESTS=ON $(CURDIR)
-
-build: configure ## Build the project (configures if needed)
-	@echo "Building project with Ninja..."
-	cd $(NATIVE_BUILD_DIR) && ninja -j$(JOBS)
-
-test: build ## Run Arches-Server tests (ctest -L arches_server)
-	@echo "Running Arches-Server tests (label=$(SERVER_TEST_LABEL))..."
-	cd $(NATIVE_BUILD_DIR) && ctest -L $(SERVER_TEST_LABEL) --output-on-failure
-
-run: build ## Run arches-server locally
-	@echo "Running arches-server..."
-	mkdir -p $(NATIVE_BUILD_DIR)/data
-	ARCHES_DB_PATH=$(NATIVE_BUILD_DIR)/data/arches.db \
-	LD_LIBRARY_PATH=$(NATIVE_BUILD_DIR)/lib $(NATIVE_BUILD_DIR)/bin/arches-server
-
-# =============================================================================
-# Lint & installer (per §12 — Makefile is the single entry point)
-# =============================================================================
-
-# Static analysis: cppcheck + clang-tidy, both driven from compile_commands.json
-# (exported by CMAKE_EXPORT_COMPILE_COMMANDS in the root CMakeLists). Best-effort:
-# if a tool is not installed, report and continue rather than fail the §9 validation
-# gate. When a tool IS present and reports errors, this target exits nonzero.
-lint: cppcheck ## Static analysis (cppcheck + clang-tidy, best-effort)
-	@echo "Running clang-tidy on Arches-Server sources (best-effort)..."
-	@if command -v clang-tidy >/dev/null 2>&1; then \
-		if [ -f $(NATIVE_BUILD_DIR)/compile_commands.json ]; then \
-			clang-tidy -p $(NATIVE_BUILD_DIR) $$(find $(CURDIR)/src -name '*.cc' -o -name '*.cpp'); \
-		else \
-			echo "  compile_commands.json missing — run 'make configure' first."; \
-		fi; \
+# Run apps on remote target: $(1)=IP address
+define run_remote
+	@APP="$(word 2, $(MAKECMDGOALS))"; \
+	ARGS="$(wordlist 3, $(words $(MAKECMDGOALS)), $(MAKECMDGOALS))"; \
+	if [ -z "$$APP" ]; then \
+		echo "Running all test applications on $(1)..."; \
+		for name in $$($(SSH) $(USER)@$(1) "ls /tmp/arches-client/bin/"); do \
+			echo "--- Running $$name ---"; \
+			$(SSH) $(USER)@$(1) "cd /tmp/arches-client && ./bin/$$name" || true; \
+		done; \
 	else \
-		echo "  clang-tidy not installed; skipping (cppcheck result above stands)."; \
+		echo "Running $$APP on $(1) with args: $$ARGS"; \
+		$(SSH) $(USER)@$(1) "cd /tmp/arches-client && ./bin/$$APP $$ARGS"; \
 	fi
-
-# Package the server via CPack (.deb / .rpm / .ipk per §12). The .ipk is an
-# opkg-compatible rename of the .deb (Yocto consumes .ipk); produced last.
-installer: build ## Package via CPack (.deb/.rpm)
-	@echo "Packaging Arches-Server via CPack..."
-	cd $(NATIVE_BUILD_DIR) && cpack -G DEB && cpack -G RPM
-	@deb=$$(cd $(NATIVE_BUILD_DIR) && ls -1 *.deb 2>/dev/null | head -1); \
-	if [ -n "$$deb" ]; then \
-		ipk=$${deb%.deb}.ipk; \
-		cp $(NATIVE_BUILD_DIR)/$$deb $(NATIVE_BUILD_DIR)/$$ipk; \
-		echo "  produced .ipk: $$ipk (opkg/Yocto variant of $$deb)"; \
-	else \
-		echo "  no .deb produced — .ipk skipped"; \
-	fi
+endef
 
 # =============================================================================
-# Common
+# Build & test (Docker)
+# =============================================================================
+
+build: docker-build-server ## Build the Server (x86) in Docker
+test: docker-test-server ## Run server unit tests in Docker (x86)
+
+# =============================================================================
+# Common for native and Cross
 # =============================================================================
 
 clean: ## Remove build directory
 	@echo "Cleaning build directory..."
 	rm -rf build
 
+list: ## List available test applications
+	@echo "Cross ($(CROSS_BUILD_DIR)):"
+	@ls -1 $(CROSS_BUILD_DIR)/bin/ 2>/dev/null | sed 's/^/    /' || echo "    (none - run 'make docker-build' first)"
+
 # =============================================================================
-# Code quality & Docs
+# Cross builds (Docker)
 # =============================================================================
 
-format: configure ## Format code with clang-format
-	@echo "Formatting code..."
-	cd $(NATIVE_BUILD_DIR) && ninja format
-	@echo "Formatting CMake files..."
-	find . -name CMakeLists.txt -not -path './build/*' | xargs cmake-format -i 2>/dev/null || true
+# -t: allocate a pseudo-TTY so Ctrl-C (SIGINT) is forwarded to the container
+# --init: use tini as PID 1 to properly propagate signals to child processes (e.g. ninja)
+# ccache volume: persist compilation cache across docker runs
+# Arches_ROOT is mounted so ../Arches-HAL/protos and ../Arches-HAL/src resolve inside the container.
+DOCKER_RUN := docker run --rm -t --init --platform linux/arm64 -v $(Arches_ROOT):/workspace -v ccache-arches-client:/home/rpi/.ccache $(DOCKER_IMAGE) bash -c
 
-cppcheck: configure ## Run static analysis with cppcheck
-	@echo "Running cppcheck static analysis (best-effort)..."
-	@if command -v cppcheck >/dev/null 2>&1; then \
-		if [ -f $(NATIVE_BUILD_DIR)/compile_commands.json ]; then \
-			cppcheck --quiet --enable=warning,style --inline-suppr \
-				--project=$(NATIVE_BUILD_DIR)/compile_commands.json || true; \
-		else \
-			echo "  compile_commands.json missing — run 'make configure' first."; \
-		fi; \
+# Run command for the server x86 container
+DOCKER_SERVER_RUN := docker run --rm -t --init --platform linux/amd64 -v $(Arches_ROOT):/workspace -v ccache-arches-server:/home/arches/.ccache $(DOCKER_SERVER_IMAGE) bash -c
+
+docker-install: ## Install Docker if not present
+	@if ! command -v docker > /dev/null 2>&1; then \
+		echo "Docker not found. Installing Docker..."; \
+		sudo apt update && sudo apt install -y docker.io; \
 	else \
-		echo "  cppcheck not installed; skipping (install cppcheck to enable)."; \
+		echo "Docker is already installed."; \
 	fi
 
-doc: configure ## Generate Doxygen documentation
-	@echo "Generating documentation..."
-	cd $(NATIVE_BUILD_DIR) && ninja doc_doxygen 2>/dev/null || echo "  Doxygen target not configured yet."
+docker-image: docker-install ## Build Docker image (ARM64) if not exists
+	@if ! docker image inspect $(DOCKER_IMAGE) >/dev/null 2>&1; then \
+		echo "Building Docker image $(DOCKER_IMAGE)..."; \
+		make -C docker build; \
+	else \
+		echo "Docker image $(DOCKER_IMAGE) already exists."; \
+	fi
+
+docker-configure: docker-image ## Configure project with Docker/Ninja
+	@echo "Configuring project with Docker/Ninja..."
+	$(DOCKER_RUN) "mkdir -p $(DOCKER_CROSS_BUILD_DIR) && cd $(DOCKER_CROSS_BUILD_DIR) && cmake -GNinja -DBUILD_TESTS=ON $(DOCKER_SRC_DIR)"
+
+docker-build: docker-image ## Build project with Docker/Ninja
+	@echo "Building project with Docker/Ninja..."
+	$(DOCKER_RUN) "if [ ! -f $(DOCKER_CROSS_BUILD_DIR)/build.ninja ]; then mkdir -p $(DOCKER_CROSS_BUILD_DIR) && cd $(DOCKER_CROSS_BUILD_DIR) && cmake -GNinja -DBUILD_TESTS=ON $(DOCKER_SRC_DIR); fi && cd $(DOCKER_CROSS_BUILD_DIR) && ninja -j$(DOCKER_JOBS)"
+
+docker-test: docker-build
+	@echo "Running tests in Docker (ARM64 via QEMU)..."
+	$(DOCKER_RUN) "cd $(DOCKER_CROSS_BUILD_DIR) && ctest --output-on-failure"
+
+docker-clean: docker-image ## Clean Docker build artifacts
+	@echo "Cleaning Docker build directory..."
+	$(DOCKER_RUN) "rm -rf $(DOCKER_CROSS_BUILD_DIR)"
+
+docker-shell: docker-image ## Start Docker shell for development
+	@echo "Starting Docker shell for development..."
+	docker run -it --rm --platform linux/arm64 -v $(Arches_ROOT):/workspace -v ccache-arches-client:/home/rpi/.ccache $(DOCKER_IMAGE) bash
+
+# =============================================================================
+# Server builds (x86 Ubuntu 22.04 via Docker)
+# =============================================================================
+
+docker-image-server: ## Build server Docker image (x86) if not exists
+	@if ! docker image inspect $(DOCKER_SERVER_IMAGE) >/dev/null 2>&1; then \
+		echo "Building Docker image $(DOCKER_SERVER_IMAGE) for x86 Ubuntu..."; \
+		make -C docker build-server IMAGE_NAME=$(DOCKER_SERVER_IMAGE); \
+	else \
+		echo "Docker image $(DOCKER_SERVER_IMAGE) already exists."; \
+	fi
+
+docker-build-server: docker-image-server ## Build Arches Server (x86) with Docker/Ninja
+	@echo "Building Arches Server in Docker (x86 Ubuntu 22.04)..."
+	$(DOCKER_SERVER_RUN) "if [ ! -f $(DOCKER_SERVER_BUILD_DIR)/build.ninja ]; then \
+		mkdir -p $(DOCKER_SERVER_BUILD_DIR) && \
+		cd $(DOCKER_SERVER_BUILD_DIR) && \
+		cmake -GNinja -DBUILD_TESTS=ON $(DOCKER_SERVER_SRC_DIR); \
+	fi && cd $(DOCKER_SERVER_BUILD_DIR) && ninja -j$(DOCKER_JOBS)"
+
+docker-test-server: docker-build-server ## Run server unit tests in Docker (x86)
+	@echo "Running Arches Server unit tests in Docker (x86)..."
+	$(DOCKER_SERVER_RUN) "cd $(DOCKER_SERVER_BUILD_DIR) && ctest -L $(SERVER_TEST_LABEL) --output-on-failure"
+
+docker-clean-server: docker-image-server ## Clean server Docker build artifacts
+	@echo "Cleaning Arches Server Docker build directory..."
+	$(DOCKER_SERVER_RUN) "rm -rf $(DOCKER_SERVER_BUILD_DIR)"
+
+docker-shell-server: docker-image-server ## Start server Docker shell (x86)
+	@echo "Starting Arches Server Docker shell (x86 Ubuntu)..."
+	docker run -it --rm --platform linux/amd64 -v $(Arches_ROOT):/workspace -v ccache-arches-server:/home/arches/.ccache $(DOCKER_SERVER_IMAGE) bash
+
+# =============================================================================
+# Deploy & Run (on target device)
+# =============================================================================
+
+deploy: deploy-a deploy-b ## Deploy to all devices (deploy-a + deploy-b)
+
+deploy-a: docker-build ## Deploy lib and bin to $(IP_A)
+	$(call deploy_remote,$(IP_A))
+
+deploy-b: docker-build ## Deploy lib and bin to $(IP_B)
+	$(call deploy_remote,$(IP_B))
+
+run-a: deploy-a ## Run test app on $(IP_A) (usage: make run-a [name] [args...], no args = run all)
+	$(call run_remote,$(IP_A))
+
+run-b: deploy-b ## Run test app on $(IP_B) (usage: make run-b [name] [args...], no args = run all)
+	$(call run_remote,$(IP_B))
+
+# =============================================================================
+# Code quality & Docs (run inside the Docker build container)
+# =============================================================================
+
+format: docker-image ## Format code with clang-format (in Docker)
+	@echo "Running clang-format in Docker..."
+	$(DOCKER_RUN) "cd $(DOCKER_CROSS_BUILD_DIR) && ninja format"
+
+cppcheck: docker-image ## Run static analysis with cppcheck (in Docker)
+	@echo "Running cppcheck in Docker..."
+	$(DOCKER_RUN) "cd $(DOCKER_CROSS_BUILD_DIR) && ninja cppcheck"
+
+doc: docker-image ## Generate Doxygen documentation (in Docker)
+	@echo "Generating documentation in Docker..."
+	$(DOCKER_RUN) "cd $(DOCKER_CROSS_BUILD_DIR) && ninja doc_doxygen"
+
+# =============================================================================
+# Misc
+# =============================================================================
+
+setup-completion:
+	@echo "Setting up bash completion for make..."
+	@if ! grep -q "source $(PWD)/make_completion.bash" ~/.bashrc; then \
+		echo "source $(PWD)/make_completion.bash" >> ~/.bashrc; \
+		echo "Added completion to ~/.bashrc. Restart your shell or run 'source ~/.bashrc' to activate."; \
+	else \
+		echo "Completion already set up in ~/.bashrc."; \
+	fi
 
 # =============================================================================
 # Help
@@ -122,8 +227,9 @@ doc: configure ## Generate Doxygen documentation
 # ── Fleet-standard aliases ────────────────────────────────────────────────────
 # Same verbs mean the same thing in every repo; these forward to this
 # repo's own targets rather than duplicating their recipes.
-.PHONY: fmt
+.PHONY: fmt lint
 fmt: format ## Alias for format
+lint: cppcheck ## Alias for cppcheck
 
 # ── Help ──────────────────────────────────────────────────────────────────────
 # Targets are self-documenting: text after `## ` on a target line is picked up

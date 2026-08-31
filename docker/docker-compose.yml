@@ -1,0 +1,1 @@
+version: "3.8" services: postgres: image: postgres:16-alpine container_name: arches-postgres environment: POSTGRES_DB: arches POSTGRES_USER: arches POSTGRES_PASSWORD: arches_dev ports: - "5432:5432" volumes: - arches_pgdata:/var/lib/postgresql/data healthcheck: test: ["CMD-SHELL", "pg_isready -U arches"] interval: 5s timeout: 5s retries: 10 volumes: arches_pgdata:
