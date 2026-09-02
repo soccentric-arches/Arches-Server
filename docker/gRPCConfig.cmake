@@ -36,3 +36,12 @@ if(NOT TARGET gRPC::grpc++_reflection)
         IMPORTED_LOCATION "/usr/lib/x86_64-linux-gnu/libgrpc++_reflection.so"
         INTERFACE_LINK_LIBRARIES "gRPC::grpc++")
 endif()
+
+# The grpc_cpp_plugin binary is built from source in the image (Ubuntu's
+# libgrpc--dev does not ship it). Expose it as an imported executable so that
+# get_target_property(... gRPC::grpc_cpp_plugin LOCATION) resolves.
+if(NOT TARGET gRPC::grpc_cpp_plugin)
+    add_executable(gRPC::grpc_cpp_plugin IMPORTED)
+    set_target_properties(gRPC::grpc_cpp_plugin PROPERTIES
+        IMPORTED_LOCATION "/usr/local/bin/grpc_cpp_plugin")
+endif()

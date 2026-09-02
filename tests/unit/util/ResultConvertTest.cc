@@ -221,7 +221,7 @@ TEST(UnpackModuleResultsTest, UnpacksModuleWrapperWithMultipleResults) {
                            hal::common::TEST_SEVERITY_WARNING);
 
     google::protobuf::Any any;
-    ASSERT_TRUE(any.PackFrom(mod_result));
+    any.PackFrom(mod_result);
     EXPECT_EQ(any.type_url(), "type.googleapis.com/hal.modules.cpu.Result");
 
     auto got = unpack_module_results(any, "cpu");
@@ -238,7 +238,8 @@ TEST(UnpackModuleResultsTest, UnpacksModuleWrapperWithMultipleResults) {
 TEST(UnpackModuleResultsTest, EmptyWrapperReturnsZeroResults) {
     hal::modules::cpu::Result mod_result;  // no results added
     google::protobuf::Any any;
-    ASSERT_TRUE(any.PackFrom(mod_result));
+    any.PackFrom(mod_result);
+    ASSERT_EQ(any.type_url(), "type.googleapis.com/hal.modules.cpu.Result");
     auto got = unpack_module_results(any, "cpu");
     EXPECT_TRUE(got.empty());
 }
@@ -251,7 +252,7 @@ TEST(UnpackModuleResultsTest, BareTestResultFallback) {
                                hal::common::TEST_STATUS_PASS,
                                hal::common::TEST_SEVERITY_INFO);
     google::protobuf::Any any;
-    ASSERT_TRUE(any.PackFrom(tr));
+    any.PackFrom(tr);
     EXPECT_EQ(any.type_url(), "type.googleapis.com/hal.common.TestResult");
 
     auto got = unpack_module_results(any, "unknownmod");
