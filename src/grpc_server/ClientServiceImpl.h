@@ -2,29 +2,33 @@
 // grpc_server/ClientServiceImpl.h — implements the arches.stream::ClientService
 // bidi stream (the client<->server interop path).
 //
-// Ported from the prior reference implementation with the two §5/interop gap-closures:
+// Ported from the prior reference implementation with the two §5/interop
+// gap-closures:
 //   - §5 module-Result unpack in handle_result_batch: each ResultSample.payload
 //     (google.protobuf.Any) is unpacked via util::unpack_module_results, which
-//     handles the hal.modules.<id>.Result wrapper AND the bare-TestResult fallback.
-//     The prior reference implementation only unpacked bare hal.common.TestResult and rejected everything else.
-//   - batch.state() mapping: on a terminal batch, RunService::set_run_status maps
-//     the client's RunState -> runs.status instead of the prior reference implementation's blind
-//     complete_run("completed"). The UNSPECIFIED guard is preserved.
+//     handles the hal.modules.<id>.Result wrapper AND the bare-TestResult
+//     fallback. The prior reference implementation only unpacked bare
+//     hal.common.TestResult and rejected everything else.
+//   - batch.state() mapping: on a terminal batch, RunService::set_run_status
+//   maps
+//     the client's RunState -> runs.status instead of the prior reference
+//     implementation's blind complete_run("completed"). The UNSPECIFIED guard
+//     is preserved.
 //
-// New vs the prior reference implementation: a per-stream outbound writer thread drains an out_queue of
-// ServerMessages (run-control from RunService via ClientStreamRegistry + acks
-// produced here) into the stream, so all stream->Write() calls are serialized
-// (gRPC forbids concurrent writes on one stream). The prior reference implementation
-// wrote acks inline from the read thread and never wrote run-control, so it had no
-// concurrency hazard.
+// New vs the prior reference implementation: a per-stream outbound writer
+// thread drains an out_queue of ServerMessages (run-control from RunService via
+// ClientStreamRegistry + acks produced here) into the stream, so all
+// stream->Write() calls are serialized (gRPC forbids concurrent writes on one
+// stream). The prior reference implementation wrote acks inline from the read
+// thread and never wrote run-control, so it had no concurrency hazard.
 //
-// HelloReport registers the board_id -> out_queue in the ClientStreamRegistry so
-// RunService can push run-control to the right client. Reconnect (duplicate
+// HelloReport registers the board_id -> out_queue in the ClientStreamRegistry
+// so RunService can push run-control to the right client. Reconnect (duplicate
 // Hello) re-registers; the registry tolerates it.
 
-#include "services/RunService.h"
-#include "services/LogService.h"
 #include "grpc_server/StreamBackpressure.h"
+#include "services/LogService.h"
+#include "services/RunService.h"
 #include "stream_registry/ClientStreamRegistry.h"
 
 #include "client_service.grpc.pb.h"
@@ -41,38 +45,38 @@
 
 namespace arches::server::grpc {
 
-class ClientServiceImpl final
-    : public arches::stream::ClientService::Service {
+class ClientServiceImpl final : public arches::stream::ClientService::Service {
 public:
-    ClientServiceImpl(RunService& run_svc, LogService& log_svc,
-                      ClientStreamRegistry& stream_registry,
-                      std::size_t queue_capacity = 1024);
+  ClientServiceImpl(RunService &run_svc, LogService &log_svc,
+                    ClientStreamRegistry &stream_registry,
+                    std::size_t queue_capacity = 1024);
 
-    ::grpc::Status Connect(
-        ::grpc::ServerContext*                                                    ctx,
-        ::grpc::ServerReaderWriter<arches::stream::ServerMessage,
-                                   arches::stream::ClientMessage>* stream) override;
+  ::grpc::Status
+  Connect(::grpc::ServerContext *ctx,
+          ::grpc::ServerReaderWriter<arches::stream::ServerMessage,
+                                     arches::stream::ClientMessage> *stream)
+      override;
 
 private:
-    struct IngestWork {
-        std::string              run_id;
-        std::string              module_id;
-        std::string              module_version;
-        std::string              mode;
-        hal::common::TestResult  tr;
-    };
+  struct IngestWork {
+    std::string run_id;
+    std::string module_id;
+    std::string module_version;
+    std::string mode;
+    hal::common::TestResult tr;
+  };
 
-    RunService&              run_svc_;
-    LogService&              log_svc_;
-    ClientStreamRegistry&   stream_registry_;
-    std::size_t             queue_capacity_;
+  RunService &run_svc_;
+  LogService &log_svc_;
+  ClientStreamRegistry &stream_registry_;
+  std::size_t queue_capacity_;
 
-    // §5 unpack: per ResultSample, unpack the module-specific Result (or bare
-    // TestResult fallback) and enqueue each TestResult for the DB writer thread.
-    void handle_result_batch(const arches::stream::TestResultBatch& batch,
-                              BoundedQueue<IngestWork>& ingest_queue);
+  // §5 unpack: per ResultSample, unpack the module-specific Result (or bare
+  // TestResult fallback) and enqueue each TestResult for the DB writer thread.
+  void handle_result_batch(const arches::stream::TestResultBatch &batch,
+                           BoundedQueue<IngestWork> &ingest_queue);
 
-    void handle_log_batch(const arches::stream::LogBatch& batch);
+  void handle_log_batch(const arches::stream::LogBatch &batch);
 };
 
-}  // namespace arches::server::grpc
+} // namespace arches::server::grpc

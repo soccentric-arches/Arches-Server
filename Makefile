@@ -3,7 +3,7 @@
 
 .DEFAULT_GOAL := help
 
-.PHONY: build test clean docker shell fmt format lint help
+.PHONY: build test run clean docker shell fmt format lint help
 
 # Parallel jobs (override with make JOBS=N)
 JOBS := $(shell nproc)
@@ -14,6 +14,7 @@ DOCKER_IMAGE := arches-dev
 # visible inside the container at /workspace.
 Arches_ROOT := $(shell dirname $(realpath $(CURDIR)))
 DOCKER_SRC_DIR := /workspace/Arches-Server
+DOCKER_HAL_DIR := /workspace/Arches-HAL
 BUILD_DIR      := build/docker
 
 DOCKER_RUN := docker run --rm -t --init --platform linux/amd64 \
@@ -49,6 +50,19 @@ test: build ## Run unit tests (x86, in Docker)
 	@echo "Running unit tests in Docker (x86)..."
 	$(DOCKER_RUN) "cd $(DOCKER_SRC_DIR)/$(BUILD_DIR) && ctest -L arches_server --output-on-failure"
 
+run: build ## Build then run arches-server (x86, in Docker)
+	@echo "Running arches-server in Docker (x86)..."
+	docker run --rm -t --init --platform linux/amd64 \
+		-p 50051:50051 \
+		-v $(Arches_ROOT):/workspace \
+		-v ccache-arches-server:/home/arches/.ccache \
+		$(DOCKER_IMAGE) bash -c "cd $(DOCKER_SRC_DIR) && \
+			export LD_LIBRARY_PATH=$(DOCKER_SRC_DIR)/$(BUILD_DIR)/lib:$(DOCKER_SRC_DIR)/$(BUILD_DIR)/arches_hal_build/lib && \
+			mkdir -p $(BUILD_DIR)/run && \
+			ARCHES_DB_PATH=$(DOCKER_SRC_DIR)/$(BUILD_DIR)/run/server.db \
+			ARCHES_REGISTRY_PATH=$(DOCKER_HAL_DIR)/protos/registry/modules.yaml \
+			$(DOCKER_SRC_DIR)/$(BUILD_DIR)/bin/arches-server"
+
 shell: docker ## Open a shell in the build container (x86)
 	@echo "Starting Docker shell (x86)..."
 	docker run -it --rm --platform linux/amd64 \
@@ -77,9 +91,13 @@ lint: ## Run cppcheck static analysis (uses compile_commands.json)
 		echo "No $(BUILD_DIR)/compile_commands.json — run 'make build' first."; \
 		exit 1; \
 	fi
-	@echo "Running cppcheck..."
-	cppcheck --project=$(BUILD_DIR)/compile_commands.json \
+	@echo "Running cppcheck (remapping container paths to host)..."
+	@sed -e 's|/workspace/Arches-Server|$(CURDIR)|g' \
+		-e 's|/workspace/Arches-HAL|$(Arches_ROOT)/Arches-HAL|g' \
+		$(BUILD_DIR)/compile_commands.json > $(BUILD_DIR)/compile_commands.host.json
+	cppcheck --project=$(BUILD_DIR)/compile_commands.host.json \
 		--enable=warning,style,performance,portability --inline-suppr \
+		--suppress='*:*/arches_hal_build/protos/generated/*' \
 		-j$(JOBS) 2>&1 | tee cppcheck.log
 
 # =============================================================================

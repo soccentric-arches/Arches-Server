@@ -31,7 +31,7 @@ From the repository root, run `make configure`. This creates `build/native` and 
 
 ## 7. Deployment, install, and run
 
-- `make run` builds and runs `arches-server` locally on the x86 host.
+- `make run` builds then runs `arches-server` in the x86 Docker container (gRPC 50051 published to the host; SQLite DB persisted at `build/docker/run/server.db`).
 - Install the CPack artifact with the host package manager when a package is produced; the exact package manager is environment-dependent.
 - No cross deployment, board flashing, SSH target deployment, cloud image, or registry publishing target is defined.
 

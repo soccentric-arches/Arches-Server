@@ -19,7 +19,7 @@ Postgres/Drogon stack (see server_update/10_arches_port.md).
 - Test:  make test (runs ctest -L arches_server — never run bare ctest,
   the linked HAL subproject registers ~36 unbuilt HAL tests that fail otherwise)
 - Lint:  make lint (cppcheck + clang-tidy vs compile_commands.json, best-effort)
-- Run:   make run (build/native/bin/arches-server)
+- Run:   make run (Docker x86; binary build/docker/bin/arches-server, gRPC 50051 published)
 - Clean: make clean
 - Validate gate: ./.claude/validate.sh quick|full (quick = seconds; full = + build + test).
   Exit codes: 0 pass, 1-76 fail, 77 a check never ran (BLOCKED, not a pass —
