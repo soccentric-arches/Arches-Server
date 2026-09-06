@@ -15,6 +15,7 @@
 #include <deque>
 #include <mutex>
 #include <optional>
+#include <spdlog/spdlog.h>
 
 namespace arches::server::grpc {
 
@@ -24,8 +25,25 @@ template <typename T> class BoundedQueue {
 
     // Enqueue an item.  Blocks if the queue is at capacity.
     // Returns false if the queue has been closed.
+    //
+    // Saturation is logged (Task.md E-07). A blocked enqueue IS the
+    // backpressure working as designed, but it was entirely silent: ingest
+    // falling behind looked identical to ingest keeping up, from outside. The
+    // client on the other end is being throttled and its spool is growing, and
+    // nobody could see why.
+    //
+    // Logged once per saturation episode rather than per call, so a sustained
+    // backlog does not drown the log -- and logged again when it drains, so
+    // the episode has an end as well as a start.
     bool enqueue(T item) {
         std::unique_lock<std::mutex> lock{mutex_};
+        if (!closed_ && queue_.size() >= capacity_) {
+            if (!saturated_) {
+                saturated_ = true;
+                spdlog::warn("ingest queue saturated at {} items: producer is being throttled",
+                             capacity_);
+            }
+        }
         not_full_.wait(lock, [this] { return closed_ || queue_.size() < capacity_; });
         if (closed_)
             return false;
@@ -42,6 +60,12 @@ template <typename T> class BoundedQueue {
             return std::nullopt;
         T item = std::move(queue_.front());
         queue_.pop_front();
+        if (saturated_ && queue_.size() * 2 <= capacity_) {
+            // Hysteresis at half capacity: recovering at capacity-1 would flap
+            // the log on every item while sitting near the limit.
+            saturated_ = false;
+            spdlog::info("ingest queue recovered: {}/{} items", queue_.size(), capacity_);
+        }
         not_full_.notify_one();
         return item;
     }
@@ -67,6 +91,8 @@ template <typename T> class BoundedQueue {
     private:
     mutable std::mutex mutex_;
     std::condition_variable not_full_;
+    // True while an episode of saturation is in progress; see enqueue().
+    bool saturated_{false};
     std::condition_variable not_empty_;
     std::deque<T> queue_;
     std::size_t capacity_;

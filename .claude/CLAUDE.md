@@ -38,6 +38,38 @@ into SQLite and pushes run-control back.
 * Let `ClientStreamRegistry` tolerate a re-Hello — re-register replaces and closes the stale queue, guarded by pointer identity so a reconnect cannot yank the fresh one.
 * Go through the Makefile for everything. Never ad-hoc clang-tidy or cppcheck.
 
+## Instrumentation: this repo does NOT report to istate
+
+**Decided 2026-09-06 (Task.md E-07). Recorded here so it stops being an open
+question in every review.**
+
+Arches-HAL and Arches-Client declare alarms to Arches-Instrumentation over
+`ApplicationApi`. **Arches-Server does not, and should not.**
+
+Instrumentation is an *on-device* suite. It ships in the Jetson image, its
+socket is `/run/instrumentation/application.sock` on that device, and its whole
+model is a device describing itself. Arches-Server runs on an **x86 bench
+host** — it is the peer the device streams results *to*. There is no istate on
+that host to talk to, and putting one there would mean shipping the device
+management suite onto a workstation to report on a workstation.
+
+So for this repo, E-07 reduces to **structured logging only**, and that is what
+it got: `BoundedQueue::enqueue` now logs once per saturation episode and once
+on recovery (hysteresis at half capacity). Before that, ingest falling behind
+was completely silent — a blocked enqueue is the backpressure working, but from
+outside it looked identical to ingest keeping up, while the client on the other
+end was being throttled and its spool grew.
+
+Alarm ids **are** allocated for `arches-server` in the catalog (application
+domain, module `0x12`: `server_ingest_backlog`, `server_db_write_failed`). They
+are reserved, not orphaned. Allocation is one-way — the alarm layout is locked
+and an id that ships cannot be reused — so they were allocated at the same time
+as HAL's and Client's rather than deferred. If Server is ever colocated with a
+device, or an istate is ever run on the bench host, the ids are waiting.
+
+Do not "finish" E-07 by adding an `ApplicationApi` client here. Reopen the
+decision first.
+
 ## Don't
 
 * **Don't `ALTER TABLE ADD CONSTRAINT CHECK`.** SQLite only allows CHECK at create time.

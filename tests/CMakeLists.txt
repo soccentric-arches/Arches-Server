@@ -41,7 +41,9 @@ target_link_libraries(
   arches-streambackpressure-test
   PRIVATE arches_stream_registry # header-only BoundedQueue, but pulls the
                                  # include path
-          GTest::gtest GTest::gtest_main Threads::Threads)
+          # BoundedQueue logs saturation (Task.md E-07), so the header now
+          # needs spdlog even though it is otherwise header-only.
+          spdlog::spdlog GTest::gtest GTest::gtest_main Threads::Threads)
 target_include_directories(arches-streambackpressure-test
                            PRIVATE ${CMAKE_SOURCE_DIR}/src)
 set_compiler_warnings(arches-streambackpressure-test)
