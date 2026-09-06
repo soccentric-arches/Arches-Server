@@ -1,0 +1,67 @@
+[Unit]
+Description=Arches Server — gRPC run control and result ingestion (x86 bench host)
+Documentation=https://github.com/soccentric-arches/Arches-Server
+After=network-online.target
+Wants=network-online.target
+StartLimitIntervalSec=60
+StartLimitBurst=5
+
+# NOTE ON WHERE THIS RUNS.
+#
+# Arches-Server runs on an x86 BENCH HOST, not on the Jetson. It is the peer
+# that Arches-Client streams results to. It is deliberately not part of the
+# device image and has no Yocto recipe -- see Task.md D-11 and the
+# instrumentation decision in .claude/CLAUDE.md.
+#
+# This unit is for deploying the server onto that host.
+
+[Service]
+Type=simple
+User=arches
+Group=arches
+WorkingDirectory=/var/lib/arches
+ExecStart=/usr/bin/arches-server
+Restart=on-failure
+RestartSec=5
+
+# Configuration is environment-driven (src/config/Settings.cc). The compiled
+# defaults are already right for a deployed host -- ARCHES_DB_PATH defaults to
+# /var/lib/arches/server.db and ARCHES_GRPC_LISTEN to 0.0.0.0:50051 -- so
+# nothing is overridden here. Override in a drop-in, not by editing this file.
+#
+# ARCHES_REGISTRY_PATH is the exception: its default is the relative developer
+# path ../Arches-HAL/protos/registry/modules.yaml, which does not resolve on a
+# deployed host. Set it to wherever the registry is installed.
+Environment=ARCHES_REGISTRY_PATH=/usr/share/arches-hal/modules.yaml
+# Environment=ARCHES_GRPC_LISTEN=0.0.0.0:50051
+# Environment=ARCHES_LOG_LEVEL=info
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=arches-server
+
+# Hardening — matches Arches-Client's posture (Task.md E-08), with the
+# additions a network-facing service on a shared host wants.
+NoNewPrivileges=yes
+ProtectSystem=full
+PrivateTmp=yes
+ReadWritePaths=/var/lib/arches
+ProtectHome=yes
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectControlGroups=yes
+# Server, unlike Client, touches no hardware and needs no device access, so it
+# can be locked down further than the client's posture allows.
+PrivateDevices=yes
+RestrictNamespaces=yes
+RestrictRealtime=yes
+RestrictSUIDSGID=yes
+LockPersonality=yes
+MemoryDenyWriteExecute=yes
+SystemCallArchitectures=native
+# It is a TCP service and nothing else.
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+
+[Install]
+WantedBy=multi-user.target

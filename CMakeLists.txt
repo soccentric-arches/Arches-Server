@@ -192,5 +192,11 @@ include(CPack)
 # Install
 # ---------------------------------------------------------------------------
 install(TARGETS arches-server RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+# systemd unit for bench-host deployment (Task.md E-08). OPTIONAL so a source
+# tree without it still installs, matching how Arches-Client installs its own.
+install(FILES systemd/arches-server.service
+  DESTINATION ${CMAKE_INSTALL_LIBDIR}/systemd/system
+  OPTIONAL
+)
 install(DIRECTORY "${CMAKE_SOURCE_DIR}/migrations/"
         DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/arches/migrations")
