@@ -60,7 +60,7 @@ namespace arches::server::db {
 // enables WAL + a 5s busy timeout, and sets PRAGMA foreign_keys=ON so the
 // ON DELETE CASCADE constraints in the migrations actually fire. Throws
 // std::runtime_error on failure.
-void init_db_client(const std::string &db_path);
+void init_db_client(const std::string& db_path);
 
 // Close the global connection. Optional; called at shutdown. Safe to call even
 // if init was never done.
@@ -68,11 +68,11 @@ void shutdown_db_client();
 
 // Returns the shared SQLite connection. Throws if init_db_client() was not
 // called. Acquires the connection mutex internally for every call.
-sqlite3 *get_db();
+sqlite3* get_db();
 
 // Execute one or more SQL statements (no parameters, no results). Acquires the
 // mutex and runs sqlite3_exec. Throws std::runtime_error on error.
-void exec(const std::string &sql);
+void exec(const std::string& sql);
 
 // RAII prepared statement with typed binders + column accessors. Repositories
 // build one of these from a SQL string, bind parameters, then call step() in a
@@ -80,54 +80,53 @@ void exec(const std::string &sql);
 // the threading note above), so the entire prepare->bind->step->fetch sequence
 // is one serialized critical section.
 class PreparedStatement {
-public:
-  // Compiles `sql` against the shared connection. Throws on compile error.
-  explicit PreparedStatement(const std::string &sql);
-  ~PreparedStatement();
+    public:
+    // Compiles `sql` against the shared connection. Throws on compile error.
+    explicit PreparedStatement(const std::string& sql);
+    ~PreparedStatement();
 
-  PreparedStatement(const PreparedStatement &) = delete;
-  PreparedStatement &operator=(const PreparedStatement &) = delete;
-  PreparedStatement(PreparedStatement &&) noexcept;
-  PreparedStatement &operator=(PreparedStatement &&) noexcept;
+    PreparedStatement(const PreparedStatement&) = delete;
+    PreparedStatement& operator=(const PreparedStatement&) = delete;
+    PreparedStatement(PreparedStatement&&) noexcept;
+    PreparedStatement& operator=(PreparedStatement&&) noexcept;
 
-  // Bind by 1-based index.
-  void bind(int idx, std::nullptr_t);
-  void bind(int idx, int value);
-  void bind(int idx, int64_t value);
-  void bind(int idx, double value);
-  void bind(int idx, const std::string &value);
-  void bind(int idx, const char *value);
-  void bind_text_or_null(int idx, const std::optional<std::string> &value);
-  void bind_int64_or_null(int idx, const std::optional<int64_t> &value);
-  void bind_blob(int idx, const void *data, std::size_t len);
-  void bind_blob(int idx, const std::vector<std::uint8_t> &blob);
+    // Bind by 1-based index.
+    void bind(int idx, std::nullptr_t);
+    void bind(int idx, int value);
+    void bind(int idx, int64_t value);
+    void bind(int idx, double value);
+    void bind(int idx, const std::string& value);
+    void bind(int idx, const char* value);
+    void bind_text_or_null(int idx, const std::optional<std::string>& value);
+    void bind_int64_or_null(int idx, const std::optional<int64_t>& value);
+    void bind_blob(int idx, const void* data, std::size_t len);
+    void bind_blob(int idx, const std::vector<std::uint8_t>& blob);
 
-  // Advance to the next row. Returns true if a row is available, false if the
-  // statement is exhausted (no more rows). Throws on error.
-  bool step();
+    // Advance to the next row. Returns true if a row is available, false if the
+    // statement is exhausted (no more rows). Throws on error.
+    bool step();
 
-  // Reset to before the first row and clear all bindings, for reuse in a loop.
-  void reset();
+    // Reset to before the first row and clear all bindings, for reuse in a loop.
+    void reset();
 
-  // Column accessors (0-based column index). Call only after step() returned
-  // true.
-  int column_int(int idx) const;
-  int64_t column_int64(int idx) const;
-  double column_double(int idx) const;
-  std::string column_text(int idx) const;
-  std::vector<std::uint8_t> column_blob(int idx) const;
-  bool column_is_null(int idx) const;
+    // Column accessors (0-based column index). Call only after step() returned
+    // true.
+    int column_int(int idx) const;
+    int64_t column_int64(int idx) const;
+    double column_double(int idx) const;
+    std::string column_text(int idx) const;
+    std::vector<std::uint8_t> column_blob(int idx) const;
+    bool column_is_null(int idx) const;
 
-  // Number of columns in the result row.
-  int column_count() const;
+    // Number of columns in the result row.
+    int column_count() const;
 
-private:
-  void check(int rc, const char *context) const;
+    private:
+    void check(int rc, const char* context) const;
 
-  sqlite3_stmt *stmt_{nullptr};
-  sqlite3 *db_{nullptr}; // captured under the lock in the ctor; for error msgs
-  std::unique_lock<std::recursive_mutex>
-      lock_; // held for the statement's lifetime
+    sqlite3_stmt* stmt_{nullptr};
+    sqlite3* db_{nullptr}; // captured under the lock in the ctor; for error msgs
+    std::unique_lock<std::recursive_mutex> lock_; // held for the statement's lifetime
 };
 
 // Convenience: a scoped lock on the connection mutex. With PreparedStatement
@@ -135,14 +134,14 @@ private:
 // remains for cases that must serialize a sequence of raw sqlite3 calls as one
 // unit.
 class [[nodiscard]] DbLock {
-public:
-  DbLock();
-  ~DbLock();
-  DbLock(const DbLock &) = delete;
-  DbLock &operator=(const DbLock &) = delete;
+    public:
+    DbLock();
+    ~DbLock();
+    DbLock(const DbLock&) = delete;
+    DbLock& operator=(const DbLock&) = delete;
 
-private:
-  std::unique_lock<std::recursive_mutex> lock_;
+    private:
+    std::unique_lock<std::recursive_mutex> lock_;
 };
 
 } // namespace arches::server::db

@@ -14,14 +14,14 @@
 namespace arches::server {
 
 struct TestConfig {
-  std::string id;
-  std::string name;
-  std::string description;
-  std::string mode; // single_shot | long_term | monitoring | event_based
-  std::string common_config_json; // JSON object, default "{}"
-  std::string modules_json; // JSON array of per-module entries, default "[]"
-  std::string created_at;   // ISO-8601
-  bool is_archived = false;
+    std::string id;
+    std::string name;
+    std::string description;
+    std::string mode;               // single_shot | long_term | monitoring | event_based
+    std::string common_config_json; // JSON object, default "{}"
+    std::string modules_json;       // JSON array of per-module entries, default "[]"
+    std::string created_at;         // ISO-8601
+    bool is_archived = false;
 };
 
 } // namespace arches::server
@@ -29,13 +29,13 @@ struct TestConfig {
 namespace arches::server::repositories {
 
 class TestConfigRepository {
-public:
-  TestConfig create(const TestConfig &c);
-  std::optional<TestConfig> find_by_id(const std::string &id);
-  std::vector<TestConfig> list(bool include_archived = false);
-  void update(const TestConfig &c);
-  void archive(const std::string &id);
-  void remove(const std::string &id);
+    public:
+    TestConfig create(const TestConfig& c);
+    std::optional<TestConfig> find_by_id(const std::string& id);
+    std::vector<TestConfig> list(bool include_archived = false);
+    void update(const TestConfig& c);
+    void archive(const std::string& id);
+    void remove(const std::string& id);
 };
 
 } // namespace arches::server::repositories

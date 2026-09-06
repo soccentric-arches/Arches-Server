@@ -18,23 +18,23 @@
 namespace arches::server::config {
 
 struct Settings {
-  // gRPC listen address (host:port).
-  std::string grpc_listen = "0.0.0.0:50051";
+    // gRPC listen address (host:port).
+    std::string grpc_listen = "0.0.0.0:50051";
 
-  // SQLite database file path.
-  std::string db_path = "/var/lib/arches/server.db";
+    // SQLite database file path.
+    std::string db_path = "/var/lib/arches/server.db";
 
-  // HAL module registry manifest (modules.yaml) path.
-  std::string registry_path = "../Arches-HAL/protos/registry/modules.yaml";
+    // HAL module registry manifest (modules.yaml) path.
+    std::string registry_path = "../Arches-HAL/protos/registry/modules.yaml";
 
-  // Per-stream bounded-queue capacity (ingest + outbound).
-  std::size_t stream_queue_size = 1024;
+    // Per-stream bounded-queue capacity (ingest + outbound).
+    std::size_t stream_queue_size = 1024;
 
-  // spdlog level string: trace/debug/info/warn/err/critical/off.
-  std::string log_level = "info";
+    // spdlog level string: trace/debug/info/warn/err/critical/off.
+    std::string log_level = "info";
 
-  // Graceful shutdown timeout (seconds).
-  int shutdown_timeout_sec = 10;
+    // Graceful shutdown timeout (seconds).
+    int shutdown_timeout_sec = 10;
 };
 
 // Load settings from ARCHES_* env vars, falling back to the struct defaults.

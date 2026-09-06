@@ -17,16 +17,16 @@
 namespace arches::server::db {
 
 class MigrationRunner {
-public:
-  // migrations_dir: path to the directory containing *.sql migration files.
-  explicit MigrationRunner(std::string migrations_dir);
+    public:
+    // migrations_dir: path to the directory containing *.sql migration files.
+    explicit MigrationRunner(std::string migrations_dir);
 
-  // Run all pending migrations against the shared SQLite connection.
-  // Throws std::runtime_error if any migration fails.
-  void run();
+    // Run all pending migrations against the shared SQLite connection.
+    // Throws std::runtime_error if any migration fails.
+    void run();
 
-private:
-  std::string migrations_dir_;
+    private:
+    std::string migrations_dir_;
 };
 
 } // namespace arches::server::db

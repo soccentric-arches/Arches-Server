@@ -43,21 +43,19 @@ std::string status_to_string(std::int16_t status);
 // Canonical uppercase string for a TestSeverity integer. e.g. 1 -> "INFO".
 std::string severity_to_string(std::int16_t severity);
 // Parse a status string (case-insensitive) back to an integer; 0 on miss.
-std::int16_t string_to_status(const std::string &s);
+std::int16_t string_to_status(const std::string& s);
 // Parse a severity string (case-insensitive) back to an integer; 0 on miss.
-std::int16_t string_to_severity(const std::string &s);
+std::int16_t string_to_severity(const std::string& s);
 
 // ── TypedValue JSON serialisation (minimal, no JsonCpp) ──────────────────────
 
 // Serialise a map<string, TypedValue> to a JSON string.
 // Output: { "key": { "type": "double", "value": 42.5 }, ... }
-std::string typed_map_to_json(
-    const google::protobuf::Map<std::string, hal::common::TypedValue> &m);
+std::string typed_map_to_json(const google::protobuf::Map<std::string, hal::common::TypedValue>& m);
 
 // Serialise a map<string, string> (reason) to a JSON string.
 // Output: { "key": "value", ... }
-std::string
-string_map_to_json(const google::protobuf::Map<std::string, std::string> &m);
+std::string string_map_to_json(const google::protobuf::Map<std::string, std::string>& m);
 
 // ── Proto -> Result conversion ───────────────────────────────────────────────
 
@@ -65,11 +63,9 @@ string_map_to_json(const google::protobuf::Map<std::string, std::string> &m);
 // struct. parent_id is empty for top-level results; set by the recursive caller
 // for subtests. The caller must set result.id before inserting (the server
 // assigns ids).
-Result proto_to_result(const hal::common::TestResult &tr,
-                       const std::string &run_id,
-                       const std::string &module_version,
-                       const std::string &mode,
-                       const std::string &parent_id = "");
+Result proto_to_result(const hal::common::TestResult& tr, const std::string& run_id,
+                       const std::string& module_version, const std::string& mode,
+                       const std::string& parent_id = "");
 
 // ── §5 module-Result unpack (NEW — server-side inverse of client pack) ──────
 
@@ -87,11 +83,10 @@ Result proto_to_result(const hal::common::TestResult &tr,
 // Relies on hal_protos_shared having registered every hal.modules.<id>.Result
 // descriptor in DescriptorPool::generated_pool() (it does — the server links
 // the same SHARED proto lib as the client).
-std::vector<hal::common::TestResult>
-unpack_module_results(const google::protobuf::Any &payload,
-                      const std::string &module_id);
+std::vector<hal::common::TestResult> unpack_module_results(const google::protobuf::Any& payload,
+                                                           const std::string& module_id);
 
 // Build the type_url string for a module Result (mirror of the client helper).
-std::string module_result_type_url(const std::string &module_id);
+std::string module_result_type_url(const std::string& module_id);
 
 } // namespace arches::server::util

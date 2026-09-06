@@ -24,31 +24,30 @@
 namespace arches::server::grpc {
 
 class GrpcServerRunner {
-public:
-  GrpcServerRunner(HalServiceImpl &hal_service,
-                   ClientServiceImpl &client_service,
-                   const config::Settings &settings);
+    public:
+    GrpcServerRunner(HalServiceImpl& hal_service, ClientServiceImpl& client_service,
+                     const config::Settings& settings);
 
-  // Start the gRPC server.  Blocks until shutdown() is called.  Resolves
-  // port_future() (value on success, exception on bind/build failure) before
-  // blocking on Wait().
-  void start();
+    // Start the gRPC server.  Blocks until shutdown() is called.  Resolves
+    // port_future() (value on success, exception on bind/build failure) before
+    // blocking on Wait().
+    void start();
 
-  // Signal graceful shutdown.
-  void shutdown();
+    // Signal graceful shutdown.
+    void shutdown();
 
-  // A future that resolves to the actual bound port once the server is up.
-  // get() throws std::runtime_error if the server failed to start. Safe to
-  // ignore (never call get()) — e.g. main() with a fixed port doesn't need it.
-  std::future<int> &port_future() { return port_future_; }
+    // A future that resolves to the actual bound port once the server is up.
+    // get() throws std::runtime_error if the server failed to start. Safe to
+    // ignore (never call get()) — e.g. main() with a fixed port doesn't need it.
+    std::future<int>& port_future() { return port_future_; }
 
-private:
-  HalServiceImpl &hal_service_;
-  ClientServiceImpl &client_service_;
-  const config::Settings &settings_;
-  std::unique_ptr<::grpc::Server> server_;
-  std::promise<int> port_promise_;
-  std::future<int> port_future_;
+    private:
+    HalServiceImpl& hal_service_;
+    ClientServiceImpl& client_service_;
+    const config::Settings& settings_;
+    std::unique_ptr<::grpc::Server> server_;
+    std::promise<int> port_promise_;
+    std::future<int> port_future_;
 };
 
 } // namespace arches::server::grpc

@@ -1,0 +1,16 @@
+# Arches fleet C++ style: 4-space indent, access specifiers aligned with
+# members, pointers/references attach to the type (const std::string& x).
+#
+# Byte-identical to Arches-Client/.clang-format. The fleet had three answers to
+# this question and two repos with no answer at all: Client was LLVM/100,
+# Arches-Instrumentation is Microsoft/300 (deliberately, for its own reasons --
+# see the rationale in that file), and HAL and Server had no .clang-format, so
+# clang-format silently fell back to plain LLVM at 80 columns. Their gates run
+# `clang-format --dry-run --Werror` against that fallback and were failing on
+# it. See Task.md G-02.
+BasedOnStyle: LLVM
+IndentWidth: 4
+ColumnLimit: 100
+DerivePointerAlignment: false
+PointerAlignment: Left
+AccessModifierOffset: 0

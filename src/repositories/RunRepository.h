@@ -26,21 +26,21 @@
 namespace arches::server {
 
 struct Run {
-  std::string id;
-  std::string name;
-  std::string description;
-  std::string test_config_snapshot_json; // frozen snapshot of the TestConfig
-  std::string mode;       // single_shot | long_term | monitoring | event_based
-  std::string board_id;   // owning connected client (FK to board.id)
-  std::string status;     // queued|running|paused|completed|failed|cancelled
-  std::string started_at; // ISO-8601, empty until set_started
-  std::string ended_at;   // ISO-8601, empty until set_ended
-  std::string error_message;
-  std::string tags_json; // JSON array, default "[]"
-  std::string notes;
-  bool baseline_flag = false;
-  std::string attached_files_json; // JSON array, default "[]"
-  std::string created_at;          // ISO-8601
+    std::string id;
+    std::string name;
+    std::string description;
+    std::string test_config_snapshot_json; // frozen snapshot of the TestConfig
+    std::string mode;                      // single_shot | long_term | monitoring | event_based
+    std::string board_id;                  // owning connected client (FK to board.id)
+    std::string status;                    // queued|running|paused|completed|failed|cancelled
+    std::string started_at;                // ISO-8601, empty until set_started
+    std::string ended_at;                  // ISO-8601, empty until set_ended
+    std::string error_message;
+    std::string tags_json; // JSON array, default "[]"
+    std::string notes;
+    bool baseline_flag = false;
+    std::string attached_files_json; // JSON array, default "[]"
+    std::string created_at;          // ISO-8601
 };
 
 } // namespace arches::server
@@ -48,24 +48,24 @@ struct Run {
 namespace arches::server::repositories {
 
 class RunRepository {
-public:
-  Run create(const Run &r);
-  std::optional<Run> find_by_id(const std::string &id);
+    public:
+    Run create(const Run& r);
+    std::optional<Run> find_by_id(const std::string& id);
 
-  // Update status (and optional error_message). Empty error_message -> NULL.
-  void update_status(const std::string &id, const std::string &status,
-                     const std::string &error_message = "");
+    // Update status (and optional error_message). Empty error_message -> NULL.
+    void update_status(const std::string& id, const std::string& status,
+                       const std::string& error_message = "");
 
-  // Set started_at = now, status = 'running'.
-  void set_started(const std::string &id);
+    // Set started_at = now, status = 'running'.
+    void set_started(const std::string& id);
 
-  // Set ended_at = now, status, optional error_message. Empty -> NULL.
-  void set_ended(const std::string &id, const std::string &status,
-                 const std::string &error_message = "");
+    // Set ended_at = now, status, optional error_message. Empty -> NULL.
+    void set_ended(const std::string& id, const std::string& status,
+                   const std::string& error_message = "");
 
-  // All runs whose status is in `statuses`. Used by RunService::reconcile_
-  // stale_runs to find queued/running runs left over from a crashed server.
-  std::vector<Run> list_by_status(const std::vector<std::string> &statuses);
+    // All runs whose status is in `statuses`. Used by RunService::reconcile_
+    // stale_runs to find queued/running runs left over from a crashed server.
+    std::vector<Run> list_by_status(const std::vector<std::string>& statuses);
 };
 
 } // namespace arches::server::repositories

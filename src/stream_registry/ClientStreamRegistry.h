@@ -39,31 +39,30 @@ using OutQueue = BoundedQueue<arches::stream::ServerMessage>;
 using OutQueuePtr = std::shared_ptr<OutQueue>;
 
 class ClientStreamRegistry {
-public:
-  ClientStreamRegistry() = default;
+    public:
+    ClientStreamRegistry() = default;
 
-  // Register (or replace) the outbound queue for board_id. Called by
-  // ClientServiceImpl::Connect on HelloReport. Thread-safe.
-  void register_stream(const std::string &board_id, OutQueuePtr queue);
+    // Register (or replace) the outbound queue for board_id. Called by
+    // ClientServiceImpl::Connect on HelloReport. Thread-safe.
+    void register_stream(const std::string& board_id, OutQueuePtr queue);
 
-  // Deregister the outbound queue for board_id, but only if the currently
-  // registered queue is `queue` (guards against the reconnect race described
-  // above). No-op if board_id is unknown or the queue was already replaced.
-  void deregister_stream(const std::string &board_id, OutQueuePtr queue);
+    // Deregister the outbound queue for board_id, but only if the currently
+    // registered queue is `queue` (guards against the reconnect race described
+    // above). No-op if board_id is unknown or the queue was already replaced.
+    void deregister_stream(const std::string& board_id, OutQueuePtr queue);
 
-  // Enqueue a run-control ServerMessage to the board's outbound queue.
-  // Returns false if no stream is registered for board_id (board not
-  // connected) or the queue is closed (stream tearing down). The caller
-  // (RunService) treats a false return as "client not reachable" and logs it.
-  bool push(const std::string &board_id,
-            const arches::stream::ServerMessage &msg);
+    // Enqueue a run-control ServerMessage to the board's outbound queue.
+    // Returns false if no stream is registered for board_id (board not
+    // connected) or the queue is closed (stream tearing down). The caller
+    // (RunService) treats a false return as "client not reachable" and logs it.
+    bool push(const std::string& board_id, const arches::stream::ServerMessage& msg);
 
-  // Whether a board is currently connected (has a registered outbound queue).
-  bool has_stream(const std::string &board_id);
+    // Whether a board is currently connected (has a registered outbound queue).
+    bool has_stream(const std::string& board_id);
 
-private:
-  std::mutex mutex_;
-  std::unordered_map<std::string, OutQueuePtr> streams_;
+    private:
+    std::mutex mutex_;
+    std::unordered_map<std::string, OutQueuePtr> streams_;
 };
 
 } // namespace arches::server::grpc

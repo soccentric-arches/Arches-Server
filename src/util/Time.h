@@ -17,6 +17,6 @@ std::string utc_now_iso8601();
 std::string to_iso8601(TimePoint tp);
 
 // Parse an ISO-8601 (UTC) string to TimePoint. Returns epoch on parse failure.
-TimePoint parse_iso8601(const std::string &s);
+TimePoint parse_iso8601(const std::string& s);
 
 } // namespace arches::server::util

@@ -13,16 +13,16 @@
 namespace arches::server {
 
 class LogService {
-public:
-  LogService() = default;
+    public:
+    LogService() = default;
 
-  // Ingest a log entry (called from ClientServiceImpl's kLogBatch handler).
-  LogEntry ingest(const LogEntry &e);
+    // Ingest a log entry (called from ClientServiceImpl's kLogBatch handler).
+    LogEntry ingest(const LogEntry& e);
 
-  std::vector<LogEntry> list(const LogFilter &f);
+    std::vector<LogEntry> list(const LogFilter& f);
 
-private:
-  repositories::LogRepository log_repo_;
+    private:
+    repositories::LogRepository log_repo_;
 };
 
 } // namespace arches::server

@@ -46,37 +46,35 @@
 namespace arches::server::grpc {
 
 class ClientServiceImpl final : public arches::stream::ClientService::Service {
-public:
-  ClientServiceImpl(RunService &run_svc, LogService &log_svc,
-                    ClientStreamRegistry &stream_registry,
-                    std::size_t queue_capacity = 1024);
+    public:
+    ClientServiceImpl(RunService& run_svc, LogService& log_svc,
+                      ClientStreamRegistry& stream_registry, std::size_t queue_capacity = 1024);
 
-  ::grpc::Status
-  Connect(::grpc::ServerContext *ctx,
-          ::grpc::ServerReaderWriter<arches::stream::ServerMessage,
-                                     arches::stream::ClientMessage> *stream)
-      override;
+    ::grpc::Status
+    Connect(::grpc::ServerContext* ctx,
+            ::grpc::ServerReaderWriter<arches::stream::ServerMessage,
+                                       arches::stream::ClientMessage>* stream) override;
 
-private:
-  struct IngestWork {
-    std::string run_id;
-    std::string module_id;
-    std::string module_version;
-    std::string mode;
-    hal::common::TestResult tr;
-  };
+    private:
+    struct IngestWork {
+        std::string run_id;
+        std::string module_id;
+        std::string module_version;
+        std::string mode;
+        hal::common::TestResult tr;
+    };
 
-  RunService &run_svc_;
-  LogService &log_svc_;
-  ClientStreamRegistry &stream_registry_;
-  std::size_t queue_capacity_;
+    RunService& run_svc_;
+    LogService& log_svc_;
+    ClientStreamRegistry& stream_registry_;
+    std::size_t queue_capacity_;
 
-  // §5 unpack: per ResultSample, unpack the module-specific Result (or bare
-  // TestResult fallback) and enqueue each TestResult for the DB writer thread.
-  void handle_result_batch(const arches::stream::TestResultBatch &batch,
-                           BoundedQueue<IngestWork> &ingest_queue);
+    // §5 unpack: per ResultSample, unpack the module-specific Result (or bare
+    // TestResult fallback) and enqueue each TestResult for the DB writer thread.
+    void handle_result_batch(const arches::stream::TestResultBatch& batch,
+                             BoundedQueue<IngestWork>& ingest_queue);
 
-  void handle_log_batch(const arches::stream::LogBatch &batch);
+    void handle_log_batch(const arches::stream::LogBatch& batch);
 };
 
 } // namespace arches::server::grpc

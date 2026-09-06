@@ -19,16 +19,16 @@
 #include "config/Settings.h"
 #include "db/DbClient.h"
 #include "db/MigrationRunner.h"
-#include "registry/ModuleRegistry.h"
-#include "services/RunService.h"
-#include "services/LogService.h"
-#include "stream_registry/ClientStreamRegistry.h"
-#include "grpc_server/HalServiceImpl.h"
 #include "grpc_server/ClientServiceImpl.h"
 #include "grpc_server/GrpcServerRunner.h"
+#include "grpc_server/HalServiceImpl.h"
+#include "registry/ModuleRegistry.h"
+#include "services/LogService.h"
+#include "services/RunService.h"
+#include "stream_registry/ClientStreamRegistry.h"
 
-#include <spdlog/spdlog.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
+#include <spdlog/spdlog.h>
 
 #include <csignal>
 #include <pthread.h>
@@ -46,8 +46,8 @@ int main() {
     spdlog::set_default_logger(logger);
     spdlog::set_level(spdlog::level::from_str(settings.log_level));
     spdlog::info("arches-server {} starting", ARCHES_SERVER_VERSION);
-    spdlog::info("arches-server: grpc_listen={} db_path={} registry={}",
-                 settings.grpc_listen, settings.db_path, settings.registry_path);
+    spdlog::info("arches-server: grpc_listen={} db_path={} registry={}", settings.grpc_listen,
+                 settings.db_path, settings.registry_path);
 
     try {
         // ── SQLite DB + migrations ──────────────────────────────────────────
@@ -74,10 +74,10 @@ int main() {
         }
 
         // ── gRPC services + runner ──────────────────────────────────────────
-        arches::server::grpc::HalServiceImpl    hal_svc{run_svc, log_svc, modules, settings};
+        arches::server::grpc::HalServiceImpl hal_svc{run_svc, log_svc, modules, settings};
         arches::server::grpc::ClientServiceImpl client_svc{run_svc, log_svc, stream_registry,
-                                                            settings.stream_queue_size};
-        arches::server::grpc::GrpcServerRunner  runner{hal_svc, client_svc, settings};
+                                                           settings.stream_queue_size};
+        arches::server::grpc::GrpcServerRunner runner{hal_svc, client_svc, settings};
 
         // ── Signal handling: block SIGINT/SIGTERM here, sigwait in a thread ──
         // (async-signal-safe: the worker thread, not a handler, calls shutdown).
@@ -91,7 +91,9 @@ int main() {
             int sig = 0;
             sigwait(&mask, &sig);
             spdlog::info("arches-server: received signal {} — shutting down", sig);
-            try { runner.shutdown(); } catch (const std::exception& e) {
+            try {
+                runner.shutdown();
+            } catch (const std::exception& e) {
                 spdlog::error("arches-server: shutdown error: {}", e.what());
             }
         });

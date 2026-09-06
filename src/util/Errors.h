@@ -11,27 +11,24 @@ namespace arches::server {
 
 // Base application error.
 struct AppError : std::runtime_error {
-  using std::runtime_error::runtime_error;
+    using std::runtime_error::runtime_error;
 };
 
 struct NotFoundError : AppError {
-  explicit NotFoundError(const std::string &msg)
-      : AppError("not found: " + msg) {}
+    explicit NotFoundError(const std::string& msg) : AppError("not found: " + msg) {}
 };
 
 struct ValidationError : AppError {
-  explicit ValidationError(const std::string &msg)
-      : AppError("validation: " + msg) {}
+    explicit ValidationError(const std::string& msg) : AppError("validation: " + msg) {}
 };
 
 struct ConflictError : AppError {
-  explicit ConflictError(const std::string &msg)
-      : AppError("conflict: " + msg) {}
+    explicit ConflictError(const std::string& msg) : AppError("conflict: " + msg) {}
 };
 
 struct ServiceUnavailableError : AppError {
-  explicit ServiceUnavailableError(const std::string &msg)
-      : AppError("service unavailable: " + msg) {}
+    explicit ServiceUnavailableError(const std::string& msg)
+        : AppError("service unavailable: " + msg) {}
 };
 
 } // namespace arches::server
