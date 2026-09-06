@@ -3,7 +3,7 @@
 
 .DEFAULT_GOAL := help
 
-.PHONY: build test run clean docker shell fmt format lint help
+.PHONY: build test run clean docker shell fmt format lint cppcheck help
 
 # Parallel jobs (override with make JOBS=N)
 JOBS := $(shell nproc)
@@ -85,6 +85,14 @@ format: ## Run clang-format on src/ and tests/
 		xargs -0 clang-format -i --style=file
 
 fmt: format ## Alias for format
+
+# The gate (.claude/validate.sh) invokes `make cppcheck`, which did not exist
+# here -- Make answered "No rule to make target 'cppcheck'", exit 2, and the
+# gate recorded a FAIL. So Arches-Server's gate has been red for a missing
+# alias rather than for anything wrong with the code. Arches-HAL spells the
+# same target `cppcheck`; this repo spelled it `lint`. Both names now work.
+# Gate scripts are human-owned, so the fix belongs here. See Task.md G-11.
+cppcheck: lint ## Alias for lint — the name .claude/validate.sh calls
 
 lint: ## Run cppcheck static analysis (uses compile_commands.json)
 	@if [ ! -f $(BUILD_DIR)/compile_commands.json ]; then \
